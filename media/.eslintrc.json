@@ -10,5 +10,17 @@
   "parserOptions": {
     "parser": "@babel/eslint-parser"
   },
-  "rules": {}
+  "rules": {
+    "quotes": "off",
+    "semi": "off",
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "asyncArrow": "always",
+        "named": "never"
+      }
+    ],
+    "standard/computed-property-even-spacing": "off"
+  }
 }

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "core-js": "3.10.1",
+    "lodash": "^4.17.21",
     "vue": "3.0.11"
   },
   "devDependencies": {
@@ -19,9 +20,14 @@
     "@vue/cli-plugin-eslint": "~5.0.0-alpha.8",
     "@vue/cli-service": "~5.0.0-alpha.8",
     "@vue/compiler-sfc": "3.0.11",
+    "autoprefixer": "^10.2.5",
     "cross-env": "^7.0.3",
     "eslint": "^7.24.0",
-    "eslint-plugin-vue": "^7.9.0"
+    "eslint-plugin-vue": "^7.9.0",
+    "postcss": "^8.2.10",
+    "postcss-import": "^14.0.1",
+    "postcss-nesting": "^7.0.1",
+    "tailwindcss": "^2.1.1"
   },
   "browserslist": [
     "> 1%",
