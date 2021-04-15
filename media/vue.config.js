@@ -1,7 +1,16 @@
+const isProduction = process.env.NODE_ENV === "production";
+
 module.exports = {
   lintOnSave: false,
   configureWebpack: {
     devtool: process.env.NO_SOURCE_MAP ? false : "source-map",
     plugins: []
-  }
+  },
+  chainWebpack: config => {
+    if (isProduction) {
+      config.optimization.splitChunks(false);
+    }
+  },
+  assetsDir: "assets",
+  filenameHashing: isProduction ? false : true
 }
