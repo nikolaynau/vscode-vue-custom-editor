@@ -31,14 +31,16 @@
   },
   "icon": "images/icon.png",
   "activationEvents": [
-    "onCommand:vscode-test-vue-custom-editor.helloWorld"
+    "onCommand:vscodeTestVueCustomEditor.start",
+    "onWebviewPanel:counterEditor"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "vscode-test-vue-custom-editor.helloWorld",
-        "title": "Hello World"
+        "command": "vscodeTestVueCustomEditor.start",
+        "title": "Start",
+        "category": "Vue Custom Editor"
       }
     ]
   },

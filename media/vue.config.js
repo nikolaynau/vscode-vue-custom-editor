@@ -10,6 +10,9 @@ module.exports = {
     if (isProduction) {
       config.optimization.splitChunks(false);
     }
+    if (process.env.NO_MINIFY) {
+      config.optimization.minimize(false);
+    }
   },
   assetsDir: "assets",
   filenameHashing: isProduction ? false : true

@@ -1,13 +1,20 @@
 import * as vscode from 'vscode';
+import { CounterEditorPanel, getWebviewOptions } from './CounterEditorPanel';
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log('Congratulations, your extension "vscode-test-vue-custom-editor" is now active!');
+  context.subscriptions.push(
+    vscode.commands.registerCommand('vscodeTestVueCustomEditor.start', () => {
+      CounterEditorPanel.createOrShow(context.extensionUri);
+    })
+  );
 
-  let disposable = vscode.commands.registerCommand('vscode-test-vue-custom-editor.helloWorld', () => {
-    vscode.window.showInformationMessage('Hello World from vscode-test-vue-custom-editor!');
-  });
-
-  context.subscriptions.push(disposable);
+  if (vscode.window.registerWebviewPanelSerializer) {
+    vscode.window.registerWebviewPanelSerializer(CounterEditorPanel.viewType, {
+      async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
+        console.log(`Got state: ${state}`);
+        webviewPanel.webview.options = getWebviewOptions(context.extensionUri);
+        CounterEditorPanel.revive(webviewPanel, context.extensionUri);
+      }
+    });
+  }
 }
-
-export function deactivate() { }

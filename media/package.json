@@ -6,6 +6,7 @@
     "start": "cross-env NO_SOURCE_MAP=true npm run serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "stage": "cross-env NO_MINIFY=true npm run build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
