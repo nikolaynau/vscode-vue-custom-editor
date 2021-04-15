@@ -1,8 +1,13 @@
-
 module.exports = {
   purge: false,
   darkMode: false,
-  theme: {},
+  theme: {
+    extend: {
+      fontFamily: {
+        vscode: "var(--vscode-font-family)"
+      }
+    }
+  },
   variants: {},
   plugins: []
 }
