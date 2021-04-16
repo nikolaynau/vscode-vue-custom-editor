@@ -18,7 +18,9 @@
   "publisher": "nikolaynau",
   "keywords": [
     "custom-editor",
-    "webview"
+    "counetr-editor",
+    "webview",
+    "example"
   ],
   "engines": {
     "vscode": "^1.55.0"
@@ -31,16 +33,28 @@
   },
   "icon": "images/icon.png",
   "activationEvents": [
-    "onCommand:vscodeTestVueCustomEditor.start",
-    "onWebviewPanel:counterEditor"
+    "onCustomEditor:vscodeTestVueCustomEditor.counterEditor",
+    "onCommand:vscodeTestVueCustomEditor.counterEditor.new"
   ],
   "main": "./dist/extension.js",
   "contributes": {
+    "customEditors": [
+      {
+        "viewType": "vscodeTestVueCustomEditor.counterEditor",
+        "displayName": "Counter Editor",
+        "selector": [
+          {
+            "filenamePattern": "*.counter"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
     "commands": [
       {
-        "command": "vscodeTestVueCustomEditor.start",
-        "title": "Start",
-        "category": "Vue Custom Editor"
+        "command": "vscodeTestVueCustomEditor.counterEditor.new",
+        "title": "Create new Counter document",
+        "category": "Counter Editor"
       }
     ]
   },

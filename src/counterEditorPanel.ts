@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { getNonce } from './utils';
+import { getNonce } from './util';
 
 export function getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions {
   return {
