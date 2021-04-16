@@ -1,0 +1,4 @@
+.v-workbench {
+  /* sizes */
+  @apply w-full h-full;
+}

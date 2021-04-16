@@ -1,0 +1,19 @@
+.v-button {
+  /* display styles */
+  @apply inline-flex items-center justify-center;
+
+  /* visual styles */
+  @apply text-center text-button-foreground bg-button-background whitespace-nowrap;
+
+  /* sizes */
+  @apply py-0.5 px-3.5;
+
+  /* cursor */
+  @apply cursor-pointer;
+
+  /* focus */
+  @apply focus:outline-button;
+
+  /* hover */
+  @apply hover:bg-button-hover-background hover:text-button-foreground;
+}

@@ -1,5 +1,5 @@
 @import "vscode-theme";
 @import "vscode-default";
 @import "tailwind";
-@import "theme";
 @import "base";
+@import "app";

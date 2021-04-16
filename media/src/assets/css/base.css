@@ -12,4 +12,7 @@ body {
 
   /* sizes */
   @apply p-0;
+
+  /* selection */
+  @apply select-none;
 }

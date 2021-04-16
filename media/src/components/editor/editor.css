@@ -1,0 +1,24 @@
+.v-editor {
+  /* display styles */
+  @apply flex items-center justify-center;
+
+  /* sizes */
+  @apply w-full h-full px-5;
+}
+
+.v-editor__content {
+  /* display styles */
+  @apply flex;
+}
+
+.v-editor__input {
+  /* sizes */
+  @apply mx-1 py-0.5 px-3.5;
+
+  /* focus */
+  @apply focus:outline-blue;
+}
+
+.v-editor__content .v-button {
+  @apply ml-1 first:ml-0;
+}

@@ -1,0 +1,4 @@
+#app {
+  /* sizes */
+  @apply w-full h-full;
+}
