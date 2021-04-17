@@ -1,5 +1,9 @@
 import * as vscode from 'vscode';
 
+export interface DisposableEvent {
+  readonly onDidDispose: vscode.Event<void>;
+}
+
 export function disposeAll(disposables: vscode.Disposable[]): void {
   while (disposables.length) {
     const item = disposables.pop();

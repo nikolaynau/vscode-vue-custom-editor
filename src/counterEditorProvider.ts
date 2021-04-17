@@ -36,24 +36,31 @@ export class CounterEditorProvider implements vscode.CustomEditorProvider<Counte
     private readonly _context: vscode.ExtensionContext
   ) { }
 
-  public async openCustomDocument(uri: vscode.Uri, openContext: vscode.CustomDocumentOpenContext, token: vscode.CancellationToken): Promise<CounterDocument> {
-    const editor = CounterEditor.create(this._context.extensionUri, uri, openContext);
-    const document = await editor.openDocument();
+  public async openCustomDocument(
+    uri: vscode.Uri,
+    openContext: vscode.CustomDocumentOpenContext,
+    token: vscode.CancellationToken
+  ): Promise<CounterDocument> {
+    const editor = await CounterEditor.create(this._context.extensionUri, uri, openContext);
 
     const listeners: vscode.Disposable[] = [];
     listeners.push(editor.onDidChangeDocument(e => { this._onDidChangeCustomDocument.fire(e); }));
     editor.onDidDispose(() => disposeAll(listeners));
 
     this._editors.add(uri, editor);
-    return document;
+    return editor.document;
   }
 
-  public async resolveCustomEditor(document: CounterDocument, webviewPanel: vscode.WebviewPanel, _token: vscode.CancellationToken): Promise<void> {
+  public async resolveCustomEditor(
+    document: CounterDocument,
+    webviewPanel: vscode.WebviewPanel,
+    _token: vscode.CancellationToken
+  ): Promise<void> {
     const editor = this._editors.get(document.uri);
     if (!editor) {
       throw new Error(`Could not find editor for uri: ${document.uri.toString()}`);
     }
-    editor.createView(webviewPanel);
+    editor.createViewPanel(webviewPanel);
   }
 
   public saveCustomDocument(document: CounterDocument, cancellation: vscode.CancellationToken): Thenable<void> {

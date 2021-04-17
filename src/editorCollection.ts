@@ -1,19 +1,16 @@
 import * as vscode from 'vscode';
-import { Disposable } from './dispose';
+import { Disposable, DisposableEvent } from './dispose';
 
-export interface EditorItem {
-  readonly onDidDispose: vscode.Event<void>;
-}
-
-export class EditorCollection<T extends EditorItem> extends Disposable {
+export class EditorCollection<T extends DisposableEvent> extends Disposable {
   private readonly _editors = new Map<string, T>();
 
   public add(uri: vscode.Uri, editor: T) {
     const key = uri.toString();
+    this._editors.set(key, editor);
+
     this._register(editor.onDidDispose(() => {
       this._editors.delete(key);
     }));
-    this._editors.set(key, editor);
   }
 
   public get(uri: vscode.Uri): T | undefined {

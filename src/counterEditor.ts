@@ -1,19 +1,21 @@
 import * as vscode from 'vscode';
 import { CounterDocument, CounterDocumentDelegate } from './counterDocument';
-import { Disposable } from './dispose';
-import { EditorItem } from "./editorCollection";
+import { CounterEditorPanel } from './counterEditorPanel';
+import { Disposable, DisposableEvent } from './dispose';
+import { EditorPanelCollection } from './editorPanelCollection';
 
-export class CounterEditor extends Disposable implements EditorItem, CounterDocumentDelegate {
+export class CounterEditor extends Disposable implements DisposableEvent {
 
-  public static create(
+  public static async create(
     extensionUri: vscode.Uri,
     documentUri: vscode.Uri,
     documentOpenContext: vscode.CustomDocumentOpenContext
-  ): CounterEditor {
-    return new CounterEditor(extensionUri, documentUri, documentOpenContext);
+  ): Promise<CounterEditor> {
+    const document = await CounterDocument.create(documentUri, documentOpenContext.backupId);
+    return new CounterEditor(extensionUri, document);
   }
 
-  private _document: CounterDocument | null = null;
+  private _panels = new EditorPanelCollection<CounterEditorPanel>();
 
   private readonly _onDidChangeDocument = this._register(new vscode.EventEmitter<vscode.CustomDocumentEditEvent<CounterDocument>>());
   public readonly onDidChangeDocument = this._onDidChangeDocument.event;
@@ -23,33 +25,43 @@ export class CounterEditor extends Disposable implements EditorItem, CounterDocu
 
   private constructor(
     private readonly _extensionUri: vscode.Uri,
-    private readonly _documentUri: vscode.Uri,
-    private readonly _documentOpenContext: vscode.CustomDocumentOpenContext
+    private readonly _document: CounterDocument
   ) {
     super();
+    this.registerListeners();
   }
 
   public get document() { return this._document; }
 
-  public get extensionUri() { return this._extensionUri; }
+  private registerListeners() {
+    this._register(this._document.onDidDispose(() => this.dispose()));
+    this._register(this._document.onDidChange((e) => this._onDidChangeDocument.fire(e)));
+    this._register(this._document.onDidChangeContent(() => this.updateViewPanel()));
 
-  public async openDocument(): Promise<CounterDocument> {
-    if (this._document) {
-      this._document.dispose();
-    }
-    this._document = await CounterDocument.create(
-      this._documentUri,
-      this._documentOpenContext.backupId,
-      this
-    );
-    return this._document;
+    this._document.setDelegate(this._createDocumentDelegate());
   }
 
-  public createView(webviewPanel: vscode.WebviewPanel): void {
-
+  public dispose() {
+    this._onDidDispose.fire();
+    super.dispose();
   }
 
-  public async getFileData(): Promise<Uint8Array> {
+  public createViewPanel(webviewPanel: vscode.WebviewPanel): void {
+    this._panels.add(this._document.uri, new CounterEditorPanel(webviewPanel, this._extensionUri));
+  }
+
+  private updateViewPanel() {
+  }
+
+  private async getFileData(): Promise<Uint8Array> {
     return new Uint8Array();
+  }
+
+  private _createDocumentDelegate(): CounterDocumentDelegate {
+    return {
+      getFileData: () => {
+        return this.getFileData();
+      }
+    };
   }
 }

@@ -23,11 +23,10 @@ export class CounterDocument extends Disposable implements vscode.CustomDocument
   public static async create(
     uri: vscode.Uri,
     backupId: string | undefined,
-    delegate: CounterDocumentDelegate
   ): Promise<CounterDocument | PromiseLike<CounterDocument>> {
     const dataFile = typeof backupId === 'string' ? vscode.Uri.parse(backupId) : uri;
     const fileData = await CounterDocument.readFile(dataFile);
-    return new CounterDocument(uri, fileData, delegate);
+    return new CounterDocument(uri, fileData);
   }
 
   private static async readFile(uri: vscode.Uri): Promise<Uint8Array> {
@@ -46,10 +45,11 @@ export class CounterDocument extends Disposable implements vscode.CustomDocument
   private readonly _onDidChange = this._register(new vscode.EventEmitter<vscode.CustomDocumentEditEvent<CounterDocument>>());
   public readonly onDidChange = this._onDidChange.event;
 
+  private _delegate: CounterDocumentDelegate | undefined = undefined;
+
   private constructor(
     private readonly _uri: vscode.Uri,
-    private _documentData: Uint8Array,
-    private readonly _delegate: CounterDocumentDelegate
+    private _documentData: Uint8Array
   ) {
     super();
   }
@@ -63,28 +63,32 @@ export class CounterDocument extends Disposable implements vscode.CustomDocument
     super.dispose();
   }
 
-  makeEdit(edit: CounterDocumentEdit) {
+  public setDelegate(delegate: CounterDocumentDelegate): void {
+    this._delegate = delegate;
   }
 
-  async save(cancellation: vscode.CancellationToken): Promise<void> {
+  public makeEdit(edit: CounterDocumentEdit) {
+  }
+
+  public async save(cancellation: vscode.CancellationToken): Promise<void> {
     await this.saveAs(this.uri, cancellation);
   }
 
-  async saveAs(targetResource: vscode.Uri, cancellation: vscode.CancellationToken): Promise<void> {
-    const fileData = await this._delegate.getFileData();
+  public async saveAs(targetResource: vscode.Uri, cancellation: vscode.CancellationToken): Promise<void> {
+    const fileData = await this._delegate?.getFileData() ?? new Uint8Array();
     if (cancellation.isCancellationRequested) {
       return;
     }
     await vscode.workspace.fs.writeFile(targetResource, fileData);
   }
 
-  async revert(_cancellation: vscode.CancellationToken): Promise<void> {
+  public async revert(_cancellation: vscode.CancellationToken): Promise<void> {
     const diskContent = await CounterDocument.readFile(this.uri);
     this._documentData = diskContent;
     this._onDidChangeContent.fire();
   }
 
-  async backup(destination: vscode.Uri, cancellation: vscode.CancellationToken): Promise<vscode.CustomDocumentBackup> {
+  public async backup(destination: vscode.Uri, cancellation: vscode.CancellationToken): Promise<vscode.CustomDocumentBackup> {
     await this.saveAs(destination, cancellation);
 
     return {
