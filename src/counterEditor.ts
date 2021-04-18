@@ -6,19 +6,11 @@ import { EditorPanelCollection } from './editorPanelCollection';
 
 export class CounterEditor extends Disposable implements DisposableEvent {
 
-  public static async create(
-    extensionUri: vscode.Uri,
-    documentUri: vscode.Uri,
-    documentOpenContext: vscode.CustomDocumentOpenContext
-  ): Promise<CounterEditor> {
-    const document = await CounterDocument.create(documentUri, documentOpenContext.backupId);
+  public static create(extensionUri: vscode.Uri, document: CounterDocument): CounterEditor {
     return new CounterEditor(extensionUri, document);
   }
 
   private _panels = new EditorPanelCollection<CounterEditorPanel>();
-
-  private readonly _onDidChangeDocument = this._register(new vscode.EventEmitter<vscode.CustomDocumentEditEvent<CounterDocument>>());
-  public readonly onDidChangeDocument = this._onDidChangeDocument.event;
 
   private readonly _onDidDispose = this._register(new vscode.EventEmitter<void>());
   public readonly onDidDispose = this._onDidDispose.event;
@@ -28,6 +20,7 @@ export class CounterEditor extends Disposable implements DisposableEvent {
     private readonly _document: CounterDocument
   ) {
     super();
+    this._document.setDelegate(this._createDocumentDelegate());
     this.registerListeners();
   }
 
@@ -35,10 +28,7 @@ export class CounterEditor extends Disposable implements DisposableEvent {
 
   private registerListeners() {
     this._register(this._document.onDidDispose(() => this.dispose()));
-    this._register(this._document.onDidChange((e) => this._onDidChangeDocument.fire(e)));
     this._register(this._document.onDidChangeContent((e) => this.updateViewPanels(e)));
-
-    this._document.setDelegate(this._createDocumentDelegate());
   }
 
   public dispose() {
@@ -49,8 +39,8 @@ export class CounterEditor extends Disposable implements DisposableEvent {
   public createViewPanel(webviewPanel: vscode.WebviewPanel): void {
     const panel = new CounterEditorPanel(webviewPanel, this._extensionUri);
     panel.onDidReceiveEdit(e => this._document.makeEdit(e, panel.id));
-    panel.setFileData(this._document.documentData);
 
+    panel.setFileData(this._document.documentData);
     this._panels.add(this._document.uri, panel);
   }
 

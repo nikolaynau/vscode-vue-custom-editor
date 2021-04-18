@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { CounterEditorProvider } from './counterEditorProvider';
 
 export class NewCounterFileCommand {
+
   private static newUntitledId = 1;
 
   public static register(): vscode.Disposable {

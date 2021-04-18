@@ -5,6 +5,7 @@ import { EditorCollection } from './editorCollection';
 import { NewCounterFileCommand } from './newCounterFileCommand';
 
 export class CounterEditorProvider implements vscode.CustomEditorProvider<CounterDocument> {
+
   public static readonly viewType = "vscodeTestVueCustomEditor.counterEditor";
 
   private static readonly _options = {
@@ -35,15 +36,13 @@ export class CounterEditorProvider implements vscode.CustomEditorProvider<Counte
   ) { }
 
   public async openCustomDocument(uri: vscode.Uri, openContext: vscode.CustomDocumentOpenContext, token: vscode.CancellationToken): Promise<CounterDocument> {
-    const editor = await CounterEditor.create(this._context.extensionUri, uri, openContext);
-    editor.onDidChangeDocument(e => { this._onDidChangeCustomDocument.fire(e); });
-    this._editors.add(uri, editor);
-    return editor.document;
+    const document = await CounterDocument.create(uri, openContext.backupId);
+    document.onDidChange(e => { this._onDidChangeCustomDocument.fire(e); });
+    return document;
   }
 
   public async resolveCustomEditor(document: CounterDocument, webviewPanel: vscode.WebviewPanel, _token: vscode.CancellationToken): Promise<void> {
-    const editor = this._editors.get(document.uri);
-    if (!editor) { throw new Error(`Could not find editor for uri: ${document.uri.toString()}`); }
+    const editor = this.getOrCreateEditor(document);
     editor.createViewPanel(webviewPanel);
   }
 
@@ -61,5 +60,14 @@ export class CounterEditorProvider implements vscode.CustomEditorProvider<Counte
 
   public backupCustomDocument(document: CounterDocument, context: vscode.CustomDocumentBackupContext, cancellation: vscode.CancellationToken): Thenable<vscode.CustomDocumentBackup> {
     return document.backup(context.destination, cancellation);
+  }
+
+  private getOrCreateEditor(document: CounterDocument): CounterEditor {
+    let editor = this._editors.get(document.uri);
+    if (!editor) {
+      editor = CounterEditor.create(this._context.extensionUri, document);
+      this._editors.add(document.uri, editor);
+    }
+    return editor;
   }
 }

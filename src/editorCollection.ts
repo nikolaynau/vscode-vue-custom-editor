@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { Disposable, DisposableEvent } from './dispose';
 
 export class EditorCollection<T extends DisposableEvent> extends Disposable {
+
   private readonly _editors = new Map<string, T>();
 
   public add(uri: vscode.Uri, editor: T) {

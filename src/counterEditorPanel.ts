@@ -5,6 +5,7 @@ import { RpcProvider } from 'worker-rpc';
 import { CounterDocumentEdit, EditOperation } from './counterDocument';
 
 export class CounterEditorPanel extends Disposable implements DisposableEvent {
+
   private static _nextPanelId: number = 1;
 
   private readonly _onDidDispose = this._register(new vscode.EventEmitter<void>());
