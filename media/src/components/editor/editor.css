@@ -1,9 +1,9 @@
 .v-editor {
   /* display styles */
-  @apply flex items-center justify-center;
+  @apply flex items-center justify-start xs:justify-center;
 
   /* sizes */
-  @apply h-full px-5 w-96 xs:w-full;
+  @apply h-full px-5 w-auto xs:w-full;
 }
 
 .v-editor__content {
@@ -21,4 +21,9 @@
 
 .v-editor__content .v-button {
   @apply ml-1 first:ml-0;
+}
+
+.v-editor__controls {
+  /* visual styles */
+  @apply whitespace-nowrap;
 }
