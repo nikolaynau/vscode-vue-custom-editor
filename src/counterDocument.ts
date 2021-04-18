@@ -105,6 +105,7 @@ export class CounterDocument extends Disposable implements vscode.CustomDocument
   public async save(cancellation: vscode.CancellationToken): Promise<void> {
     await this.saveAs(this.uri, cancellation);
     this._savedEdits = Array.from(this._edits);
+    // this._documentData = fileData;
   }
 
   public async saveAs(targetResource: vscode.Uri, cancellation: vscode.CancellationToken): Promise<void> {
