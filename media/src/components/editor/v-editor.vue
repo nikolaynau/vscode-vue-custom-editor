@@ -2,7 +2,7 @@
   <div class="v-editor">
     <div v-if="model.error" class="v-editor__error">
       The document could not be displayed because the content is in an invalid
-      format. Details: {{ model.error.message }}
+      format.<br />Details: {{ model.error.message }}
     </div>
     <div v-else class="v-editor__content">
       <div class="v-editor__controls">

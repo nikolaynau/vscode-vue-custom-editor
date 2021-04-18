@@ -1,7 +1,13 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   purge: false,
   darkMode: false,
   theme: {
+    screens: {
+      xs: "384px",
+      ...defaultTheme.screens,
+    },
     extend: {
       colors: {
         "focus-border": "var(--vscode-focusBorder)",
@@ -19,7 +25,8 @@ module.exports = {
     }
   },
   variants: {
-    margin: ["responsive", "first"]
+    margin: ["responsive", "first"],
+    width: ["responsive"]
   },
   plugins: []
 }

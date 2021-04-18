@@ -3,7 +3,7 @@
   @apply flex items-center justify-center;
 
   /* sizes */
-  @apply w-full h-full px-5;
+  @apply h-full px-5 w-96 xs:w-full;
 }
 
 .v-editor__content {

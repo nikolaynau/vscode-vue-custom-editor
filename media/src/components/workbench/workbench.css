@@ -1,4 +1,7 @@
 .v-workbench {
+  /* display styles */
+  @apply overflow-auto;
+
   /* sizes */
   @apply w-full h-full;
 }

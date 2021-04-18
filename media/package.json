@@ -14,11 +14,15 @@
     "eventemitter3": "4.0.7",
     "is-plain-object": "2.0.4",
     "lodash": "4.17.21",
-    "vue": "3.0.11"
+    "vue": "3.0.11",
+    "worker-rpc": "0.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.13.15",
     "@babel/eslint-parser": "^7.13.14",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.13.8",
+    "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
+    "@babel/plugin-proposal-optional-chaining": "^7.13.12",
     "@vue/cli-plugin-babel": "~5.0.0-alpha.8",
     "@vue/cli-plugin-eslint": "~5.0.0-alpha.8",
     "@vue/cli-service": "~5.0.0-alpha.8",
