@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { Disposable, DisposableEvent } from './dispose';
 import { getNonce } from './util';
 import { RpcProvider } from 'worker-rpc';
-import { CounterDocumentEdit, EditOperation } from './counterDocument';
+import { DocumentEdit, EditOperation } from './documents';
 
 export class CounterEditorPanel extends Disposable implements DisposableEvent {
 
@@ -11,7 +11,7 @@ export class CounterEditorPanel extends Disposable implements DisposableEvent {
   private readonly _onDidDispose = this._register(new vscode.EventEmitter<void>());
   public readonly onDidDispose = this._onDidDispose.event;
 
-  private readonly _onDidRecieveEdit = this._register(new vscode.EventEmitter<CounterDocumentEdit>());
+  private readonly _onDidRecieveEdit = this._register(new vscode.EventEmitter<DocumentEdit>());
   public readonly onDidReceiveEdit = this._onDidRecieveEdit.event;
 
   private readonly _rpcProvider: RpcProvider;
@@ -34,7 +34,7 @@ export class CounterEditorPanel extends Disposable implements DisposableEvent {
       console.error("[CounterEditorPanel]: rpc provider error:", err);
     });
 
-    this._rpcProvider.registerSignalHandler<CounterDocumentEdit>("edit", (e) => {
+    this._rpcProvider.registerSignalHandler<DocumentEdit>("edit", (e) => {
       this._onDidRecieveEdit.fire(e);
     });
 

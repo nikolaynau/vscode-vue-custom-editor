@@ -44,6 +44,20 @@ export class UndoRedoStack<T extends EditStackElement> {
     return this._elements[this._elements.length - 1];
   }
 
+  public getLeftElements(): T[] {
+    if (this._currentEditIndex < this._savePointIndex) {
+      return this._elements.slice(this._currentEditIndex + 1, this._savePointIndex + 1);
+    }
+    return [];
+  }
+
+  public getRightElements() {
+    if (this._currentEditIndex > this._savePointIndex) {
+      return this._elements.splice(this._savePointIndex + 1, this._currentEditIndex + 1);
+    }
+    return [];
+  }
+
   public pushElement(element: T): void {
     if (this._currentEditIndex < 0) {
       this._elements.length = 0;

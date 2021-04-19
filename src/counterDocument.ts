@@ -19,7 +19,7 @@ export class CounterDocument extends Disposable implements vscode.CustomDocument
       return "";
     }
     const diskContent = await vscode.workspace.fs.readFile(uri);
-    return Buffer.from(diskContent.buffer).toString();
+    return Buffer.from(diskContent).toString("utf8");
   }
 
   private readonly _onDidDispose = this._register(new vscode.EventEmitter<void>());
@@ -69,20 +69,14 @@ export class CounterDocument extends Disposable implements vscode.CustomDocument
   }
 
   public async save(cancellation: vscode.CancellationToken): Promise<void> {
-    const result = await this.saveAs(this.uri, cancellation);
+    const result = await this.doSave(this.uri, cancellation);
     if (result !== false) {
       this._documentModel.saveValue(result as string);
     }
   }
 
-  public async saveAs(targetResource: vscode.Uri, cancellation: vscode.CancellationToken): Promise<string | boolean> {
-    const fileData = await this._delegate?.getFileData() ?? "";
-    if (cancellation.isCancellationRequested) {
-      return false;
-    }
-    const writeData = Buffer.from(this._documentModel.getValue(), "utf8");
-    await vscode.workspace.fs.writeFile(targetResource, writeData);
-    return fileData;
+  public async saveAs(targetResource: vscode.Uri, cancellation: vscode.CancellationToken): Promise<void> {
+    await this.doSave(targetResource, cancellation);
   }
 
   public async revert(_cancellation: vscode.CancellationToken): Promise<void> {
@@ -91,8 +85,18 @@ export class CounterDocument extends Disposable implements vscode.CustomDocument
   }
 
   public async backup(destination: vscode.Uri, cancellation: vscode.CancellationToken): Promise<vscode.CustomDocumentBackup> {
-    await this.saveAs(destination, cancellation);
+    await this.doSave(destination, cancellation);
     return DocumentBackup.create(destination);
+  }
+
+  private async doSave(targetResource: vscode.Uri, cancellation: vscode.CancellationToken): Promise<string | boolean> {
+    const fileData = await this._delegate?.getFileData() ?? "";
+    if (cancellation.isCancellationRequested) {
+      return false;
+    }
+    const writeData = Buffer.from(fileData, "utf8");
+    await vscode.workspace.fs.writeFile(targetResource, writeData);
+    return fileData;
   }
 
   private fireChangeEvent(label: string): void {

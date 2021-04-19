@@ -22,7 +22,7 @@ export default function useWorkbench(vscode) {
   rpc.provider.registerRpcHandler("setInitialData", ({ data, editOperations }) => {
     if (editor.value) {
       editor.value.model.setValue(data);
-      editor.value.model.applyEdits(editOperations);
+      editor.value.model.applyEdits(editOperations, false);
     } else {
       pendingInitialData = { data, editOperations };
     }
@@ -31,7 +31,7 @@ export default function useWorkbench(vscode) {
   watch(editor, () => {
     if (pendingInitialData && editor.value) {
       editor.value.model.setValue(pendingInitialData.data);
-      editor.value.model.applyEdits(pendingInitialData.editOperations);
+      editor.value.model.applyEdits(pendingInitialData.editOperations, false);
       pendingInitialData = null;
     }
   });

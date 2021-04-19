@@ -37,7 +37,6 @@ class DocumentEditStackElement implements EditStackElement {
     this._label = this._changes[0]?.applied?.name ?? "unknown edit";
     this._appliedChanges = this._changes.map(c => c.applied);
     this._reverseChanges = this._changes.map(c => c.reverse).reverse();
-
   }
 
   public get changes() { return this._changes; }
@@ -129,8 +128,14 @@ export class DocumentModel {
 
   public getUnsavedChanges(): EditOperation[] {
     const result: EditOperation[] = [];
-    this._undoEditStack.getUnsavedStackElements().forEach(e => {
-      result.push(...e.appliedChanges);
+    const reverseOperations: EditOperation[] = [];
+    this._undoEditStack.getLeftElements().forEach(element => {
+      reverseOperations.push(...element.reverseChanges);
+    });
+    result.push(...reverseOperations.reverse());
+
+    this._undoEditStack.getRightElements().forEach(element => {
+      result.push(...element.appliedChanges);
     });
     return result;
   }
