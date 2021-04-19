@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
+import { NewCounterFileCommand } from './commands';
 import { CounterDocument } from './counterDocument';
 import { CounterEditor } from './counterEditor';
 import { EditorCollection } from './editorCollection';
-import { NewCounterFileCommand } from './newCounterFileCommand';
 
 export class CounterEditorProvider implements vscode.CustomEditorProvider<CounterDocument> {
 
@@ -17,7 +17,7 @@ export class CounterEditorProvider implements vscode.CustomEditorProvider<Counte
 
   public static register(context: vscode.ExtensionContext): vscode.Disposable[] {
     const disposables: vscode.Disposable[] = [];
-    disposables.push(NewCounterFileCommand.register());
+    disposables.push(vscode.commands.registerCommand(NewCounterFileCommand.ID, NewCounterFileCommand.execute));
     disposables.push(vscode.window.registerCustomEditorProvider(
       CounterEditorProvider.viewType,
       new CounterEditorProvider(context),
