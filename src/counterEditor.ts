@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
-import { CounterDocument, CounterDocumentChangeContent, CounterDocumentDelegate } from './counterDocument';
+import { CounterDocument, CounterDocumentDelegate } from './counterDocument';
 import { CounterEditorPanel } from './counterEditorPanel';
 import { Disposable, DisposableEvent } from './dispose';
+import { EditOperation } from './documents';
 import { EditorPanelCollection } from './editorPanelCollection';
 
 export class CounterEditor extends Disposable implements DisposableEvent {
@@ -28,7 +29,9 @@ export class CounterEditor extends Disposable implements DisposableEvent {
 
   private registerListeners() {
     this._register(this._document.onDidDispose(() => this.dispose()));
-    this._register(this._document.onDidChangeContent((e) => this.updateViewPanels(e)));
+    this._register(this._document.onDidChangeContent(
+      e => this.updateViewPanels(e.content, e.changes, e.panelId))
+    );
   }
 
   public dispose() {
@@ -39,29 +42,28 @@ export class CounterEditor extends Disposable implements DisposableEvent {
   public createViewPanel(webviewPanel: vscode.WebviewPanel): void {
     const panel = new CounterEditorPanel(webviewPanel, this._extensionUri);
     panel.onDidReceiveEdit(e => this._document.makeEdit(e, panel.id));
-
-    panel.setFileData(this._document.documentData);
+    panel.setInitialData(this._document.documentData, this._document.getUnsavedChanges());
     this._panels.add(this._document.uri, panel);
   }
 
-  private updateViewPanels(e: CounterDocumentChangeContent) {
+  private updateViewPanels(content?: string, changes?: EditOperation[], skipPanelId?: number) {
     for (const panel of this._panels.get(this._document.uri)) {
-      if (e.panelId !== panel.id) {
-        this.updateViewPanel(panel, e);
+      if (skipPanelId !== panel.id) {
+        this.updateViewPanel(panel, content, changes);
       }
     }
   }
 
-  private async updateViewPanel(panel: CounterEditorPanel, e: CounterDocumentChangeContent) {
-    if (e.content) {
-      await panel.setFileData(e.content);
+  private async updateViewPanel(panel: CounterEditorPanel, content?: string, changes?: EditOperation[]) {
+    if (typeof content === "string") {
+      await panel.setFileData(content);
     }
-    if (e.changes) {
-      await panel.applyEdits(e.changes);
+    if (Array.isArray(changes)) {
+      await panel.applyEdits(changes);
     }
   }
 
-  private async getFileData(): Promise<Uint8Array> {
+  private async getFileDataFromPanel(): Promise<string> {
     const panelsForDocument = Array.from(this._panels.get(this._document.uri));
     if (!panelsForDocument.length) {
       throw new Error('Could not find editor panel to save for');
@@ -73,7 +75,7 @@ export class CounterEditor extends Disposable implements DisposableEvent {
   private _createDocumentDelegate(): CounterDocumentDelegate {
     return {
       getFileData: () => {
-        return this.getFileData();
+        return this.getFileDataFromPanel();
       }
     };
   }

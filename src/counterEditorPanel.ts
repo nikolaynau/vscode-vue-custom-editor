@@ -57,17 +57,20 @@ export class CounterEditorPanel extends Disposable implements DisposableEvent {
     super.dispose();
   }
 
-  public async getFileData(): Promise<Uint8Array> {
-    const response = await this._rpcProvider.rpc<void, number[]>("getFileData");
-    return new Uint8Array(response);
+  public getFileData(): Promise<string> {
+    return this._rpcProvider.rpc<void, string>("getFileData");
   }
 
-  public setFileData(data: Uint8Array): Promise<void> {
-    return this._rpcProvider.rpc("setFileData", Array.from(data));
+  public setFileData(data: string): Promise<void> {
+    return this._rpcProvider.rpc<string>("setFileData", data);
   }
 
   public applyEdits(editOperations: EditOperation[]): Promise<void> {
     return this._rpcProvider.rpc("applyEdits", editOperations);
+  }
+
+  public setInitialData(data: string, editOperations: EditOperation[]): Promise<void> {
+    return this._rpcProvider.rpc("setInitialData", { data, editOperations });
   }
 
   private getHtmlForWebview(webview: vscode.Webview): string {

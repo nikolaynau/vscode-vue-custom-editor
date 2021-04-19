@@ -1,38 +1,39 @@
-import { ref, onBeforeUnmount } from "vue"
+import { ref, watch, onBeforeUnmount } from "vue"
 import { WorkbenchRpc } from './workbench-rpc';
 
 export default function useWorkbench(vscode) {
-  const value = ref(null);
-  const editor = ref(null);
-
   const rpc = new WorkbenchRpc(vscode);
-  const encoder = new TextEncoder();
-  const decoder = new TextDecoder();
-
-  const setValue = (val) => {
-    if (editor.value) {
-      editor.value.model.setValue(val);
-    } else {
-      value.value = val;
-    }
-  }
+  const editor = ref(null);
+  let pendingInitialData = null;
 
   rpc.provider.registerRpcHandler("getFileData", () => {
-    if (!editor.value) return [];
-    const data = JSON.stringify(editor.value.model.getValue(), null, 2);
-    const bytes = encoder.encode(data);
-    return Array.from(bytes);
+    if (!editor.value) return "";
+    return JSON.stringify(editor.value.model.getValue(), null, 2);
   });
 
   rpc.provider.registerRpcHandler("setFileData", (data) => {
-    if (Array.isArray(data)) {
-      const val = decoder.decode(new Uint8Array(data));
-      setValue(val);
-    }
+    editor.value?.model.setValue(data);
   });
 
   rpc.provider.registerRpcHandler("applyEdits", (editOperations) => {
     editor.value?.model.applyEdits(editOperations, false);
+  });
+
+  rpc.provider.registerRpcHandler("setInitialData", ({ data, editOperations }) => {
+    if (editor.value) {
+      editor.value.model.setValue(data);
+      editor.value.model.applyEdits(editOperations);
+    } else {
+      pendingInitialData = { data, editOperations };
+    }
+  });
+
+  watch(editor, () => {
+    if (pendingInitialData && editor.value) {
+      editor.value.model.setValue(pendingInitialData.data);
+      editor.value.model.applyEdits(pendingInitialData.editOperations);
+      pendingInitialData = null;
+    }
   });
 
   const onChangeValue = (e) => {
@@ -45,7 +46,6 @@ export default function useWorkbench(vscode) {
 
   return {
     editor,
-    value,
     onChangeValue
   }
 }

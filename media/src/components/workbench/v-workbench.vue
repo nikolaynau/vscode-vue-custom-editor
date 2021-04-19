@@ -1,6 +1,6 @@
 <template>
   <div class="v-workbench">
-    <v-editor ref="editor" :value="value" @change-value="onChangeValue" />
+    <v-editor ref="editor" @change-value="onChangeValue" />
   </div>
 </template>
 
@@ -12,11 +12,10 @@ export default {
   name: "v-workbench",
   setup() {
     const vscode = inject("$vscode");
-    const { value, editor, onChangeValue } = useWorkbench(vscode);
+    const { editor, onChangeValue } = useWorkbench(vscode);
 
     return {
       editor,
-      value,
       onChangeValue
     };
   }
