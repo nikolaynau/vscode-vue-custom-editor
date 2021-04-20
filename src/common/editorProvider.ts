@@ -22,6 +22,7 @@ export abstract class BaseEditorProvider<TDocument extends Document<any>, TEdito
   public constructor(private readonly _context: vscode.ExtensionContext) { }
 
   protected abstract createDocument(uri: vscode.Uri, openContext: vscode.CustomDocumentOpenContext): Promise<TDocument>;
+
   protected abstract createEditor(extensionUri: vscode.Uri, document: TDocument): TEditor;
 
   public get context() { return this._context; }
