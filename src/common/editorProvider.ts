@@ -10,40 +10,23 @@ export interface EditorProviderOptions {
 }
 
 export interface EditorProvider<TDocument extends vscode.CustomDocument> extends vscode.CustomEditorProvider<TDocument> {
-  getViewType(): string;
-  getOptions(): EditorProviderOptions;
 }
 
-export abstract class BaseEditorProvider<TDocument extends Document<any>, TEditor extends Editor>
-  extends Disposable
-  implements EditorProvider<TDocument>
-{
-  protected readonly _onDidChangeCustomDocument = this._register(new vscode.EventEmitter<vscode.CustomDocumentEditEvent<TDocument>>());
+export abstract class BaseEditorProvider<TDocument extends Document<any>, TEditor extends Editor> implements EditorProvider<TDocument> {
+
+  protected readonly _onDidChangeCustomDocument = new vscode.EventEmitter<vscode.CustomDocumentEditEvent<TDocument>>();
   public readonly onDidChangeCustomDocument = this._onDidChangeCustomDocument.event;
 
-  protected readonly _onDidDispose = this._register(new vscode.EventEmitter<void>());
-  public readonly onDidDispose = this._onDidDispose.event;
+  private readonly _editors = new EditorCollection<TEditor>();
 
-  private readonly _context: vscode.ExtensionContext;
-  private readonly _editors = this._register(new EditorCollection<TEditor>());
-
-  public constructor(context: vscode.ExtensionContext) {
-    super();
-    this._context = context;
-    this._register(this.registerProvider());
-  }
-
-  public abstract getViewType(): string;
-  public abstract getOptions(): EditorProviderOptions;
+  public constructor(private readonly _context: vscode.ExtensionContext) { }
 
   protected abstract createDocument(uri: vscode.Uri, openContext: vscode.CustomDocumentOpenContext): Promise<TDocument>;
   protected abstract createEditor(extensionUri: vscode.Uri, document: TDocument): TEditor;
 
   public get context() { return this._context; }
 
-  protected registerProvider(): vscode.Disposable {
-    return vscode.window.registerCustomEditorProvider(this.getViewType(), this, this.getOptions());
-  }
+  public get editors() { return this._editors; }
 
   public async openCustomDocument(uri: vscode.Uri, openContext: vscode.CustomDocumentOpenContext, token: vscode.CancellationToken): Promise<TDocument> {
     const document = await this.createDocument(uri, openContext);
@@ -79,10 +62,5 @@ export abstract class BaseEditorProvider<TDocument extends Document<any>, TEdito
       this._editors.add(document.uri, editor);
     }
     return editor;
-  }
-
-  public dispose() {
-    this._onDidDispose.fire();
-    super.dispose();
   }
 }

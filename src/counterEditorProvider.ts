@@ -1,23 +1,24 @@
-import type * as vscode from 'vscode';
+import * as vscode from 'vscode';
 import { BaseEditorProvider, EditorProviderOptions } from './common/editorProvider';
 import { CounterDocument } from './counterDocument';
 import { CounterEditor } from './counterEditor';
 
 export class CounterEditorProvider extends BaseEditorProvider<CounterDocument, CounterEditor> {
-
   public static readonly viewType = "vscodeTestVueCustomEditor.counterEditor";
 
-  public getOptions(): EditorProviderOptions {
-    return {
-      webviewOptions: {
-        retainContextWhenHidden: true
-      },
-      supportsMultipleEditorsPerDocument: true
-    };
-  }
+  private static options: EditorProviderOptions = {
+    webviewOptions: {
+      retainContextWhenHidden: true
+    },
+    supportsMultipleEditorsPerDocument: true
+  };
 
-  public getViewType(): string {
-    return CounterEditorProvider.viewType;
+  public static register(context: vscode.ExtensionContext): vscode.Disposable {
+    return vscode.window.registerCustomEditorProvider(
+      CounterEditorProvider.viewType,
+      new CounterEditorProvider(context),
+      CounterEditorProvider.options
+    );
   }
 
   protected createDocument(uri: vscode.Uri, openContext: vscode.CustomDocumentOpenContext): Promise<CounterDocument> {

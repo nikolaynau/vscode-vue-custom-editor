@@ -1,7 +1,7 @@
 import type * as vscode from 'vscode';
 import { Disposable, DisposableEvent } from './dispose';
 
-export class EditorCollection<T extends DisposableEvent> extends Disposable {
+export class EditorCollection<T extends DisposableEvent> {
 
   private readonly _editors = new Map<string, T>();
 
@@ -9,9 +9,9 @@ export class EditorCollection<T extends DisposableEvent> extends Disposable {
     const key = uri.toString();
     this._editors.set(key, editor);
 
-    this._register(editor.onDidDispose(() => {
+    editor.onDidDispose(() => {
       this._editors.delete(key);
-    }));
+    });
   }
 
   public get(uri: vscode.Uri): T | undefined {
@@ -19,8 +19,7 @@ export class EditorCollection<T extends DisposableEvent> extends Disposable {
     return this._editors.get(key);
   }
 
-  public dispose(): any {
+  public clear(): void {
     this._editors.clear();
-    super.dispose();
   }
 }

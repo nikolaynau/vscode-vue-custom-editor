@@ -4,5 +4,5 @@ import { CounterEditorProvider } from './counterEditorProvider';
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(NewCounterFileCommand.ID, NewCounterFileCommand.execute));
-  context.subscriptions.push(new CounterEditorProvider(context));
+  context.subscriptions.push(CounterEditorProvider.register(context));
 }
