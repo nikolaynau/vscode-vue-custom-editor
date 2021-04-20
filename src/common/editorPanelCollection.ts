@@ -1,4 +1,4 @@
-import * as vscode from 'vscode';
+import type * as vscode from 'vscode';
 import { DisposableEvent } from './dispose';
 
 export class EditorPanelCollection<T extends DisposableEvent> {

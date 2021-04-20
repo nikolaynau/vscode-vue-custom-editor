@@ -16,22 +16,22 @@ export interface DocumentChangeElement {
   readonly reverse: EditOperation;
 }
 
-export interface DocumentChangeContentEvent {
-  readonly content?: string;
+export interface DocumentChangeContentEvent<T> {
+  readonly content?: T;
   readonly changes?: EditOperation[];
   readonly panelId?: number;
   readonly isUndo?: boolean;
   readonly isRedo?: boolean;
 }
 
-class DocumentEditStackElement implements EditStackElement {
+export class DocumentEditStackElement<T> implements EditStackElement {
 
   private readonly _label: string;
   private readonly _appliedChanges: EditOperation[];
   private readonly _reverseChanges: EditOperation[];
 
   constructor(
-    private readonly _model: DocumentModel,
+    private readonly _model: DocumentModel<T>,
     private readonly _changes: DocumentChangeElement[]
   ) {
     this._label = this._changes[0]?.applied?.name ?? "unknown edit";
@@ -56,27 +56,24 @@ class DocumentEditStackElement implements EditStackElement {
   }
 }
 
-export class DocumentModel {
+export class DocumentModel<TData> {
 
-  private readonly _onDidChangeValue = new vscode.EventEmitter<DocumentChangeContentEvent>();
+  private readonly _onDidChangeValue = new vscode.EventEmitter<DocumentChangeContentEvent<TData>>();
   public readonly onDidChangeValue = this._onDidChangeValue.event;
 
-  private readonly _undoEditStack = new UndoRedoStack<DocumentEditStackElement>();
+  private readonly _undoEditStack = new UndoRedoStack<DocumentEditStackElement<TData>>();
 
-  constructor(
-    private _value: string
-  ) {
-  }
+  constructor(private _value: TData) { }
 
-  public getValue(): string {
+  public getValue(): TData {
     return this._value;
   }
 
-  public setValue(value: string): void {
+  public setValue(value: TData): void {
     this._value = value;
   }
 
-  public revertValue(value: string, notify?: boolean): void {
+  public revertValue(value: TData, notify?: boolean): void {
     this._value = value;
     this._undoEditStack.restorePoint();
     if (notify) {
@@ -84,24 +81,12 @@ export class DocumentModel {
     }
   }
 
-  public saveValue(value: string, notify?: boolean): void {
+  public saveValue(value: TData, notify?: boolean): void {
     this._value = value;
     this._undoEditStack.savePoint();
     if (notify) {
       this._onDidChangeValue.fire({ content: this._value });
     }
-  }
-
-  public undo(): void {
-    this._undoEditStack.undo();
-  }
-
-  public redo(): void {
-    this._undoEditStack.redo();
-  }
-
-  public getLastStackElement(): DocumentEditStackElement | undefined {
-    return this._undoEditStack.getLastElement();
   }
 
   public makeEdit(changes: DocumentChangeElement[], panelId?: number, notify?: boolean): void {
@@ -126,8 +111,21 @@ export class DocumentModel {
     }
   }
 
+  public undo(): void {
+    this._undoEditStack.undo();
+  }
+
+  public redo(): void {
+    this._undoEditStack.redo();
+  }
+
+  public getLastStackElement(): DocumentEditStackElement<TData> | undefined {
+    return this._undoEditStack.getLastElement();
+  }
+
   public getUnsavedChanges(): EditOperation[] {
     const result: EditOperation[] = [];
+
     const reverseOperations: EditOperation[] = [];
     this._undoEditStack.getLeftElements().forEach(element => {
       reverseOperations.push(...element.reverseChanges);
@@ -137,33 +135,7 @@ export class DocumentModel {
     this._undoEditStack.getRightElements().forEach(element => {
       result.push(...element.appliedChanges);
     });
+
     return result;
-  }
-}
-
-export class DocumentBackup implements vscode.CustomDocumentBackup {
-
-  public static create(destination: vscode.Uri): DocumentBackup {
-    return new DocumentBackup(destination);
-  }
-
-  private readonly _id: string;
-
-  constructor(
-    private readonly _uri: vscode.Uri
-  ) {
-    this._id = this._uri.toString();
-  }
-
-  public get uri() { return this._uri; }
-
-  public get id() { return this._id; }
-
-  public async delete(): Promise<void> {
-    try {
-      await vscode.workspace.fs.delete(this._uri);
-    } catch {
-      // noop
-    }
   }
 }

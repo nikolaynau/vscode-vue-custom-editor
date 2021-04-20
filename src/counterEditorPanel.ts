@@ -1,83 +1,14 @@
 import * as vscode from 'vscode';
-import { Disposable, DisposableEvent } from './dispose';
-import { getNonce } from './util';
-import { RpcProvider } from 'worker-rpc';
-import { DocumentEdit, EditOperation } from './documents';
+import { BaseEditorPanel } from './common/editorPanel';
+import { getNonce } from './common/util';
 
-export class CounterEditorPanel extends Disposable implements DisposableEvent {
+export class CounterEditorPanel extends BaseEditorPanel<string> {
 
-  private static _nextPanelId: number = 1;
-
-  private readonly _onDidDispose = this._register(new vscode.EventEmitter<void>());
-  public readonly onDidDispose = this._onDidDispose.event;
-
-  private readonly _onDidRecieveEdit = this._register(new vscode.EventEmitter<DocumentEdit>());
-  public readonly onDidReceiveEdit = this._onDidRecieveEdit.event;
-
-  private readonly _rpcProvider: RpcProvider;
-
-  public readonly id: number = CounterEditorPanel._nextPanelId++;
-
-  constructor(
-    private readonly _panel: vscode.WebviewPanel,
-    private readonly _extensionUri: vscode.Uri
-  ) {
-    super();
-
-    this._panel.webview.options = this.getWebviewOptions();
-    this._panel.webview.html = this.getHtmlForWebview(this._panel.webview);
-
-    this._rpcProvider = new RpcProvider((message) => this._panel.webview.postMessage(message));
-    this._register(this._panel.webview.onDidReceiveMessage(e => this._rpcProvider.dispatch(e)));
-
-    this._rpcProvider.error.addHandler((err) => {
-      console.error("[CounterEditorPanel]: rpc provider error:", err);
-    });
-
-    this._rpcProvider.registerSignalHandler<DocumentEdit>("edit", (e) => {
-      this._onDidRecieveEdit.fire(e);
-    });
-
-    this.regiserListeners();
-  }
-
-  private regiserListeners() {
-    this._register(this._panel.onDidDispose(() => this.dispose()));
-  }
-
-  private getWebviewOptions(): vscode.WebviewOptions {
-    return {
-      enableScripts: true,
-      localResourceRoots: [vscode.Uri.joinPath(this._extensionUri, "media")]
-    };
-  }
-
-  public dispose() {
-    this._onDidDispose.fire();
-    super.dispose();
-  }
-
-  public getFileData(): Promise<string> {
-    return this._rpcProvider.rpc<void, string>("getFileData");
-  }
-
-  public setFileData(data: string): Promise<void> {
-    return this._rpcProvider.rpc<string>("setFileData", data);
-  }
-
-  public applyEdits(editOperations: EditOperation[]): Promise<void> {
-    return this._rpcProvider.rpc("applyEdits", editOperations);
-  }
-
-  public setInitialData(data: string, editOperations: EditOperation[]): Promise<void> {
-    return this._rpcProvider.rpc("setInitialData", { data, editOperations });
-  }
-
-  private getHtmlForWebview(webview: vscode.Webview): string {
-    const scriptPathOnDisk = vscode.Uri.joinPath(this._extensionUri, 'media', 'dist', 'assets', 'js', 'app.js');
+  protected getHtmlForWebview(webview: vscode.Webview): string {
+    const scriptPathOnDisk = vscode.Uri.joinPath(this.extensionUri, this.mediaFolderName, 'dist', 'assets', 'js', 'app.js');
     const scriptUri = webview.asWebviewUri(scriptPathOnDisk);
 
-    const stylesPathOnDisk = vscode.Uri.joinPath(this._extensionUri, 'media', 'dist', 'assets', 'css', 'app.css');
+    const stylesPathOnDisk = vscode.Uri.joinPath(this.extensionUri, this.mediaFolderName, 'dist', 'assets', 'css', 'app.css');
     const stylesUri = webview.asWebviewUri(stylesPathOnDisk);
 
     const nonce = getNonce();
