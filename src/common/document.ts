@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { Disposable } from "./dispose";
 import { DocumentBackup } from './documentBackup';
-import { DocumentChangeContentEvent, DocumentEdit, DocumentEditStackElement, DocumentModel, EditOperation } from './documentModel';
+import { DocumentChangeContentEvent, DocumentEdit, EditOperation, IDocumentModel } from './documentModel';
 import { isDefined } from './types';
 
 export interface DocumentDelegate<TData> {
@@ -26,7 +26,7 @@ export interface Document<TData> extends vscode.CustomDocument {
   backup(destination: vscode.Uri, cancellation: vscode.CancellationToken): Promise<vscode.CustomDocumentBackup>;
 }
 
-export abstract class BaseDocument<TData, TModel extends DocumentModel<TData>> extends Disposable implements Document<TData> {
+export abstract class BaseDocument<TData, TModel extends IDocumentModel<TData>> extends Disposable implements Document<TData> {
 
   public static async readFile<TData>(uri: vscode.Uri, converter: (data?: Uint8Array) => TData): Promise<TData> {
     if (uri.scheme === 'untitled') { return converter(); }
@@ -81,12 +81,8 @@ export abstract class BaseDocument<TData, TModel extends DocumentModel<TData>> e
   }
 
   public makeEdit(edit: DocumentEdit, panelId?: number): void {
-    this._documentModel.makeEdit(edit.changes, panelId, true);
-
-    const stackElement = this._documentModel.getLastStackElement();
-    if (isDefined(stackElement)) {
-      this.doChange(stackElement as DocumentEditStackElement<TData>);
-    }
+    const stackElement = this._documentModel.makeEdit(edit.changes, panelId, true);
+    this.doChange(stackElement?.label);
   }
 
   public async save(cancellation: vscode.CancellationToken): Promise<void> {
@@ -127,9 +123,9 @@ export abstract class BaseDocument<TData, TModel extends DocumentModel<TData>> e
     return false;
   }
 
-  protected doChange(stackElement: DocumentEditStackElement<TData>) {
+  protected doChange(label?: string): void {
     this._onDidChange.fire({
-      label: stackElement.label,
+      label: label ?? "edit",
       document: this,
       undo: async () => { this._documentModel.undo(); },
       redo: async () => { this._documentModel.redo(); }

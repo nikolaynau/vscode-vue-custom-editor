@@ -24,14 +24,41 @@ export interface DocumentChangeContentEvent<T> {
   readonly isRedo?: boolean;
 }
 
-export class DocumentEditStackElement<T> implements EditStackElement {
+export interface IDocumentEditStackElement extends EditStackElement {
+  readonly label: string;
+  readonly changes: DocumentChangeElement[];
+  readonly appliedChanges: EditOperation[];
+  readonly reverseChanges: EditOperation[];
+}
+
+export interface IDocumentModel<TData> {
+  storeChanges: boolean;
+
+  readonly onDidChangeValue: vscode.Event<DocumentChangeContentEvent<TData>>;
+
+  getValue(): TData;
+  setValue(value: TData): void;
+  revertValue(value: TData, notify?: boolean): void;
+  saveValue(value: TData, notify?: boolean): void;
+
+  makeEdit(changes: DocumentChangeElement[], panelId?: number, notify?: boolean): IDocumentEditStackElement | undefined;
+  applyUndo(editOperations: EditOperation[], notify?: boolean): void;
+  applyRedo(editOperations: EditOperation[], notify?: boolean): void;
+
+  undo(): void;
+  redo(): void;
+
+  getUnsavedChanges(): EditOperation[];
+}
+
+export class DocumentEditStackElement<T> implements IDocumentEditStackElement {
 
   private readonly _label: string;
   private readonly _appliedChanges: EditOperation[];
   private readonly _reverseChanges: EditOperation[];
 
   constructor(
-    private readonly _model: DocumentModel<T>,
+    private readonly _model: IDocumentModel<T>,
     private readonly _changes: DocumentChangeElement[]
   ) {
     this._label = this._changes[0]?.applied?.name ?? "unknown edit";
@@ -56,14 +83,18 @@ export class DocumentEditStackElement<T> implements EditStackElement {
   }
 }
 
-export class DocumentModel<TData> {
+export class DocumentModel<TData> implements IDocumentModel<TData> {
 
   private readonly _onDidChangeValue = new vscode.EventEmitter<DocumentChangeContentEvent<TData>>();
   public readonly onDidChangeValue = this._onDidChangeValue.event;
 
   private readonly _undoEditStack = new UndoRedoStack<DocumentEditStackElement<TData>>();
 
+  public storeChanges: boolean = true;
+
   constructor(private _value: TData) { }
+
+  public get undoEditStack() { return this._undoEditStack; }
 
   public getValue(): TData {
     return this._value;
@@ -89,23 +120,30 @@ export class DocumentModel<TData> {
     }
   }
 
-  public makeEdit(changes: DocumentChangeElement[], panelId?: number, notify?: boolean): void {
-    if (changes.length > 0) {
-      const stackElement = new DocumentEditStackElement(this, changes);
-      this._undoEditStack.pushElement(stackElement);
-      if (notify) {
-        this._onDidChangeValue.fire({ changes: stackElement.appliedChanges, panelId });
-      }
+  public makeEdit(changes: DocumentChangeElement[], panelId?: number, notify?: boolean): DocumentEditStackElement<TData> | undefined {
+    if (changes.length === 0) {
+      return undefined;
     }
+
+    const stackElement = new DocumentEditStackElement(this, changes);
+    if (this.storeChanges) {
+      this._undoEditStack.pushElement(stackElement);
+    }
+
+    if (notify) {
+      this._onDidChangeValue.fire({ changes: stackElement.appliedChanges, panelId });
+    }
+
+    return stackElement;
   }
 
-  public applyUndo(editOperations: EditOperation[], notify?: boolean) {
+  public applyUndo(editOperations: EditOperation[], notify?: boolean): void {
     if (notify) {
       this._onDidChangeValue.fire({ changes: editOperations, isUndo: true });
     }
   }
 
-  public applyRedo(editOperations: EditOperation[], notify?: boolean) {
+  public applyRedo(editOperations: EditOperation[], notify?: boolean): void {
     if (notify) {
       this._onDidChangeValue.fire({ changes: editOperations, isRedo: true });
     }
@@ -117,10 +155,6 @@ export class DocumentModel<TData> {
 
   public redo(): void {
     this._undoEditStack.redo();
-  }
-
-  public getLastStackElement(): DocumentEditStackElement<TData> | undefined {
-    return this._undoEditStack.getLastElement();
   }
 
   public getUnsavedChanges(): EditOperation[] {
