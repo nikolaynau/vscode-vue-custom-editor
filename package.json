@@ -1,19 +1,19 @@
 {
-  "name": "vscode-test-vue-custom-editor",
+  "name": "vscode-vue-custom-editor",
   "displayName": "Test vue custom editor",
   "description": "Custom editor written on Vue.js for VS Code",
   "preview": true,
   "author": "Nikolay Naumenkov <nikolas.it.web@gmail.com>",
   "license": "SEE LICENSE IN LICENSE",
   "version": "0.0.1",
-  "homepage": "https://github.com/nikolaynau/vscode-test-vue-custom-editor",
+  "homepage": "https://github.com/nikolaynau/vscode-vue-custom-editor",
   "bugs": {
-    "url": "https://github.com/nikolaynau/vscode-test-vue-custom-editor/issues",
+    "url": "https://github.com/nikolaynau/vscode-vue-custom-editor/issues",
     "email": "nikolas.it.web@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nikolaynau/vscode-test-vue-custom-editor.git"
+    "url": "https://github.com/nikolaynau/vscode-vue-custom-editor.git"
   },
   "publisher": "nikolaynau",
   "keywords": [
