@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { CounterEditorProvider } from './counterEditorProvider';
 
 export class NewCounterFileCommand {
-  public static readonly ID = "vscodeTestVueCustomEditor.counterEditor.new";
+  public static readonly id = "vscodeTestVueCustomEditor.counterEditor.new";
 
   private static newUntitledId = 1;
 
@@ -21,7 +21,7 @@ export class NewCounterFileCommand {
 }
 
 export class NewCounter2FileCommand {
-  public static readonly ID = "vscodeTestVueCustomEditor.counterEditor2.new";
+  public static readonly id = "vscodeTestVueCustomEditor.counterEditor2.new";
 
   private static newUntitledId = 1;
 
