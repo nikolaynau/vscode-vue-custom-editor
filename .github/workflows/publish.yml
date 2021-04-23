@@ -1,13 +1,15 @@
 on:
-  release:
-    types:
-      - created
+  push:
+    tags:
+    - 'v*'
+
+name:  Release And Publish
 
 jobs:
   test:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout
@@ -46,8 +48,30 @@ jobs:
       run: npm ci
     - name: Install media dependencies
       run: cd media && npm ci && cd ..
+    - name: Build vsix package
+      run: npx vsce package -o vscode-vue-custom-editor.vsix
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./vscode-vue-custom-editor.vsix
+        asset_name: vscode-vue-custom-editor-${{ github.ref }}.vsix
+        asset_content_type: application/octet-stream
     - name: Publish
       if: success()
-      run: npm run deploy
+      run: npm run deploy1
       env:
         VSCE_PAT: ${{ secrets.VSCE_PAT }}
