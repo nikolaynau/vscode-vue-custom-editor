@@ -1,6 +1,6 @@
 # Change Log
 
-## [0.1.5] - 2020-04-23
+## [0.1.6] - 2020-04-23
 ### Added
 - Editing the .counter2 format file.
 
