@@ -11,3 +11,5 @@ vsc-extension-quickstart.md
 **/*.ts
 media/**
 !media/dist/**
+webpack.config.js
+node_modules
