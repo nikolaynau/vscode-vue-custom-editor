@@ -3,7 +3,7 @@ on:
     tags:
     - 'v*'
 
-name:  Release And Publish
+name: Release
 
 jobs:
   test:
@@ -50,6 +50,10 @@ jobs:
       run: cd media && npm ci && cd ..
     - name: Build vsix package
       run: npx vsce package -o vscode-vue-custom-editor.vsix
+    - name: Get latest release version number
+      id: get_version
+      uses: battila7/get-version-action@v2
+      run: echo ${{ steps.get_version.outputs.version-without-v }}
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -68,7 +72,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./vscode-vue-custom-editor.vsix
-        asset_name: vscode-vue-custom-editor-${{ github.ref }}.vsix
+        asset_name: vscode-vue-custom-editor-${{ steps.get_version.outputs.version-without-v }}.vsix
         asset_content_type: application/octet-stream
     - name: Publish
       if: success()
