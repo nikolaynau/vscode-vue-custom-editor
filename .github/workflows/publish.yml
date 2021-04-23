@@ -36,6 +36,8 @@ jobs:
         node-version: 12.x
     - name: Install project dependencies
       run: npm install
+    - name: Install media dependencies
+      run: cd media && npm install && cd ..
     - name: Publish
       if: success()
       run: npm run deploy
