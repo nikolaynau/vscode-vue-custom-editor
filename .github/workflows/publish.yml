@@ -16,8 +16,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
+    - name: Install latest npm
+      run: npm install -g npm@latest
+    - name: Check npm version
+      run: npm -v
     - name: Install project dependencies
-      run: npm install
+      run: npm ci
     - name: Run tests
       run: xvfb-run -a npm test
       if: runner.os == 'Linux'
@@ -34,10 +38,14 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
+    - name: Install latest npm
+      run: npm install -g npm@latest
+    - name: Check npm version
+      run: npm -v
     - name: Install project dependencies
-      run: npm install
+      run: npm ci
     - name: Install media dependencies
-      run: cd media && npm install && cd ..
+      run: cd media && npm ci && cd ..
     - name: Publish
       if: success()
       run: npm run deploy
