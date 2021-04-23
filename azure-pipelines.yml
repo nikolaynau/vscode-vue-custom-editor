@@ -8,10 +8,6 @@ trigger:
 
 strategy:
   matrix:
-    linux:
-      imageName: 'ubuntu-latest'
-    mac:
-      imageName: 'macos-latest'
     windows:
       imageName: 'windows-latest'
 
@@ -26,18 +22,9 @@ steps:
   displayName: 'Install Node.js'
 
 - bash: |
-    /usr/bin/Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-    echo ">>> Started xvfb"
-  displayName: Start xvfb
-  condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
-
-- bash: |
-    echo ">>> Compile vscode-test"
-    yarn && yarn compile
-    echo ">>> Compiled vscode-test"
-    cd sample
+    echo ">>> Compile vscode-vue-custom-editor"
+    npm ci && npm compile
+    echo ">>> Compiled vscode-vue-custom-editor"
     echo ">>> Run sample integration test"
-    yarn && yarn compile && yarn test
+    npm test
   displayName: Run Tests
-  env:
-    DISPLAY: ':99.0'
