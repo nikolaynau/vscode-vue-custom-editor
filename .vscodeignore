@@ -12,6 +12,7 @@ vscode-vue-custom-editor.vsix
 **/*.ts
 media/**
 !media/dist/**
+media/dist/**/*.map
 webpack.config.js
 node_modules
 .github
