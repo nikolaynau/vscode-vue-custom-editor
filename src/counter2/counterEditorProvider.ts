@@ -4,7 +4,7 @@ import { CounterDocument } from './counterDocument';
 import { CounterEditor } from './counterEditor';
 
 export class CounterEditorProvider extends BaseEditorProvider<CounterDocument, CounterEditor> {
-  public static readonly viewType = "vscodeTestVueCustomEditor.counterEditor2";
+  public static readonly viewType = "vscodeVueCustomEditor.counterEditor2";
 
   private static options: EditorProviderOptions = {
     webviewOptions: {

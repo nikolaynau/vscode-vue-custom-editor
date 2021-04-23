@@ -34,16 +34,16 @@
   },
   "icon": "images/logo.png",
   "activationEvents": [
-    "onCustomEditor:vscodeTestVueCustomEditor.counterEditor",
-    "onCommand:vscodeTestVueCustomEditor.counterEditor.new",
-    "onCustomEditor:vscodeTestVueCustomEditor.counterEditor2",
-    "onCommand:vscodeTestVueCustomEditor.counterEditor2.new"
+    "onCustomEditor:vscodeVueCustomEditor.counterEditor",
+    "onCommand:vscodeVueCustomEditor.counterEditor.new",
+    "onCustomEditor:vscodeVueCustomEditor.counterEditor2",
+    "onCommand:vscodeVueCustomEditor.counterEditor2.new"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "customEditors": [
       {
-        "viewType": "vscodeTestVueCustomEditor.counterEditor",
+        "viewType": "vscodeVueCustomEditor.counterEditor",
         "displayName": "Counter Editor",
         "selector": [
           {
@@ -53,7 +53,7 @@
         "priority": "default"
       },
       {
-        "viewType": "vscodeTestVueCustomEditor.counterEditor2",
+        "viewType": "vscodeVueCustomEditor.counterEditor2",
         "displayName": "Counter Editor 2",
         "selector": [
           {
@@ -65,12 +65,12 @@
     ],
     "commands": [
       {
-        "command": "vscodeTestVueCustomEditor.counterEditor.new",
+        "command": "vscodeVueCustomEditor.counterEditor.new",
         "title": "Create new Counter document",
         "category": "Counter Editor"
       },
       {
-        "command": "vscodeTestVueCustomEditor.counterEditor2.new",
+        "command": "vscodeVueCustomEditor.counterEditor2.new",
         "title": "Create new Counter 2 document",
         "category": "Counter Editor 2"
       }
