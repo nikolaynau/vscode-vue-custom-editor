@@ -5,6 +5,7 @@ src/**
 .gitignore
 .yarnrc
 vsc-extension-quickstart.md
+vscode-vue-custom-editor.vsix
 **/tsconfig.json
 **/.eslintrc.json
 **/*.map
