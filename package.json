@@ -2,7 +2,6 @@
   "name": "vscode-vue-custom-editor",
   "displayName": "Vue Custom Editor Example",
   "description": "Custom editor written on Vue.js for VS Code",
-  "preview": true,
   "author": "Nikolay Naumenkov <nikolas.it.web@gmail.com>",
   "license": "SEE LICENSE IN LICENSE",
   "version": "0.1.0",
@@ -29,9 +28,6 @@
   "categories": [
     "Other"
   ],
-  "galleryBanner": {
-    "color": "#1E1E1E"
-  },
   "icon": "images/logo.png",
   "activationEvents": [
     "onCustomEditor:vscodeVueCustomEditor.counterEditor",
