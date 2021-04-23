@@ -86,7 +86,7 @@
     "media:build": "cd media && npm run build && cd ..",
     "deploy": "vsce publish --no-yarn",
     "postversion": "npm run push",
-    "push": "git push origin master --tags"
+    "push": "git push origin master && git push origin master --tags"
   },
   "dependencies": {
     "worker-rpc": "0.2.0"
