@@ -4,7 +4,7 @@
   "description": "Custom editor written on Vue.js for VS Code",
   "author": "Nikolay Naumenkov <nikolas.it.web@gmail.com>",
   "license": "SEE LICENSE IN LICENSE",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "homepage": "https://github.com/nikolaynau/vscode-vue-custom-editor",
   "bugs": {
     "url": "https://github.com/nikolaynau/vscode-vue-custom-editor/issues",
