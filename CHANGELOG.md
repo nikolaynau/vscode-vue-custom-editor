@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.1.8] - 2020-04-26
+### Fixed
+ - UI styles.
+
 ## [0.1.7] - 2020-04-24
 ### Added
  - Creating a new document outside the workspace via the command palette.
