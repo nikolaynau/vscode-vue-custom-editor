@@ -26,7 +26,8 @@ module.exports = {
   },
   variants: {
     margin: ["responsive", "first"],
-    width: ["responsive"]
+    width: ["responsive"],
+    outline: ["responsive", "focus-within", "focus", "active"],
   },
   plugins: []
 }

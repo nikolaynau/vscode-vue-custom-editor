@@ -14,6 +14,20 @@
   /* focus */
   @apply focus:outline-button;
 
+  /* active */
+  @apply active:outline-none;
+
   /* hover */
   @apply hover:bg-button-hover-background hover:text-button-foreground;
+}
+
+.v-button--disabled {
+  /* visual styles */
+  @apply opacity-40 cursor-default;
+
+  /* focus */
+  @apply focus:outline-none;
+
+  /* hover */
+  @apply hover:text-button-foreground hover:bg-button-background;
 }
