@@ -37,8 +37,6 @@
     "tailwindcss": "^2.1.1"
   },
   "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
+    "last 2 Chrome versions"
   ]
 }
