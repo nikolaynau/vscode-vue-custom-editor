@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { CounterEditorProvider } from './counterEditorProvider';
 import { CounterEditorProvider as CounterEditorProvider2 } from './counter2/counterEditorProvider';
+import { isDefined } from './common/types';
 
 export class NewCounterFileCommand {
   public static readonly id = "vscodeVueCustomEditor.counterEditor.new";
@@ -50,6 +51,7 @@ export class ResetCounterCommand {
     if (!activeEditorPanel) {
       return;
     }
+
     const editOperation = {
       name: "replace",
       payload: {
@@ -58,4 +60,72 @@ export class ResetCounterCommand {
     };
     activeEditorPanel.applyEdits([editOperation], true);
   }
+}
+
+export class AddNumberCommand {
+  public static readonly id = "vscodeVueCustomEditor.counterEditor.add";
+
+  public static async execute(): Promise<any> {
+    const activeEditorPanel = CounterEditorProvider.current?.activeCustomEditor?.getActivePanel();
+    if (!activeEditorPanel) {
+      return;
+    }
+
+    const result = await showInputNumber();
+    if (!isDefined(result)) {
+      return;
+    }
+
+    const editOperation = {
+      name: "plus",
+      payload: {
+        value: result
+      }
+    };
+    activeEditorPanel.applyEdits([editOperation], true);
+  }
+}
+
+export class SubtractNumberCommand {
+  public static readonly id = "vscodeVueCustomEditor.counterEditor.subtract";
+
+  public static async execute(): Promise<any> {
+    const activeEditorPanel = CounterEditorProvider.current?.activeCustomEditor?.getActivePanel();
+    if (!activeEditorPanel) {
+      return;
+    }
+
+    const result = await showInputNumber();
+    if (!isDefined(result)) {
+      return;
+    }
+
+    const editOperation = {
+      name: "plus",
+      payload: {
+        value: -result!
+      }
+    };
+    activeEditorPanel.applyEdits([editOperation], true);
+  }
+}
+
+async function showInputNumber(): Promise<number | undefined> {
+  const result = await vscode.window.showInputBox({
+    placeHolder: "Enter the number",
+    validateInput: text => {
+      if (!text) {
+        return null;
+      }
+      const num = Number.parseInt(text, 10);
+      if (Number.isNaN(num)) {
+        return "Please enter the correct number";
+      }
+      return null;
+    }
+  });
+  if (!result) {
+    return undefined;
+  }
+  return Number.parseInt(result!, 10);
 }

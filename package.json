@@ -71,8 +71,8 @@
         "category": "Counter Editor"
       },
       {
-        "command": "vscodeVueCustomEditor.counterEditor.plusNum",
-        "title": "Plus Number",
+        "command": "vscodeVueCustomEditor.counterEditor.add",
+        "title": "Add Number",
         "category": "Counter Editor",
         "icon": {
           "dark": "images/icons/dark-plus.svg",
@@ -80,8 +80,8 @@
         }
       },
       {
-        "command": "vscodeVueCustomEditor.counterEditor.minusNum",
-        "title": "Minus Number",
+        "command": "vscodeVueCustomEditor.counterEditor.subtract",
+        "title": "Subtract Number",
         "category": "Counter Editor",
         "icon": {
           "dark": "images/icons/dark-minus.svg",
@@ -101,22 +101,22 @@
           "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor"
         },
         {
-          "command": "vscodeVueCustomEditor.counterEditor.plusNum",
+          "command": "vscodeVueCustomEditor.counterEditor.add",
           "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor"
         },
         {
-          "command": "vscodeVueCustomEditor.counterEditor.minusNum",
+          "command": "vscodeVueCustomEditor.counterEditor.subtract",
           "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor"
         }
       ],
       "editor/title": [
         {
-          "command": "vscodeVueCustomEditor.counterEditor.plusNum",
+          "command": "vscodeVueCustomEditor.counterEditor.add",
           "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor",
           "group": "navigation@1"
         },
         {
-          "command": "vscodeVueCustomEditor.counterEditor.minusNum",
+          "command": "vscodeVueCustomEditor.counterEditor.subtract",
           "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor",
           "group": "navigation@2"
         }
@@ -134,13 +134,13 @@
         "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor"
       },
       {
-        "command": "vscodeVueCustomEditor.counterEditor.plusNum",
-        "key": "Shift+Alt+a",
+        "command": "vscodeVueCustomEditor.counterEditor.add",
+        "key": "Shift+Alt+=",
         "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor"
       },
       {
-        "command": "vscodeVueCustomEditor.counterEditor.minusNum",
-        "key": "Shift+Alt+s",
+        "command": "vscodeVueCustomEditor.counterEditor.subtract",
+        "key": "Shift+Alt+-",
         "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor"
       }
     ]
