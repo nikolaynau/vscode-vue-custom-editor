@@ -22,11 +22,9 @@ export abstract class BaseEditorProvider<TDocument extends Document<any>, TEdito
   public constructor(private readonly _context: vscode.ExtensionContext) { }
 
   protected abstract createDocument(uri: vscode.Uri, openContext: vscode.CustomDocumentOpenContext): Promise<TDocument>;
-
   protected abstract createEditor(extensionUri: vscode.Uri, document: TDocument): TEditor;
 
   public get context() { return this._context; }
-
   public get editors() { return this._editors; }
 
   public async openCustomDocument(uri: vscode.Uri, openContext: vscode.CustomDocumentOpenContext, token: vscode.CancellationToken): Promise<TDocument> {
@@ -54,6 +52,10 @@ export abstract class BaseEditorProvider<TDocument extends Document<any>, TEdito
 
   public backupCustomDocument(document: TDocument, context: vscode.CustomDocumentBackupContext, cancellation: vscode.CancellationToken): Thenable<vscode.CustomDocumentBackup> {
     return document.backup(context.destination, cancellation);
+  }
+
+  public get activeCustomEditor(): TEditor | undefined {
+    return this._editors.values().find(editor => editor.isActive);
   }
 
   private getOrCreateEditor(document: TDocument): TEditor {

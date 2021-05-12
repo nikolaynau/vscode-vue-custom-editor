@@ -7,6 +7,7 @@ import { EditorPanelCollection } from './editorPanelCollection';
 import { isDefined } from './types';
 
 export interface Editor extends DisposableEvent {
+  readonly isActive: boolean;
   createViewPanel(webviewPanel: vscode.WebviewPanel): void;
 }
 
@@ -30,6 +31,8 @@ export abstract class BaseEditor<TDocument extends Document<any>, TPanel extends
 
   public get extensionUri() { return this._extensionUri; }
 
+  public get isActive() { return this.isActiveEditor(); }
+
   protected abstract createEditorPanel(webviewPanel: vscode.WebviewPanel): TPanel;
 
   public dispose() {
@@ -45,9 +48,22 @@ export abstract class BaseEditor<TDocument extends Document<any>, TPanel extends
   public createViewPanel(webviewPanel: vscode.WebviewPanel): void {
     const panel = this.createEditorPanel(webviewPanel);
     panel.onDidReceiveEdit(e => this._document.makeEdit(e, panel.id));
-
     panel.setInitialData(this._document.documentData, this._document.getUnsavedChanges());
     this._panels.add(this._document.uri, panel);
+  }
+
+  public getActivePanel(): TPanel | undefined {
+    for (const panel of this._panels.get(this._document.uri)) {
+      if (panel.visible && panel.active) {
+        return panel;
+      }
+    }
+    return undefined;
+  }
+
+  private isActiveEditor(): boolean {
+    const activePanel = this.getActivePanel();
+    return activePanel ? true : false;
   }
 
   private updateViewPanels(content?: any, changes?: EditOperation[], skipPanelId?: number): void {

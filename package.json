@@ -62,13 +62,86 @@
     "commands": [
       {
         "command": "vscodeVueCustomEditor.counterEditor.new",
-        "title": "Create new Counter document",
+        "title": "Create New Counter Document",
         "category": "Counter Editor"
       },
       {
+        "command": "vscodeVueCustomEditor.counterEditor.reset",
+        "title": "Reset Counter",
+        "category": "Counter Editor"
+      },
+      {
+        "command": "vscodeVueCustomEditor.counterEditor.plusNum",
+        "title": "Plus Number",
+        "category": "Counter Editor",
+        "icon": {
+          "dark": "images/icons/dark-plus.svg",
+          "light": "images/icons/light-plus.svg"
+        }
+      },
+      {
+        "command": "vscodeVueCustomEditor.counterEditor.minusNum",
+        "title": "Minus Number",
+        "category": "Counter Editor",
+        "icon": {
+          "dark": "images/icons/dark-minus.svg",
+          "light": "images/icons/light-minus.svg"
+        }
+      },
+      {
         "command": "vscodeVueCustomEditor.counterEditor2.new",
-        "title": "Create new Counter 2 document",
+        "title": "Create New Counter2 Document",
         "category": "Counter Editor 2"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "vscodeVueCustomEditor.counterEditor.reset",
+          "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor"
+        },
+        {
+          "command": "vscodeVueCustomEditor.counterEditor.plusNum",
+          "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor"
+        },
+        {
+          "command": "vscodeVueCustomEditor.counterEditor.minusNum",
+          "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "vscodeVueCustomEditor.counterEditor.plusNum",
+          "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor",
+          "group": "navigation@1"
+        },
+        {
+          "command": "vscodeVueCustomEditor.counterEditor.minusNum",
+          "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor",
+          "group": "navigation@2"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "vscodeVueCustomEditor.counterEditor.reset",
+        "key": "Shift+Alt+delete",
+        "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor"
+      },
+      {
+        "command": "vscodeVueCustomEditor.counterEditor.reset",
+        "key": "Shift+Alt+backspace",
+        "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor"
+      },
+      {
+        "command": "vscodeVueCustomEditor.counterEditor.plusNum",
+        "key": "Shift+Alt+a",
+        "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor"
+      },
+      {
+        "command": "vscodeVueCustomEditor.counterEditor.minusNum",
+        "key": "Shift+Alt+s",
+        "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor"
       }
     ]
   },

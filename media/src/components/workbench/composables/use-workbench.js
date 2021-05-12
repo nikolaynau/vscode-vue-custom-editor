@@ -15,8 +15,8 @@ export default function useWorkbench(vscode) {
     editor.value?.model.setValue(data);
   });
 
-  rpc.provider.registerRpcHandler("applyEdits", (editOperations) => {
-    editor.value?.model.applyEdits(editOperations, false);
+  rpc.provider.registerRpcHandler("applyEdits", ({ editOperations, notify }) => {
+    editor.value?.model.applyEdits(editOperations, notify);
   });
 
   rpc.provider.registerRpcHandler("setInitialData", ({ data, editOperations }) => {

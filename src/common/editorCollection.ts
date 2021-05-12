@@ -1,5 +1,5 @@
 import type * as vscode from 'vscode';
-import { Disposable, DisposableEvent } from './dispose';
+import { DisposableEvent } from './dispose';
 
 export class EditorCollection<T extends DisposableEvent> {
 
@@ -17,6 +17,10 @@ export class EditorCollection<T extends DisposableEvent> {
   public get(uri: vscode.Uri): T | undefined {
     const key = uri.toString();
     return this._editors.get(key);
+  }
+
+  public values(): T[] {
+    return Array.from(this._editors.values());
   }
 
   public clear(): void {

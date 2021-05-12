@@ -5,6 +5,8 @@ import { DocumentEdit, EditOperation } from './documentModel';
 
 export interface EditorPanel<TData> extends DisposableEvent {
   readonly id: number;
+  readonly visible: boolean;
+  readonly active: boolean;
 
   readonly onDidReceiveEdit: vscode.Event<DocumentEdit>;
 
@@ -41,6 +43,10 @@ export abstract class BaseEditorPanel<TData> extends Disposable implements Edito
   public get panel() { return this._panel; }
 
   public get extensionUri() { return this._extensionUri; }
+
+  public get visible() { return this._panel.visible; }
+
+  public get active() { return this._panel.active; }
 
   private regiserListeners() {
     this._register(this._panel.onDidDispose(() => this.dispose()));
@@ -80,8 +86,8 @@ export abstract class BaseEditorPanel<TData> extends Disposable implements Edito
     return this._rpcProvider.rpc<TData>("setFileData", data);
   }
 
-  public applyEdits(editOperations: EditOperation[]): Promise<void> {
-    return this._rpcProvider.rpc("applyEdits", editOperations);
+  public applyEdits(editOperations: EditOperation[], notify: boolean = false): Promise<void> {
+    return this._rpcProvider.rpc("applyEdits", { editOperations, notify });
   }
 
   public setInitialData(data: TData, editOperations: EditOperation[]): Promise<void> {

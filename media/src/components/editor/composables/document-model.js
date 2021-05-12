@@ -35,12 +35,19 @@ export class DocumentModel extends EventEmitter {
     this.counter += num;
   }
 
+  replace(num) {
+    this.counter = num;
+  }
+
   applyEdits(editOperations, emitChangeEvent = true) {
     const changes = this._applyEditOperations(editOperations);
 
-    if (changes.length > 0 && emitChangeEvent) {
+    if (changes.length > 0) {
       this._increaseVersionId();
-      this._emitChangeEvent(changes);
+
+      if (emitChangeEvent) {
+        this._emitChangeEvent(changes);
+      }
     }
   }
 
@@ -66,22 +73,23 @@ export class DocumentModel extends EventEmitter {
     }
 
     const { name, payload } = editOperation;
-    if (name === "plus") {
-      return this._applyPlusOperation(name, payload);
+
+    switch (name) {
+      case "plus":
+        return this._applyPlusOperation(name, payload);
+      case "replace":
+        return this._applyReplaceOperation(name, payload);
     }
 
     return null;
   }
 
   _applyPlusOperation(name, payload) {
-    if (!isDefined(payload) || !isPlainObject(payload)) {
+    const value = this._getValueFromPayload(payload);
+    if (!isDefined(value)) {
       return null;
     }
 
-    const { value } = payload;
-    if (typeof value !== "number") {
-      return null;
-    }
     this.plus(value);
 
     return {
@@ -98,6 +106,45 @@ export class DocumentModel extends EventEmitter {
         }
       }
     }
+  }
+
+  _applyReplaceOperation(name, payload) {
+    const value = this._getValueFromPayload(payload);
+    if (!isDefined(value)) {
+      return null;
+    }
+
+    const oldValue = this.counter;
+    this.replace(value);
+    const newValue = this.counter;
+
+    return {
+      applied: {
+        name,
+        payload: {
+          value: newValue
+        }
+      },
+      reverse: {
+        name,
+        payload: {
+          value: oldValue
+        }
+      }
+    }
+  }
+
+  _getValueFromPayload(payload) {
+    if (!isDefined(payload) || !isPlainObject(payload)) {
+      return null;
+    }
+
+    const { value } = payload;
+    if (typeof value !== "number") {
+      return null;
+    }
+
+    return value;
   }
 
   _increaseVersionId() {
