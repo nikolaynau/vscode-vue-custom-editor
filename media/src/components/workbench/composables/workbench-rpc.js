@@ -17,7 +17,7 @@ export class WorkbenchRpc {
   }
 
   handleError(err) {
-    logger.error("[WorkbenchApi]: rpc provider error", err);
+    logger.error("[WorkbenchRpc]: rpc provider error", err);
   }
 
   destroy() {
