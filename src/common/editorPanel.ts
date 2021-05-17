@@ -68,7 +68,7 @@ export abstract class BaseEditorPanel<TData> extends Disposable implements Edito
     this._register(this._panel.webview.onDidReceiveMessage(e => rpcProvider.dispatch(e)));
 
     rpcProvider.error.addHandler((err) => {
-      console.error("[CounterEditorPanel]: rpc provider error:", err);
+      console.error("[EditorPanel]: rpc provider error:", err);
     });
 
     rpcProvider.registerSignalHandler<DocumentEdit>("edit", (e) => {
