@@ -4,21 +4,31 @@ import { CounterDocument } from './counterDocument';
 import { CounterEditor } from './counterEditor';
 
 export class CounterEditorProvider extends BaseEditorProvider<CounterDocument, CounterEditor> {
-  public static readonly viewType = "vscodeVueCustomEditor.counterEditor2";
+  public static readonly viewType = "vscodeVueCustomEditor.counterEditor";
+  public static current: CounterEditorProvider | undefined;
 
   private static options: EditorProviderOptions = {
     webviewOptions: {
       retainContextWhenHidden: true
     },
-    supportsMultipleEditorsPerDocument: false
+    supportsMultipleEditorsPerDocument: true
   };
 
-  public static register(context: vscode.ExtensionContext): vscode.Disposable {
-    return vscode.window.registerCustomEditorProvider(
+  public static register(context: vscode.ExtensionContext): { dispose(): any } {
+    CounterEditorProvider.current = new CounterEditorProvider(context);
+
+    const provider = vscode.window.registerCustomEditorProvider(
       CounterEditorProvider.viewType,
-      new CounterEditorProvider(context),
+      CounterEditorProvider.current,
       CounterEditorProvider.options
     );
+
+    return {
+      dispose: () => {
+        CounterEditorProvider.current = undefined;
+        provider.dispose();
+      }
+    };
   }
 
   protected createDocument(uri: vscode.Uri, openContext: vscode.CustomDocumentOpenContext): Promise<CounterDocument> {

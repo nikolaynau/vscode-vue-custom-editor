@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import { BaseDocument } from './common/document';
-import { DocumentModel } from './common/documentModel';
+import { BaseDocument } from '../common/document';
+import { DocumentModel } from '../common/documentModel';
 
 export class CounterDocument extends BaseDocument<string, DocumentModel<string>> {
 

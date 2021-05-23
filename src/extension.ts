@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { NewCounter2FileCommand, NewCounterFileCommand, AddNumberCommand, ResetCounterCommand, SubtractNumberCommand } from './commands';
-import { CounterEditorProvider } from './counterEditorProvider';
-import { CounterEditorProvider as CounterEditorProvider2 } from './counter2/counterEditorProvider';
+import { CounterEditorProvider } from './counterEditor/counterEditorProvider';
+import { Counter2EditorProvider } from './counterEditor2/counter2EditorProvider';
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(NewCounterFileCommand.id, NewCounterFileCommand.execute));
@@ -11,5 +11,5 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(CounterEditorProvider.register(context));
 
   context.subscriptions.push(vscode.commands.registerCommand(NewCounter2FileCommand.id, NewCounter2FileCommand.execute));
-  context.subscriptions.push(CounterEditorProvider2.register(context));
+  context.subscriptions.push(Counter2EditorProvider.register(context));
 }
