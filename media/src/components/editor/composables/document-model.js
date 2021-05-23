@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-import isPlainObject from "is-plain-object";
+import { isPlainObject } from "is-plain-object";
 import { isDefined } from "@/utils/types";
 import EventEmitter from "eventemitter3";
 
