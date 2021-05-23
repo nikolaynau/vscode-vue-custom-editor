@@ -1,7 +1,8 @@
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import createModel from "./document-model";
 
-export default function useEditor({ value, emit }) {
+export default function useEditor({ value, focus, emit }) {
+  const input = ref(null);
   const model = ref(createModel(value.value));
 
   model.value.on("change", e => {
@@ -12,13 +13,41 @@ export default function useEditor({ value, emit }) {
     model.value.setValue(value.value);
   });
 
+  watch(focus, () => {
+    if (focus.value) {
+      focusInput();
+    }
+  });
+
+  onMounted(() => {
+    if (focus.value) {
+      focusInput();
+    }
+  });
+
   const onPlus = (num) => {
-    const editOperations = [{ name: "plus", payload: { value: num } }]
-    model.value.applyEdits(editOperations);
+    const editOperation = { name: "plus", payload: { value: num } };
+    model.value.applyEdits([editOperation]);
+  };
+
+  const onReplace = (num) => {
+    const editOperation = { name: "replace", payload: { value: num } };
+    model.value.applyEdits([editOperation]);
+  };
+
+  const onClick = () => {
+    focusInput();
+  }
+
+  function focusInput() {
+    input.value?.focus();
   }
 
   return {
     model,
-    onPlus
+    input,
+    onPlus,
+    onReplace,
+    onClick
   };
 }

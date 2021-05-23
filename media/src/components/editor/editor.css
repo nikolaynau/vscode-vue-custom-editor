@@ -17,6 +17,9 @@
 
   /* focus */
   @apply focus:outline-blue;
+
+  /* active */
+  @apply active:outline-none;
 }
 
 .v-editor__content .v-button {

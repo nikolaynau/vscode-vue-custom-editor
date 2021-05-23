@@ -4,6 +4,7 @@ import { WorkbenchRpc } from './workbench-rpc';
 export default function useWorkbench(vscode) {
   const rpc = new WorkbenchRpc(vscode);
   const editor = ref(null);
+
   let pendingInitialData = null;
 
   rpc.provider.registerRpcHandler("getFileData", () => {

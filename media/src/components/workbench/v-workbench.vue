@@ -1,6 +1,11 @@
 <template>
   <div class="v-workbench">
-    <v-editor ref="editor" @change-value="onChangeValue" />
+    <v-editor
+      ref="editor"
+      @change-value="onChangeValue"
+      keyboard-enabled
+      focus
+    />
   </div>
 </template>
 
