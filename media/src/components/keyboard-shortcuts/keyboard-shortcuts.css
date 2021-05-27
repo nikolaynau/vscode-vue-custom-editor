@@ -1,0 +1,28 @@
+.v-keyboard-shortcuts {
+  /* display styles */
+  @apply inline-table;
+
+  /* visual styles */
+  @apply border-separate;
+
+  /* sizes */
+  border-spacing: 0.8125rem 1.0625rem;
+
+  /* cursor */
+  @apply cursor-default;
+}
+
+.v-keyboard-shortcuts > dl {
+  /* display styles */
+  @apply table-row;
+}
+
+.v-keyboard-shortcuts > dl > dt {
+  /* display styles */
+  @apply table-cell;
+}
+
+.v-keyboard-shortcuts > dl > dd {
+  /* display styles */
+  @apply table-cell;
+}

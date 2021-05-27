@@ -1,0 +1,9 @@
+:root {
+  --keybinding-label-background: rgba(221, 221, 221, 0.4);
+  --keybinding-label-foreground: #555;
+  --keybinding-label-border: rgba(204, 204, 204, 0.4);
+  --keybinding-label-bottom-border: rgba(187, 187, 187, 0.4);
+  --keybinding-label-shadow: rgba(187, 187, 187, 0.4);
+
+  --keyboard-shortcuts-foreground: var(--vscode-foreground);
+}

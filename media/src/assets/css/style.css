@@ -1,4 +1,6 @@
 /* @import "vscode"; */
 @import "tailwind";
+@import "theme";
+@import "dark-theme";
 @import "base";
 @import "app";
