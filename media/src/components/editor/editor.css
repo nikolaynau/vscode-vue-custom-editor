@@ -9,6 +9,9 @@
 .v-editor__content {
   /* display styles */
   @apply flex;
+
+  /* visual styles */
+  @apply text-editor-foreground;
 }
 
 .v-editor__input {
@@ -29,4 +32,21 @@
 .v-editor__controls {
   /* visual styles */
   @apply whitespace-nowrap;
+}
+
+.v-editor__shortcuts {
+  /* display styles */
+  @apply absolute overflow-hidden pointer-events-none;
+
+  /* visual styles */
+  @apply text-center whitespace-nowrap opacity-80;
+
+  /* sizes */
+  @apply w-full;
+
+  top: calc(50% + 3.4375rem);
+}
+
+.vs-dark .v-editor__shortcuts .v-keyboard-shortcuts > dl > dt {
+  @apply text-white text-opacity-60;
 }

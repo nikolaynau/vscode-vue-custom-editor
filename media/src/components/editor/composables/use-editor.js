@@ -1,7 +1,7 @@
 import { ref, watch, onMounted } from "vue";
 import createModel from "./document-model";
 
-export default function useEditor({ value, focus, emit }) {
+export default function useEditor({ value, focusOnStart, emit }) {
   const input = ref(null);
   const model = ref(createModel(value.value));
 
@@ -13,14 +13,8 @@ export default function useEditor({ value, focus, emit }) {
     model.value.setValue(value.value);
   });
 
-  watch(focus, () => {
-    if (focus.value) {
-      focusInput();
-    }
-  });
-
   onMounted(() => {
-    if (focus.value) {
+    if (focusOnStart.value) {
       focusInput();
     }
   });

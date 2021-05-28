@@ -20,9 +20,19 @@
 .v-keyboard-shortcuts > dl > dt {
   /* display styles */
   @apply table-cell;
+
+  /* visual styles */
+  @apply text-left;
 }
 
 .v-keyboard-shortcuts > dl > dd {
   /* display styles */
   @apply table-cell;
+
+  /* visual styles */
+  @apply text-left;
+}
+
+.v-keyboard-shortcuts--title-right > dl > dt {
+  @apply text-right;
 }

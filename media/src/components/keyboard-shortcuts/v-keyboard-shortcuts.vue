@@ -1,5 +1,8 @@
 <template>
-  <div class="v-keyboard-shortcuts">
+  <div
+    class="v-keyboard-shortcuts"
+    :class="{ 'v-keyboard-shortcuts--title-right': titleRight }"
+  >
     <dl v-for="(item, index) in items" :key="index">
       <dt>{{ item.title }}</dt>
       <dd>
@@ -16,6 +19,10 @@ export default {
     items: {
       type: Array,
       default: () => []
+    },
+    titleRight: {
+      type: Boolean,
+      default: false
     }
   }
 };

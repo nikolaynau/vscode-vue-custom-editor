@@ -21,7 +21,8 @@ module.exports = {
         "keybinding-label-border": "var(--keybinding-label-border)",
         "keybinding-label-bottom-border": "var(--keybinding-label-bottom-border)",
 
-        "keyboard-shortcuts-foreground": "var(--keyboard-shortcuts-foreground)"
+        "workbenck-foreground": "var(--vscode-foreground)",
+        "editor-foreground": "var(--vscode-editor-foreground)"
       },
       spacing: {
         "2sp": "0.125rem",

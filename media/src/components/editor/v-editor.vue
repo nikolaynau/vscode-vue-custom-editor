@@ -25,6 +25,9 @@
         <v-button @click="onPlus(10)">+10</v-button>
       </div>
     </div>
+    <div class="v-editor__shortcuts">
+      <v-keyboard-shortcuts :items="shortcuts" title-right />
+    </div>
   </div>
 </template>
 
@@ -40,7 +43,7 @@ export default {
       type: String,
       default: null
     },
-    focus: {
+    focusOnStart: {
       type: Boolean,
       default: false
     },
@@ -51,13 +54,14 @@ export default {
   },
   emits: ["change-value"],
   setup(props, { emit }) {
-    const { value, focus } = toRefs(props);
+    const { value, focusOnStart } = toRefs(props);
+
     const { model, input, onPlus, onReplace, onClick } = useEditor({
       value,
-      focus,
+      focusOnStart,
       emit
     });
-    const { onUpKey, onDownKey, onDeleteKey } = useKeyboard({
+    const { shortcuts, onUpKey, onDownKey, onDeleteKey } = useKeyboard({
       onPlus,
       onReplace
     });
@@ -65,6 +69,7 @@ export default {
     return {
       model,
       input,
+      shortcuts,
       onPlus,
       onClick,
       onUpKey,

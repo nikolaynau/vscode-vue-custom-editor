@@ -4,7 +4,7 @@
       ref="editor"
       @change-value="onChangeValue"
       keyboard-enabled
-      focus
+      focus-on-start
     />
   </div>
 </template>

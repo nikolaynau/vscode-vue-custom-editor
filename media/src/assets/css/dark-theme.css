@@ -3,5 +3,5 @@
   --keybinding-label-foreground: #ccc;
   --keybinding-label-border: rgba(51, 51, 51, 0.6);
   --keybinding-label-bottom-border: rgba(68, 68, 68, 0.6);
-  --keybinding-label-shadow: rgba(68, 68, 68, 0.6);
+  --keybinding-label-shadow: rgba(0, 0, 0, 0.36);
 }
