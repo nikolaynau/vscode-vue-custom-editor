@@ -47,6 +47,6 @@
   top: calc(50% + 3.4375rem);
 }
 
-.vs-dark .v-editor__shortcuts .v-keyboard-shortcuts > dl > dt {
+.vscode-dark .v-editor__shortcuts .v-keyboard-shortcuts > dl > dt {
   @apply text-white text-opacity-60;
 }
