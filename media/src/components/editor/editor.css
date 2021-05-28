@@ -39,7 +39,7 @@
   @apply absolute overflow-hidden pointer-events-none;
 
   /* visual styles */
-  @apply text-center whitespace-nowrap opacity-80;
+  @apply text-black text-opacity-70 text-center whitespace-nowrap opacity-80;
 
   /* sizes */
   @apply w-full;
