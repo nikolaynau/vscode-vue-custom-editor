@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.1.11] - 2021-05-28
+### Added
+- Editor keyboard shortcuts.
+
 ## [0.1.10] - 2021-05-13
 ### Added
  - New commands (`add`, `subtract`, `reset`) in command pallete when custom editor is active.
