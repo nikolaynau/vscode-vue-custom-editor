@@ -71,7 +71,7 @@ export class AddNumberCommand {
       return;
     }
 
-    const result = await showInputNumber();
+    const result = await openNumberInput("Enter the number to increase the counter");
     if (!isDefined(result)) {
       return;
     }
@@ -95,7 +95,7 @@ export class SubtractNumberCommand {
       return;
     }
 
-    const result = await showInputNumber();
+    const result = await openNumberInput("Enter the number to decrease the counter");
     if (!isDefined(result)) {
       return;
     }
@@ -110,9 +110,9 @@ export class SubtractNumberCommand {
   }
 }
 
-async function showInputNumber(): Promise<number | undefined> {
+async function openNumberInput(placeHolder?: string): Promise<number | undefined> {
   const result = await vscode.window.showInputBox({
-    placeHolder: "Enter the number",
+    placeHolder,
     validateInput: text => {
       if (!text) {
         return null;
