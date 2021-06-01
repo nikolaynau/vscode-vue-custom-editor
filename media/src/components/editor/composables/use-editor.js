@@ -1,4 +1,4 @@
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, nextTick } from "vue";
 import createModel from "./document-model";
 
 export default function useEditor({ value, focusOnStart, emit }) {
@@ -29,6 +29,11 @@ export default function useEditor({ value, focusOnStart, emit }) {
     model.value.applyEdits([editOperation]);
   };
 
+  const onClear = () => {
+    onReplace(0);
+    nextTick(focusInput);
+  };
+
   const onClick = () => {
     focusInput();
   }
@@ -42,6 +47,7 @@ export default function useEditor({ value, focusOnStart, emit }) {
     input,
     onPlus,
     onReplace,
+    onClear,
     onClick
   };
 }

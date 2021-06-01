@@ -1,0 +1,22 @@
+.v-action {
+  /* display styles */
+  @apply inline-flex items-center justify-center;
+
+  /* visual styles */
+  @apply rounded-5sp;
+
+  /* sizes */
+  @apply w-22sp h-22sp p-3sp;
+
+  /* cursor */
+  @apply cursor-pointer;
+
+  /* focus */
+  @apply focus:outline-blue;
+
+  /* active */
+  @apply active:outline-none;
+
+  /* hover */
+  @apply hover:bg-action-hover-background hover:text-current;
+}

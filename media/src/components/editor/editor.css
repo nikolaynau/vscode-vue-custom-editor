@@ -30,6 +30,9 @@
 }
 
 .v-editor__controls {
+  /* display styles */
+  @apply flex items-center;
+
   /* visual styles */
   @apply whitespace-nowrap;
 }

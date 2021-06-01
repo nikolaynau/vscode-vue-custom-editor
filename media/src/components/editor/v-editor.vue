@@ -20,7 +20,7 @@
         {{ model.counter }}
       </div>
       <div class="v-editor__controls">
-        <div class="codicon codicon-clear-all"></div>
+        <v-action @click="onClear" title="Clear Counter (Delete)" icon="clear-all" />
         <v-button @click="onPlus(1)">+1</v-button>
         <v-button @click="onPlus(5)">+5</v-button>
         <v-button @click="onPlus(10)">+10</v-button>
@@ -57,11 +57,12 @@ export default {
   setup(props, { emit }) {
     const { value, focusOnStart } = toRefs(props);
 
-    const { model, input, onPlus, onReplace, onClick } = useEditor({
+    const { model, input, onPlus, onReplace, onClick, onClear } = useEditor({
       value,
       focusOnStart,
       emit
     });
+
     const { shortcuts, onUpKey, onDownKey, onDeleteKey } = useKeyboard({
       onPlus,
       onReplace
@@ -73,6 +74,7 @@ export default {
       shortcuts,
       onPlus,
       onClick,
+      onClear,
       onUpKey,
       onDownKey,
       onDeleteKey

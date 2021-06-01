@@ -11,26 +11,29 @@ module.exports = {
     extend: {
       colors: {
         "focus-border": "var(--vscode-focusBorder)",
+        "workbenck-foreground": "var(--vscode-foreground)",
+        "editor-foreground": "var(--vscode-editor-foreground)",
 
         "button-foreground": "var(--vscode-button-foreground)",
         "button-background": "var(--vscode-button-background)",
         "button-hover-background": "var(--vscode-button-hoverBackground)",
 
+        "action-hover-background": "var(--action-hover-background)",
+
         "keybinding-label-background": "var(--keybinding-label-background)",
         "keybinding-label-foreground": "var(--keybinding-label-foreground)",
         "keybinding-label-border": "var(--keybinding-label-border)",
-        "keybinding-label-bottom-border": "var(--keybinding-label-bottom-border)",
-
-        "workbenck-foreground": "var(--vscode-foreground)",
-        "editor-foreground": "var(--vscode-editor-foreground)"
+        "keybinding-label-bottom-border": "var(--keybinding-label-bottom-border)"
       },
       spacing: {
         "2sp": "0.125rem",
         "3sp": "0.1875rem",
-        "5sp": "0.3125rem"
+        "5sp": "0.3125rem",
+        "22sp": "1.375rem"
       },
       borderRadius: {
-        "3sp": "0.1875rem"
+        "3sp": "0.1875rem",
+        "5sp": "0.3125rem"
       },
       outline: {
         blue: ["1px solid var(--vscode-focusBorder)", "-1px"],
