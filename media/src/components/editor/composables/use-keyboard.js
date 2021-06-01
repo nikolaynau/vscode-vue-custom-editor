@@ -1,4 +1,5 @@
 import { reactive } from "vue";
+import { nextFocusElement, prevFocusElement } from "./util";
 
 export default function useKeyboard({ onPlus, onReplace }) {
   const shortcuts = reactive([
@@ -32,10 +33,20 @@ export default function useKeyboard({ onPlus, onReplace }) {
     onReplace(0);
   };
 
+  const onLeftKey = () => {
+    prevFocusElement();
+  };
+
+  const onRightKey = () => {
+    nextFocusElement()
+  };
+
   return {
     shortcuts,
     onUpKey,
     onDownKey,
+    onLeftKey,
+    onRightKey,
     onDeleteKey
   }
 }

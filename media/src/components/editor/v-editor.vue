@@ -3,6 +3,8 @@
     class="v-editor"
     @keydown.up="keyboardEnabled ? onUpKey($event) : null"
     @keydown.down="keyboardEnabled ? onDownKey($event) : null"
+    @keydown.left="keyboardEnabled ? onLeftKey($event) : null"
+    @keydown.right="keyboardEnabled ? onRightKey($event) : null"
     @keyup.delete="keyboardEnabled ? onDeleteKey($event) : null"
     @click.self="onClick"
   >
@@ -20,7 +22,11 @@
         {{ model.counter }}
       </div>
       <div class="v-editor__controls">
-        <v-action @click="onClear" title="Clear Counter (Delete)" icon="clear-all" />
+        <v-action
+          @click="onClear"
+          title="Clear Counter (Delete)"
+          icon="clear-all"
+        />
         <v-button @click="onPlus(1)">+1</v-button>
         <v-button @click="onPlus(5)">+5</v-button>
         <v-button @click="onPlus(10)">+10</v-button>
@@ -63,7 +69,14 @@ export default {
       emit
     });
 
-    const { shortcuts, onUpKey, onDownKey, onDeleteKey } = useKeyboard({
+    const {
+      shortcuts,
+      onUpKey,
+      onDownKey,
+      onLeftKey,
+      onRightKey,
+      onDeleteKey
+    } = useKeyboard({
       onPlus,
       onReplace
     });
@@ -77,6 +90,8 @@ export default {
       onClear,
       onUpKey,
       onDownKey,
+      onLeftKey,
+      onRightKey,
       onDeleteKey
     };
   }
