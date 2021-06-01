@@ -15,5 +15,6 @@ module.exports = {
     }
   },
   assetsDir: "assets",
+  publicPath: isProduction ? "./" : "/",
   filenameHashing: isProduction ? false : true
 }

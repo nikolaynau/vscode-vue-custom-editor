@@ -20,6 +20,7 @@
         {{ model.counter }}
       </div>
       <div class="v-editor__controls">
+        <div class="codicon codicon-clear-all"></div>
         <v-button @click="onPlus(1)">+1</v-button>
         <v-button @click="onPlus(5)">+5</v-button>
         <v-button @click="onPlus(10)">+10</v-button>
