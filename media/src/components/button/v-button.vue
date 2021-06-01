@@ -4,7 +4,7 @@
     :is="tag"
     class="v-button"
     :class="cssClasses"
-    :tabindex="tabIndex"
+    :tabindex="disabled ? null : tabIndex"
     @click="disabled ? null : onClick($event)"
     @keyup.esc="disabled ? null : onEscKey($event)"
     @keyup.space.enter="disabled ? null : onClick($event)"
@@ -41,7 +41,16 @@ export default {
       "v-button--disabled": disabled.value
     }));
 
+    const stopEvent = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
     const onClick = (e) => {
+      if (disabled.value) {
+        stopEvent(e);
+        return;
+      }
       emit("click", e);
     };
 
