@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.1.13] - 2021-06-19
+### Fixed
+- Сodicon were not displayed.
+
 ## [0.1.12] - 2021-06-02
 ### Added
 - The editor uses icons from the [vscode-codicons](https://github.com/microsoft/vscode-codicons).
