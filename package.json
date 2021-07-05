@@ -36,6 +36,12 @@
     "onCommand:vscodeVueCustomEditor.counterEditor2.new"
   ],
   "main": "./dist/extension.js",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": true
+  },
   "contributes": {
     "customEditors": [
       {
