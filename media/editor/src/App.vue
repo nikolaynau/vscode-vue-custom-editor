@@ -9,6 +9,5 @@ export default {
 </script>
 
 <style>
-@import "./assets/css/vscode";
 @import "./assets/css/style";
 </style>
