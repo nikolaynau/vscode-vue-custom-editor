@@ -17,7 +17,7 @@ export class CounterEditorProvider extends BaseEditorProvider<CounterDocument, C
   public static register(context: vscode.ExtensionContext): { dispose(): any } {
     CounterEditorProvider.current = new CounterEditorProvider(context);
 
-    const provider = vscode.window.registerCustomEditorProvider(
+    const disposable = vscode.window.registerCustomEditorProvider(
       CounterEditorProvider.viewType,
       CounterEditorProvider.current,
       CounterEditorProvider.options
@@ -26,7 +26,7 @@ export class CounterEditorProvider extends BaseEditorProvider<CounterDocument, C
     return {
       dispose: () => {
         CounterEditorProvider.current = undefined;
-        provider.dispose();
+        disposable.dispose();
       }
     };
   }
