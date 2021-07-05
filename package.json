@@ -115,6 +115,26 @@
         }
       }
     ],
+    "viewsContainers": {
+			"activitybar": [
+				{
+					"id": "counterExplorer",
+					"title": "Counter Editor",
+					"icon": "images/icons/panel-icon.svg",
+					"when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor3"
+				}
+			]
+		},
+		"views": {
+			"counterExplorer": [
+				{
+					"type": "webview",
+					"id": "vscodeVueCustomEditor.inpsectorView",
+					"name": "Inspector",
+					"when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor3"
+				}
+			]
+		},
     "menus": {
       "commandPalette": [
         {
