@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { isDefined } from './common/types';
 import { CounterEditorProvider } from './counterEditor/counterEditorProvider';
 import { Counter2EditorProvider } from './counterEditor2/counter2EditorProvider';
+import { CounterEditorProvider as CounterEditorProvider3 } from './counterEditor3/counterEditorProvider';
 
 export class NewCounterFileCommand {
   public static readonly id = "vscodeVueCustomEditor.counterEditor.new";
@@ -40,6 +41,26 @@ export class NewCounter2FileCommand {
     }
 
     vscode.commands.executeCommand('vscode.openWith', uri, Counter2EditorProvider.viewType);
+  }
+}
+
+export class NewCounter3FileCommand {
+  public static readonly id = "vscodeVueCustomEditor.counterEditor3.new";
+
+  private static newUntitledId = 1;
+
+  public static execute(): any {
+    const newFileName = `new-${NewCounter3FileCommand.newUntitledId++}.counter3`;
+    const workspaceFolders = vscode.workspace.workspaceFolders;
+
+    let uri;
+    if (workspaceFolders) {
+      uri = vscode.Uri.joinPath(workspaceFolders[0].uri, newFileName).with({ scheme: 'untitled' });
+    } else {
+      uri = vscode.Uri.parse(`untitled:${newFileName}`);
+    }
+
+    vscode.commands.executeCommand('vscode.openWith', uri, CounterEditorProvider3.viewType);
   }
 }
 

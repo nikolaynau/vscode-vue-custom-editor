@@ -63,6 +63,16 @@
           }
         ],
         "priority": "default"
+      },
+      {
+        "viewType": "vscodeVueCustomEditor.counterEditor3",
+        "displayName": "Counter Editor 3",
+        "selector": [
+          {
+            "filenamePattern": "*.counter3"
+          }
+        ],
+        "priority": "default"
       }
     ],
     "commands": [
@@ -70,6 +80,16 @@
         "command": "vscodeVueCustomEditor.counterEditor.new",
         "title": "Create New Counter Document",
         "category": "Counter Editor"
+      },
+      {
+        "command": "vscodeVueCustomEditor.counterEditor2.new",
+        "title": "Create New Counter2 Document",
+        "category": "Counter Editor 2"
+      },
+      {
+        "command": "vscodeVueCustomEditor.counterEditor3.new",
+        "title": "Create New Counter3 Document",
+        "category": "Counter Editor 3"
       },
       {
         "command": "vscodeVueCustomEditor.counterEditor.reset",
@@ -93,11 +113,6 @@
           "dark": "images/icons/dark-minus.svg",
           "light": "images/icons/light-minus.svg"
         }
-      },
-      {
-        "command": "vscodeVueCustomEditor.counterEditor2.new",
-        "title": "Create New Counter2 Document",
-        "category": "Counter Editor 2"
       }
     ],
     "menus": {
