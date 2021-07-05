@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { isDefined } from './common/types';
 import { CounterEditorProvider } from './counterEditor/counterEditorProvider';
-import { Counter2EditorProvider } from './counterEditor2/counter2EditorProvider';
+import { CounterEditorProvider as CounterEditorProvider2 } from './counterEditor2/counterEditorProvider';
 import { CounterEditorProvider as CounterEditorProvider3 } from './counterEditor3/counterEditorProvider';
 
 export class NewCounterFileCommand {
@@ -40,7 +40,7 @@ export class NewCounter2FileCommand {
       uri = vscode.Uri.parse(`untitled:${newFileName}`);
     }
 
-    vscode.commands.executeCommand('vscode.openWith', uri, Counter2EditorProvider.viewType);
+    vscode.commands.executeCommand('vscode.openWith', uri, CounterEditorProvider2.viewType);
   }
 }
 

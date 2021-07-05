@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { BaseEditorPanel } from '../common/editorPanel';
 import { getNonce } from '../common/util';
 
-export class Counter2EditorPanel extends BaseEditorPanel<string> {
+export class CounterEditorPanel extends BaseEditorPanel<string> {
 
   protected getHtmlForWebview(webview: vscode.Webview): string {
     const scriptPathOnDisk = vscode.Uri.joinPath(this.extensionUri, this.mediaFolderName, 'editor', 'dist', 'assets', 'js', 'app.js');
