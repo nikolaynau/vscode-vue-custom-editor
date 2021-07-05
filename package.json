@@ -33,7 +33,9 @@
     "onCustomEditor:vscodeVueCustomEditor.counterEditor",
     "onCommand:vscodeVueCustomEditor.counterEditor.new",
     "onCustomEditor:vscodeVueCustomEditor.counterEditor2",
-    "onCommand:vscodeVueCustomEditor.counterEditor2.new"
+    "onCommand:vscodeVueCustomEditor.counterEditor2.new",
+    "onCustomEditor:vscodeVueCustomEditor.counterEditor3",
+    "onCommand:vscodeVueCustomEditor.counterEditor3.new"
   ],
   "main": "./dist/extension.js",
   "capabilities": {
@@ -116,25 +118,25 @@
       }
     ],
     "viewsContainers": {
-			"activitybar": [
-				{
-					"id": "counterExplorer",
-					"title": "Counter Editor",
-					"icon": "images/icons/panel-icon.svg",
-					"when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor3"
-				}
-			]
-		},
-		"views": {
-			"counterExplorer": [
-				{
-					"type": "webview",
-					"id": "vscodeVueCustomEditor.inpsectorView",
-					"name": "Inspector",
-					"when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor3"
-				}
-			]
-		},
+      "activitybar": [
+        {
+          "id": "counterExplorer",
+          "title": "Counter Editor",
+          "icon": "images/icons/panel-icon.svg",
+          "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor3"
+        }
+      ]
+    },
+    "views": {
+      "counterExplorer": [
+        {
+          "type": "webview",
+          "id": "vscodeVueCustomEditor.inpsectorView",
+          "name": "Inspector",
+          "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor3"
+        }
+      ]
+    },
     "menus": {
       "commandPalette": [
         {

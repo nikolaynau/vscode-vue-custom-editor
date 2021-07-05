@@ -1,8 +1,28 @@
 import * as vscode from "vscode";
 
+let a = 1;
+
 export class InspectorView implements vscode.WebviewViewProvider {
   public static readonly viewType = "vscodeVueCustomEditor.inpsectorView";
   private _view?: vscode.WebviewView;
+
+  public static current: InspectorView | undefined;
+
+  public static register(context: vscode.ExtensionContext): { dispose(): any } {
+    InspectorView.current = new InspectorView(context.extensionUri);
+
+    const disposable = vscode.window.registerWebviewViewProvider(
+      InspectorView.viewType,
+      InspectorView.current
+    );
+
+    return {
+      dispose: () => {
+        InspectorView.current = undefined;
+        disposable.dispose();
+      }
+    };
+  }
 
   public constructor(private readonly _extensionUri: vscode.Uri) { }
 
@@ -17,6 +37,14 @@ export class InspectorView implements vscode.WebviewViewProvider {
     webviewView.webview.html = this.getHtmlForWebview(webviewView.webview);
 
     this._view.onDidDispose(() => this._view = undefined);
+  }
+
+  public show(forceFocus?: boolean): void {
+    if (this._view && !forceFocus) {
+      this._view.show();
+    } else {
+      vscode.commands.executeCommand(`${InspectorView.viewType}.focus`);
+    }
   }
 
   protected getWebviewOptions(): vscode.WebviewOptions {
@@ -38,7 +66,7 @@ export class InspectorView implements vscode.WebviewViewProvider {
       </head>
       <body>
         <div id="inspector">
-          Inspector
+          Inspector ${a++}
         </div>
       </body>
       </html>

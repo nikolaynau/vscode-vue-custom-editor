@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { BaseEditorProvider, EditorProviderOptions } from '../common/editorProvider';
+import { InspectorView } from '../inspectorView';
 import { CounterDocument } from './counterDocument';
 import { CounterEditor } from './counterEditor';
 
@@ -13,10 +14,17 @@ export class CounterEditorProvider extends BaseEditorProvider<CounterDocument, C
     supportsMultipleEditorsPerDocument: false
   };
 
-  public static register(context: vscode.ExtensionContext): vscode.Disposable {
+  public constructor(
+    context: vscode.ExtensionContext,
+    private readonly _inspectorView: InspectorView
+  ) {
+    super(context);
+  }
+
+  public static register(context: vscode.ExtensionContext, inspectorView: InspectorView): vscode.Disposable {
     return vscode.window.registerCustomEditorProvider(
       CounterEditorProvider.viewType,
-      new CounterEditorProvider(context),
+      new CounterEditorProvider(context, inspectorView),
       CounterEditorProvider.options
     );
   }
@@ -26,6 +34,6 @@ export class CounterEditorProvider extends BaseEditorProvider<CounterDocument, C
   }
 
   protected createEditor(extensionUri: vscode.Uri, document: CounterDocument): CounterEditor {
-    return CounterEditor.create(extensionUri, document);
+    return CounterEditor.create(extensionUri, document, this._inspectorView);
   }
 }
