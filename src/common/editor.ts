@@ -11,10 +11,17 @@ export interface Editor extends DisposableEvent {
   createViewPanel(webviewPanel: vscode.WebviewPanel): void;
 }
 
+export interface CreateViewPanelEvent<T> {
+  readonly editorPanel: T;
+}
+
 export abstract class BaseEditor<TDocument extends Document<any>, TPanel extends EditorPanel<any>> extends Disposable implements Editor {
 
   private readonly _onDidDispose = this._register(new vscode.EventEmitter<void>());
   public readonly onDidDispose = this._onDidDispose.event;
+
+  private readonly _onDidCreateViewPanel = this._register(new vscode.EventEmitter<CreateViewPanelEvent<TPanel>>());
+  public readonly onDidCreateViewPanel = this._onDidCreateViewPanel.event;
 
   private _panels = new EditorPanelCollection<TPanel>();
 
@@ -40,7 +47,7 @@ export abstract class BaseEditor<TDocument extends Document<any>, TPanel extends
     super.dispose();
   }
 
-  private registerListeners() {
+  protected registerListeners() {
     this._register(this._document.onDidDispose(() => this.dispose()));
     this._register(this._document.onDidChangeContent(e => this.updateViewPanels(e.content, e.changes, e.panelId)));
   }
@@ -50,6 +57,8 @@ export abstract class BaseEditor<TDocument extends Document<any>, TPanel extends
     panel.onDidReceiveEdit(e => this._document.makeEdit(e, panel.id));
     panel.setInitialData(this._document.documentData, this._document.getUnsavedChanges());
     this._panels.add(this._document.uri, panel);
+
+    this._onDidCreateViewPanel.fire({ editorPanel: panel });
   }
 
   public getActivePanel(): TPanel | undefined {

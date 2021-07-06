@@ -30,6 +30,7 @@
   ],
   "icon": "images/logo.png",
   "activationEvents": [
+    "onView:vscodeVueCustomEditor.inpsectorView",
     "onCustomEditor:vscodeVueCustomEditor.counterEditor",
     "onCommand:vscodeVueCustomEditor.counterEditor.new",
     "onCustomEditor:vscodeVueCustomEditor.counterEditor2",
@@ -45,6 +46,44 @@
     "virtualWorkspaces": true
   },
   "contributes": {
+    "configuration": [
+      {
+        "title": "Vue Custom Editor",
+        "properties": {
+          "vscodeVueCustomEditor.inspector.autoReveal": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to auto reveal the inspector when the couter editor is opened."
+          },
+          "vscodeVueCustomEditor.inspector.revealDelay": {
+            "type": "number",
+            "minimum": 0,
+						"default": 200,
+            "description": "Delay before auto opening inspector."
+          }
+        }
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "counterExplorer",
+          "title": "Counter Editor",
+          "icon": "images/icons/panel-icon.svg",
+          "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor3"
+        }
+      ]
+    },
+    "views": {
+      "counterExplorer": [
+        {
+          "type": "webview",
+          "id": "vscodeVueCustomEditor.inpsectorView",
+          "name": "Inspector",
+          "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor3"
+        }
+      ]
+    },
     "customEditors": [
       {
         "viewType": "vscodeVueCustomEditor.counterEditor",
@@ -117,26 +156,6 @@
         }
       }
     ],
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "counterExplorer",
-          "title": "Counter Editor",
-          "icon": "images/icons/panel-icon.svg",
-          "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor3"
-        }
-      ]
-    },
-    "views": {
-      "counterExplorer": [
-        {
-          "type": "webview",
-          "id": "vscodeVueCustomEditor.inpsectorView",
-          "name": "Inspector",
-          "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor3"
-        }
-      ]
-    },
     "menus": {
       "commandPalette": [
         {

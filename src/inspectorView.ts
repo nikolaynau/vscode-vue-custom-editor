@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { RunOnceScheduler } from "./common/async";
 
 let a = 1;
 
@@ -40,11 +41,36 @@ export class InspectorView implements vscode.WebviewViewProvider {
   }
 
   public show(forceFocus?: boolean): void {
+    if (!this._isAutoReveal) {
+      return;
+    }
+
     if (this._view && !forceFocus) {
       this._view.show();
     } else {
-      vscode.commands.executeCommand(`${InspectorView.viewType}.focus`);
+      this.focusView();
     }
+  }
+
+  public scheduleShow(forceFocus?: boolean): void {
+    if (!this._isAutoReveal) {
+      return;
+    }
+
+    const showView = new RunOnceScheduler(() => { this.show(forceFocus); }, this._revealDelay);
+    showView.schedule();
+  }
+
+  private get _isAutoReveal(): boolean {
+    return vscode.workspace.getConfiguration("vscodeVueCustomEditor.inspector").get("autoReveal", false);
+  }
+
+  private get _revealDelay(): number {
+    return vscode.workspace.getConfiguration("vscodeVueCustomEditor.inspector").get("revealDelay", 0);
+  }
+
+  private focusView(): void {
+    vscode.commands.executeCommand(`${InspectorView.viewType}.focus`);
   }
 
   protected getWebviewOptions(): vscode.WebviewOptions {

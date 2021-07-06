@@ -1,4 +1,4 @@
-import type * as vscode from 'vscode';
+import * as vscode from 'vscode';
 import { BaseEditor } from '../common/editor';
 import { InspectorView } from '../inspectorView';
 import { CounterDocument } from './counterDocument';
@@ -22,12 +22,21 @@ export class CounterEditor extends BaseEditor<CounterDocument, CounterEditorPane
     super(extensionUri, document);
   }
 
-  protected createEditorPanel(webviewPanel: vscode.WebviewPanel): CounterEditorPanel {
-    return new CounterEditorPanel(webviewPanel, this.extensionUri);
+  protected registerListeners() {
+    super.registerListeners();
+
+    this._register(this.onDidCreateViewPanel((e) => {
+      this._inspectorView.scheduleShow();
+
+      e.editorPanel.panel.onDidChangeViewState(e => {
+        if (e.webviewPanel.visible) {
+          this._inspectorView.show(true);
+        }
+      });
+    }));
   }
 
-  public createViewPanel(webviewPanel: vscode.WebviewPanel): void {
-    super.createViewPanel(webviewPanel);
-    this._inspectorView.show();
+  protected createEditorPanel(webviewPanel: vscode.WebviewPanel): CounterEditorPanel {
+    return new CounterEditorPanel(webviewPanel, this.extensionUri);
   }
 }
