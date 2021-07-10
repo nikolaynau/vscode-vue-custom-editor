@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { BaseEditor } from '../common/editor';
-import { InspectorView } from '../inspectorView';
+import { InspectorView } from '../common/inspectorView';
 import { CounterDocument } from './counterDocument';
 import { CounterEditorPanel } from './counterEditorPanel';
 
