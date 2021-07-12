@@ -20,10 +20,13 @@ export class CounterEditor extends BaseEditor<CounterDocument, CounterEditorPane
     private readonly _inspectorView: InspectorView
   ) {
     super(extensionUri, document);
+    this._registerListeners();
   }
 
-  protected registerListeners() {
-    super.registerListeners();
+  private _registerListeners() {
+    this._register(this._inspectorView.onDidEdit((e) => {
+      this.getActivePanel()?.applyEdits(e.changes, true);
+    }));
 
     this.onDidCreateViewPanel((e) => {
       const { editorPanel } = e;

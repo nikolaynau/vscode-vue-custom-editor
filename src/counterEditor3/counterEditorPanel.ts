@@ -11,7 +11,7 @@ export class CounterEditorPanel extends BaseEditorPanel<string> {
   protected createRpcProvider(): RpcProvider {
     const rpcProvider = super.createRpcProvider();
 
-    rpcProvider.registerSignalHandler<any>("inspector", (e) => {
+    rpcProvider.registerSignalHandler<any>("updateInspector", (e) => {
       this._onDidUpdateInspector.fire(e);
     });
 
@@ -44,6 +44,7 @@ export class CounterEditorPanel extends BaseEditorPanel<string> {
       </head>
       <body>
         <div id="app"></div>
+        <script nonce="${nonce}">window.location.hash="/editor-with-inspector";</script>
       </body>
       </html>
     `;
