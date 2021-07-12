@@ -4,30 +4,7 @@ import { EditorRpc } from './editor-rpc';
 export default function useEditor(vscode) {
   const rpc = new EditorRpc(vscode);
   const editor = ref(null);
-
   let pendingInitialData = null;
-
-  rpc.provider.registerRpcHandler("getFileData", () => {
-    if (!editor.value) return "";
-    return JSON.stringify(editor.value.model.getValue(), null, 2);
-  });
-
-  rpc.provider.registerRpcHandler("setFileData", (data) => {
-    editor.value?.model.setValue(data);
-  });
-
-  rpc.provider.registerRpcHandler("applyEdits", ({ editOperations, notify }) => {
-    editor.value?.model.applyEdits(editOperations, notify);
-  });
-
-  rpc.provider.registerRpcHandler("setInitialData", ({ data, editOperations }) => {
-    if (editor.value) {
-      editor.value.model.setValue(data);
-      editor.value.model.applyEdits(editOperations, false);
-    } else {
-      pendingInitialData = { data, editOperations };
-    }
-  });
 
   watch(editor, () => {
     if (pendingInitialData && editor.value) {
@@ -44,6 +21,33 @@ export default function useEditor(vscode) {
   onBeforeUnmount(() => {
     rpc.destroy();
   });
+
+  rpc.provider.registerRpcHandler("getFileData", getFileData);
+  rpc.provider.registerRpcHandler("setFileData", setFileData);
+  rpc.provider.registerRpcHandler("applyEdits", applyEdits);
+  rpc.provider.registerRpcHandler("setInitialData", setInitialData);
+
+  function getFileData() {
+    if (!editor.value) return "";
+    return JSON.stringify(editor.value.model.getValue(), null, 2);
+  }
+
+  function setFileData(data) {
+    editor.value?.model.setValue(data);
+  }
+
+  function applyEdits({ editOperations, notify }) {
+    editor.value?.model.applyEdits(editOperations, notify);
+  }
+
+  function setInitialData({ data, editOperations }) {
+    if (editor.value) {
+      editor.value.model.setValue(data);
+      editor.value.model.applyEdits(editOperations, false);
+    } else {
+      pendingInitialData = { data, editOperations };
+    }
+  }
 
   return {
     editor,
