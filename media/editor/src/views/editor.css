@@ -1,9 +1,9 @@
-.v-workbench {
+.editor-container {
   /* display styles */
   @apply overflow-auto;
 
   /* visual styles */
-  @apply text-workbenck-foreground;
+  @apply text-workbench-foreground;
 
   /* sizes */
   @apply w-full h-full;

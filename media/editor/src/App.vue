@@ -1,5 +1,5 @@
 <template>
-  <v-workbench />
+  <router-view />
 </template>
 
 <script>

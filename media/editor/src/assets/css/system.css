@@ -1,0 +1,4 @@
+.not-found {
+  /* sizes */
+  @apply pl-5 pr-10sp;
+}

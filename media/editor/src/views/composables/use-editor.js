@@ -1,8 +1,8 @@
 import { ref, watch, onBeforeUnmount } from "vue"
-import { WorkbenchRpc } from './workbench-rpc';
+import { EditorRpc } from './editor-rpc';
 
-export default function useWorkbench(vscode) {
-  const rpc = new WorkbenchRpc(vscode);
+export default function useEditor(vscode) {
+  const rpc = new EditorRpc(vscode);
   const editor = ref(null);
 
   let pendingInitialData = null;

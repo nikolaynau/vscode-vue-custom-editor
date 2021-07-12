@@ -11,7 +11,7 @@ module.exports = {
     extend: {
       colors: {
         "focus-border": "var(--vscode-focusBorder)",
-        "workbenck-foreground": "var(--vscode-foreground)",
+        "workbench-foreground": "var(--vscode-foreground)",
         "editor-foreground": "var(--vscode-editor-foreground)",
 
         "button-foreground": "var(--vscode-button-foreground)",
@@ -29,6 +29,7 @@ module.exports = {
         "2sp": "0.125rem",
         "3sp": "0.1875rem",
         "5sp": "0.3125rem",
+        "10sp": "0.625rem",
         "22sp": "1.375rem"
       },
       borderRadius: {

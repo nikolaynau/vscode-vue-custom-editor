@@ -1,5 +1,5 @@
 <template>
-  <div class="v-workbench">
+  <div class="editor-container">
     <v-editor
       ref="editor"
       @change-value="onChangeValue"
@@ -11,13 +11,13 @@
 
 <script>
 import { inject } from "vue";
-import useWorkbench from "./composables/use-workbench";
+import useEditor from "./composables/use-editor";
 
 export default {
-  name: "v-workbench",
+  name: "editor",
   setup() {
     const vscode = inject("$vscode");
-    const { editor, onChangeValue } = useWorkbench(vscode);
+    const { editor, onChangeValue } = useEditor(vscode);
 
     return {
       editor,
@@ -28,5 +28,5 @@ export default {
 </script>
 
 <style>
-@import "workbench";
+@import "editor";
 </style>

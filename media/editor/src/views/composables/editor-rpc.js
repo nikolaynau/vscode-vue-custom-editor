@@ -1,7 +1,7 @@
 import logger from '@/utils/logger';
 import { RpcProvider } from 'worker-rpc';
 
-export class WorkbenchRpc {
+export class EditorRpc {
   constructor(vscode) {
     this.provider = new RpcProvider(message => vscode.postMessage(message));
 
@@ -17,7 +17,7 @@ export class WorkbenchRpc {
   }
 
   handleError(err) {
-    logger.error("[WorkbenchRpc]: rpc provider error", err);
+    logger.error("[EditorRpc]: rpc provider error", err);
   }
 
   destroy() {
