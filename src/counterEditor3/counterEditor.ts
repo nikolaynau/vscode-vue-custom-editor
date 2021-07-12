@@ -25,15 +25,21 @@ export class CounterEditor extends BaseEditor<CounterDocument, CounterEditorPane
   protected registerListeners() {
     super.registerListeners();
 
-    this._register(this.onDidCreateViewPanel((e) => {
+    this.onDidCreateViewPanel((e) => {
+      const { editorPanel } = e;
       this._inspectorView.scheduleShow();
 
-      e.editorPanel.panel.onDidChangeViewState(e => {
+      editorPanel.onDidUpdateInspector((e) => {
+        this._inspectorView.setData(e);
+      });
+
+      editorPanel.panel.onDidChangeViewState(e => {
         if (e.webviewPanel.visible) {
+          editorPanel.needUpdateInspector();
           this._inspectorView.show(true);
         }
       });
-    }));
+    });
   }
 
   protected createEditorPanel(webviewPanel: vscode.WebviewPanel): CounterEditorPanel {

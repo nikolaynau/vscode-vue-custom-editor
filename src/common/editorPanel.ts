@@ -25,7 +25,7 @@ export abstract class BaseEditorPanel<TData> extends Disposable implements Edito
   private readonly _onDidRecieveEdit = this._register(new vscode.EventEmitter<DocumentEdit>());
   public readonly onDidReceiveEdit = this._onDidRecieveEdit.event;
 
-  private readonly _rpcProvider: RpcProvider;
+  protected readonly _rpcProvider: RpcProvider;
 
   public readonly id: number = BaseEditorPanel._nextId++;
 
