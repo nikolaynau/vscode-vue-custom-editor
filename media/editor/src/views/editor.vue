@@ -2,9 +2,11 @@
   <div class="editor-container">
     <v-editor
       ref="editor"
-      @change-value="onChangeValue"
       keyboard-enabled
+      :inspector-enabled="inspectorEnabled"
       focus-on-start
+      @change-value="onChangeValue"
+      @update-inspector="onUpdateInspector"
     />
   </div>
 </template>
@@ -15,13 +17,20 @@ import useEditor from "./composables/use-editor";
 
 export default {
   name: "editor",
+  props: {
+    inspectorEnabled: {
+      type: Boolean,
+      default: false
+    }
+  },
   setup() {
     const vscode = inject("$vscode");
-    const { editor, onChangeValue } = useEditor(vscode);
+    const { editor, onChangeValue, onUpdateInspector } = useEditor(vscode);
 
     return {
       editor,
-      onChangeValue
+      onChangeValue,
+      onUpdateInspector
     };
   }
 };

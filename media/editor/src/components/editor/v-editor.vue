@@ -42,6 +42,7 @@
 import { toRefs } from "vue";
 import useEditor from "./composables/use-editor";
 import useKeyboard from "./composables/use-keyboard";
+import useInspector from "./composables/use-inspector";
 
 export default {
   name: "v-editor",
@@ -57,17 +58,23 @@ export default {
     keyboardEnabled: {
       type: Boolean,
       default: false
+    },
+    inspectorEnabled: {
+      type: Boolean,
+      default: false
     }
   },
-  emits: ["change-value"],
+  emits: ["change-value", "update-inspector"],
   setup(props, { emit }) {
-    const { value, focusOnStart } = toRefs(props);
+    const { value, focusOnStart, inspectorEnabled } = toRefs(props);
 
     const { model, input, onPlus, onReplace, onClick, onClear } = useEditor({
       value,
       focusOnStart,
       emit
     });
+
+    useInspector({ model, inspectorEnabled, emit });
 
     const {
       shortcuts,
