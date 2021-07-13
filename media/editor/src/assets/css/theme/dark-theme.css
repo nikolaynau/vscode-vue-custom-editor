@@ -1,4 +1,5 @@
 .vscode-dark {
+  /* keybinding */
   --keybinding-label-background: rgba(128, 128, 128, 0.17);
   --keybinding-label-foreground: #ccc;
   --keybinding-label-border: rgba(51, 51, 51, 0.6);

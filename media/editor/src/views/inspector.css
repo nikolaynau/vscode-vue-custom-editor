@@ -3,5 +3,5 @@
   @apply overflow-auto;
 
   /* sizes */
-  @apply w-full h-full pl-5 pr-10sp;
+  @apply w-full h-full pl-10sp;
 }
