@@ -14,9 +14,7 @@
     </div>
     <div v-else class="v-editor__content">
       <div class="v-editor__controls">
-        <v-button @click="onPlus(-10)">-10</v-button>
-        <v-button @click="onPlus(-5)">-5</v-button>
-        <v-button @click="onPlus(-1)">-1</v-button>
+        <v-editor-buttons :items="model.leftButtons" @click="onPlus($event)" />
       </div>
       <div ref="input" class="v-editor__input" tabindex="0">
         {{ model.counter }}
@@ -27,9 +25,7 @@
           title="Clear Counter (Delete)"
           icon="clear-all"
         />
-        <v-button @click="onPlus(1)">+1</v-button>
-        <v-button @click="onPlus(5)">+5</v-button>
-        <v-button @click="onPlus(10)">+10</v-button>
+        <v-editor-buttons :items="model.rightButtons" @click="onPlus($event)" />
       </div>
     </div>
     <div class="v-editor__shortcuts">

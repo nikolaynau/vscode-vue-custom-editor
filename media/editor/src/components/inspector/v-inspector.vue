@@ -1,68 +1,37 @@
 <template>
   <div class="v-inspector">
-    <v-fieldset b-border label="Some input group">
+    <v-fieldset b-border label="General">
       <v-field-layout vertical>
         <template #label>
-          <v-label truncate>Some property</v-label>
+          <v-label truncate>Counter value</v-label>
         </template>
         <template #value>
           <v-input
-            v-model="form.text"
+            v-model="counterValueModel"
             type="text"
-            placeholder="Enter your text"
+            placeholder="Enter number"
           >
             <template #icon>
-              <span class="codicon codicon-file-code"></span>
-            </template>
-          </v-input>
-        </template>
-      </v-field-layout>
-      <v-field-layout vertical>
-        <template #label>
-          <v-label truncate>Some property</v-label>
-        </template>
-        <template #value>
-          <v-input
-            v-model="form.text"
-            type="text"
-            placeholder="Enter your text"
-          >
-            <template #icon>
-              <span class="codicon codicon-file-code"></span>
+              <span class="codicon codicon-info"></span>
             </template>
           </v-input>
         </template>
       </v-field-layout>
     </v-fieldset>
-    <v-fieldset label="Some input group">
-      <v-field-layout vertical>
+    <v-fieldset label="Controls">
+      <v-field-layout v-for="button in buttonInputs" :key="button.id" vertical>
         <template #label>
-          <v-label truncate>Some property</v-label>
+          <v-label truncate>Button #{{ button.id }}</v-label>
         </template>
         <template #value>
           <v-input
-            v-model="form.text"
+            :model-value="button.value"
+            @update:modelValue="onUpdateButton(button, $event)"
             type="text"
-            placeholder="Enter your text"
+            placeholder="Enter number"
           >
             <template #icon>
-              <span class="codicon codicon-file-code"></span>
-            </template>
-          </v-input>
-        </template>
-      </v-field-layout>
-      <v-field-layout vertical>
-        <template #label>
-          <v-label truncate>Some property</v-label>
-        </template>
-        <template #value>
-          <v-input
-            v-model="form.text"
-            type="text"
-            placeholder="Enter your text"
-          >
-            <template #icon>
-              <span class="codicon codicon-file-code"></span>
+              <span class="codicon codicon-info"></span>
             </template>
           </v-input>
         </template>
@@ -72,19 +41,34 @@
 </template>
 
 <script>
+import { toRefs } from "vue";
+import useInspector from "./composables/use-inspector";
+
 export default {
   name: "v-inspector",
   props: {
     dataModel: {
       type: Object,
       default: null
+    },
+    editDelay: {
+      type: Number,
+      default: 500
     }
   },
-  data() {
+  emits: ["edit"],
+  setup(props, { emit }) {
+    const { dataModel, editDelay } = toRefs(props);
+    const { counterValueModel, buttonInputs, onUpdateButton } = useInspector({
+      dataModel,
+      editDelay,
+      emit
+    });
+
     return {
-      form: {
-        text: null
-      }
+      counterValueModel,
+      buttonInputs,
+      onUpdateButton
     };
   }
 };

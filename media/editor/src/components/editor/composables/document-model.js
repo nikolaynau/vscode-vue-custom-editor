@@ -1,7 +1,8 @@
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import { isPlainObject } from "is-plain-object";
 import { isDefined } from "@/utils/types";
 import EventEmitter from "eventemitter3";
+import { createButtons } from "./buttons";
 
 export class DocumentModel extends EventEmitter {
   constructor(value) {
@@ -9,7 +10,15 @@ export class DocumentModel extends EventEmitter {
     this.counter = 0;
     this.versionId = 0;
     this.error = null;
+    this.buttons = createButtons();
     this._parseValue(value);
+  }
+
+  initComputed() {
+    this.leftButtons = computed(() =>
+      this.buttons.filter(b => b.side === "left"));
+    this.rightButtons = computed(() =>
+      this.buttons.filter(b => b.side === "right"));
   }
 
   getValue() {
@@ -79,6 +88,8 @@ export class DocumentModel extends EventEmitter {
         return this._applyPlusOperation(name, payload);
       case "replace":
         return this._applyReplaceOperation(name, payload);
+      case "change-button":
+        return this._applyChangeButtonOperation(name, payload);
     }
 
     return null;
@@ -128,6 +139,43 @@ export class DocumentModel extends EventEmitter {
       reverse: {
         name,
         payload: {
+          value: oldValue
+        }
+      }
+    }
+  }
+
+  _applyChangeButtonOperation(name, payload) {
+    if (!isDefined(payload) || !isPlainObject(payload)) {
+      return null;
+    }
+
+    const { buttonId, value } = payload;
+    if (typeof value !== "number") {
+      return null;
+    }
+
+    const button = this.buttons.find(button => button.id === buttonId);
+    if (!button) {
+      return null;
+    }
+
+    const oldValue = button.value;
+    button.value = value;
+    button.label = value > 0 ? `+${value}` : `${value}`;
+
+    return {
+      applied: {
+        name,
+        payload: {
+          buttonId: button.id,
+          value: button.value
+        }
+      },
+      reverse: {
+        name,
+        payload: {
+          buttonId: button.id,
           value: oldValue
         }
       }
@@ -203,5 +251,7 @@ export class DocumentModel extends EventEmitter {
 }
 
 export default function createModel(value) {
-  return reactive(new DocumentModel(value));
+  const instance = reactive(new DocumentModel(value));
+  instance.initComputed();
+  return instance;
 }
