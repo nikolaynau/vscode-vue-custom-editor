@@ -70,7 +70,7 @@ export default {
       emit
     });
 
-    useInspector({ model, inspectorEnabled, emit });
+    const { updateInspector } = useInspector({ model, inspectorEnabled, emit });
 
     const {
       shortcuts,
@@ -95,7 +95,8 @@ export default {
       onDownKey,
       onLeftKey,
       onRightKey,
-      onDeleteKey
+      onDeleteKey,
+      updateInspector
     };
   }
 };

@@ -89,7 +89,7 @@ export abstract class BaseEditor<TDocument extends Document<any>, TPanel extends
     }
 
     if (Array.isArray(changes)) {
-      await panel.applyEdits(changes);
+      await panel.applyEdits(changes, false);
     }
   }
 

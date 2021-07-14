@@ -42,7 +42,11 @@ export default function useEditor(vscode) {
   }
 
   function applyEdits({ editOperations, notify }) {
-    editor.value?.model.applyEdits(editOperations, notify);
+    editor.value?.model.applyEdits(editOperations, !!notify);
+
+    if (!notify) {
+      needUpdateInspector();
+    }
   }
 
   function setInitialData({ data, editOperations }) {
@@ -55,7 +59,7 @@ export default function useEditor(vscode) {
   }
 
   function needUpdateInspector() {
-    onUpdateInspector({ needUpdateInspector: true });
+    editor.value?.updateInspector();
   }
 
   return {

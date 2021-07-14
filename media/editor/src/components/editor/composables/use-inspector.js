@@ -17,4 +17,8 @@ export default function useInspector({ model, inspectorEnabled, emit }) {
       }))
     }
   }
+
+  return {
+    updateInspector
+  }
 }

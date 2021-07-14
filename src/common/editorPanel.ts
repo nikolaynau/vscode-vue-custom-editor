@@ -12,7 +12,7 @@ export interface EditorPanel<TData> extends DisposableEvent {
 
   getFileData(): Promise<TData>;
   setFileData(data: TData): Promise<void>;
-  applyEdits(editOperations: EditOperation[], notify?: boolean): Promise<void>;
+  applyEdits(editOperations: EditOperation[], notify: boolean): Promise<void>;
   setInitialData(data: TData, editOperations: EditOperation[]): Promise<void>;
 }
 
@@ -71,7 +71,7 @@ export abstract class BaseEditorPanel<TData> extends Disposable implements Edito
     return this._rpcProvider.rpc<TData>("setFileData", data);
   }
 
-  public applyEdits(editOperations: EditOperation[], notify?: boolean): Promise<void> {
+  public applyEdits(editOperations: EditOperation[], notify: boolean): Promise<void> {
     return this._rpcProvider.rpc("applyEdits", { editOperations, notify });
   }
 
