@@ -3,7 +3,7 @@
     <v-fieldset b-border label="General">
       <v-field-layout vertical>
         <template #label>
-          <v-label truncate>Counter value</v-label>
+          <v-label truncate>Counter</v-label>
         </template>
         <template #value>
           <v-input
