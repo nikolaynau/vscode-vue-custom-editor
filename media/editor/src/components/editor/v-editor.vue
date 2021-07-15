@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="v-editor__shortcuts">
-      <v-keyboard-shortcuts :items="shortcuts" title-right />
+      <v-keyboard-shortcuts :items="shortcuts" label-align="right" />
     </div>
   </div>
 </template>

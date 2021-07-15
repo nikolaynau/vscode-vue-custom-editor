@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="v-keyboard-shortcuts"
-    :class="{ 'v-keyboard-shortcuts--title-right': titleRight }"
-  >
+  <div class="v-keyboard-shortcuts" :class="cssClasses">
     <dl v-for="(item, index) in items" :key="index">
       <dt>{{ item.title }}</dt>
       <dd>
@@ -13,6 +10,8 @@
 </template>
 
 <script>
+import { computed, toRefs } from "vue";
+
 export default {
   name: "v-keyboard-shortcuts",
   props: {
@@ -20,10 +19,22 @@ export default {
       type: Array,
       default: () => []
     },
-    titleRight: {
-      type: Boolean,
-      default: false
+    labelAlign: {
+      type: String,
+      default: "left"
     }
+  },
+  setup(props) {
+    const { labelAlign } = toRefs(props);
+
+    const cssClasses = computed(() => ({
+      "v-keyboard-shortcuts--label-left": labelAlign.value === "left",
+      "v-keyboard-shortcuts--label-right": labelAlign.value === "right"
+    }));
+
+    return {
+      cssClasses
+    };
   }
 };
 </script>
