@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.2.0] - 2021-07-15
+### Added
+- Counter editor 3 with inspector.
+
 ## [0.1.13] - 2021-06-19
 ### Fixed
 - Сodicon were not displayed.
