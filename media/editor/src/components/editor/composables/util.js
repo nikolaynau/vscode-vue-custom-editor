@@ -29,12 +29,12 @@ export function prevFocusElement() {
   }
   let prevElement = activeElement?.previousElementSibling;
   if (prevElement?.classList.contains("v-editor__controls")) {
-    prevElement = prevElement.lastChild;
+    prevElement = prevElement.lastElementChild;
   } else if (!prevElement && activeElement?.parentNode?.previousElementSibling?.classList.contains("v-editor__input")) {
     prevElement = activeElement.parentNode.previousElementSibling;
   }
   if (!prevElement) {
-    prevElement = activeElement?.parentNode?.parentNode?.lastChild?.lastChild;
+    prevElement = activeElement?.parentNode?.parentNode?.lastElementChild?.lastElementChild;
   }
 
   if (prevElement) {
