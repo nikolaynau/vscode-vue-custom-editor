@@ -4,7 +4,7 @@
   "description": "Custom editor written on Vue.js for VS Code",
   "author": "Nikolay Naumenkov <nikolas.it.web@gmail.com>",
   "license": "SEE LICENSE IN LICENSE",
-  "version": "0.1.13",
+  "version": "0.2.0",
   "homepage": "https://github.com/nikolaynau/vscode-vue-custom-editor",
   "bugs": {
     "url": "https://github.com/nikolaynau/vscode-vue-custom-editor/issues",
@@ -58,7 +58,7 @@
           "vscodeVueCustomEditor.inspector.revealDelay": {
             "type": "number",
             "minimum": 0,
-						"default": 200,
+            "default": 200,
             "description": "Delay before auto opening inspector."
           }
         }
