@@ -221,7 +221,8 @@
     "editor:build": "cd media/editor && npm run build && cd ../..",
     "deploy": "vsce publish --no-yarn",
     "postversion": "npm run push",
-    "push": "git push origin master && git push origin master --tags"
+    "push": "git push origin master && git push origin master --tags",
+    "vsix": "npx vsce package"
   },
   "dependencies": {
     "worker-rpc": "0.2.0"
@@ -238,7 +239,7 @@
     "mocha": "^9.0.2",
     "ts-loader": "^9.2.3",
     "typescript": "^4.3.5",
-    "vsce": "^1.95.0",
+    "vsce": "^1.95.1",
     "vscode-test": "^1.5.2",
     "webpack": "^5.42.0",
     "webpack-cli": "^4.7.2"
