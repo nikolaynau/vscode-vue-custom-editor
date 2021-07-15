@@ -47,7 +47,7 @@ jobs:
     - name: Install project dependencies
       run: npm ci
     - name: Install media dependencies
-      run: cd media && npm ci && cd ..
+      run: cd media/editor && npm ci && cd ../..
     - name: Build vsix package
       run: npx vsce package -o vscode-vue-custom-editor.vsix
     - name: Get latest release version number
