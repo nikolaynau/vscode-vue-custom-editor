@@ -4,7 +4,11 @@ This extension contains an example implementation of a [custom editor](https://c
 As changes, the editor uses small objects called edit operations.
 There is support for multiple views for one document.
 
-![Custom Editor Screen](./images/screen.gif)
+![Custom Editor Screen](./images/editor.gif)
+
+Custom editor with inspector:
+
+![Custom Editor With Inspector](./images/inspector.gif)
 
 ## License
 
