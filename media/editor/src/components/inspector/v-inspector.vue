@@ -29,11 +29,7 @@
             @update:modelValue="onUpdateButton(button, $event)"
             type="text"
             placeholder="Enter number"
-          >
-            <template #icon>
-              <span class="codicon codicon-info"></span>
-            </template>
-          </v-input>
+          />
         </template>
       </v-field-layout>
     </v-fieldset>
