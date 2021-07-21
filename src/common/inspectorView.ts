@@ -30,13 +30,9 @@ export abstract class BaseInspectorView implements vscode.WebviewViewProvider, I
 
   public get view() { return this._view; }
 
-  public get isAutoReveal(): boolean {
-    return vscode.workspace.getConfiguration("vscodeVueCustomEditor.inspector").get("autoReveal", false);
-  }
+  public get isAutoReveal(): boolean { return true; }
 
-  public get revealDelay(): number {
-    return vscode.workspace.getConfiguration("vscodeVueCustomEditor.inspector").get("revealDelay", 0);
-  }
+  public get revealDelay(): number { return 0; }
 
   public resolveWebviewView(
     webviewView: vscode.WebviewView,

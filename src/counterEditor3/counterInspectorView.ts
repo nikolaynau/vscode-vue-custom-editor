@@ -27,6 +27,14 @@ export class CounterInspectorView extends BaseInspectorView {
     };
   }
 
+  public get isAutoReveal(): boolean {
+    return vscode.workspace.getConfiguration("vscodeVueCustomEditor.inspector").get("autoReveal", false);
+  }
+
+  public get revealDelay(): number {
+    return vscode.workspace.getConfiguration("vscodeVueCustomEditor.inspector").get("revealDelay", 0);
+  }
+
   protected createView(webviewView: vscode.WebviewView, extensionUri: vscode.Uri): InspectorWebviewView {
     return new CounterInspectorWebviewView(webviewView, extensionUri);
   }
