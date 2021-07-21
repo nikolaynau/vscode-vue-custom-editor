@@ -7,6 +7,7 @@ export interface EditorPanel<TData> extends DisposableEvent {
   readonly id: number;
   readonly visible: boolean;
   readonly active: boolean;
+  readonly panel: vscode.WebviewPanel;
 
   readonly onDidReceiveEdit: vscode.Event<DocumentEdit>;
 
@@ -87,11 +88,14 @@ export abstract class BaseEditorPanel<TData> extends Disposable implements Edito
       console.error("[EditorPanel]: rpc provider error:", err);
     });
 
+    this.registerRpcHandlers(rpcProvider);
+    return rpcProvider;
+  }
+
+  protected registerRpcHandlers(rpcProvider: RpcProvider): void {
     rpcProvider.registerSignalHandler<DocumentEdit>("edit", (e) => {
       this._onDidRecieveEdit.fire(e);
     });
-
-    return rpcProvider;
   }
 
   public dispose() {
