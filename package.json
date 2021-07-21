@@ -20,7 +20,8 @@
     "custom editor",
     "vue",
     "webview",
-    "example"
+    "example",
+    "inspector"
   ],
   "engines": {
     "vscode": "^1.57.1"
