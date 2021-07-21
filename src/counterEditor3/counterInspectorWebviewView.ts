@@ -19,7 +19,7 @@ export class CounterInspectorWebviewView extends BaseInspectorWebviewView {
         <meta charset="UTF-8">
         <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; img-src ${webview.cspSource}; font-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Counter Editor 3</title>
+        <title>Inspector</title>
 
         <script defer="defer" nonce="${nonce}" src="${scriptUri}"></script>
         <link href="${stylesUri}" rel="stylesheet">
