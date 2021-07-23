@@ -1,4 +1,4 @@
-/* @import "demo"; */
+/* @import "environment/style"; */
 @import "tailwind";
 @import "theme/light-theme";
 @import "theme/dark-theme";
