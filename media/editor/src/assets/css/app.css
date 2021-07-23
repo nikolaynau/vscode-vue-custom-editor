@@ -7,6 +7,9 @@ body {
   /* display styles */
   @apply overflow-hidden;
 
+  /* visual styles */
+  @apply font-vscode;
+
   /* sizes */
   @apply p-0;
 
