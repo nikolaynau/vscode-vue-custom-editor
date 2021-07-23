@@ -5,4 +5,10 @@
   --keybinding-label-border: rgba(51, 51, 51, 0.6);
   --keybinding-label-bottom-border: rgba(68, 68, 68, 0.6);
   --keybinding-label-shadow: rgba(0, 0, 0, 0.36);
+
+  /* action */
+  --action-hover-background: rgba(90, 93, 94, 0.31);
+
+  /* fieldset */
+  --fieldset-border: #cccccc33;
 }

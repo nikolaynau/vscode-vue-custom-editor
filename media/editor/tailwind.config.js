@@ -12,7 +12,6 @@ module.exports = {
       colors: {
         "foreground": "var(--vscode-foreground)",
         "focus-border": "var(--vscode-focusBorder)",
-        "workbench-foreground": "var(--vscode-foreground)",
         "editor-foreground": "var(--vscode-editor-foreground)",
 
         "input-placeholder-foreground": "var(--vscode-input-placeholderForeground)",

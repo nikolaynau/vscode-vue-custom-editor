@@ -1,7 +1,6 @@
-/* @import "vscode/vscode"; */
+/* @import "vscode-default/all"; */
 @import "tailwind";
-@import "theme/theme";
+@import "theme/light-theme";
 @import "theme/dark-theme";
-@import "base";
 @import "app";
 @import "system";

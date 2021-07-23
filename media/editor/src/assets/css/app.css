@@ -1,3 +1,19 @@
+html, body {
+  /* sizes */
+  @apply w-full h-full;
+}
+
+body {
+  /* display styles */
+  @apply overflow-hidden;
+
+  /* sizes */
+  @apply p-0;
+
+  /* selection */
+  @apply select-none;
+}
+
 #app {
   /* sizes */
   @apply w-full h-full;

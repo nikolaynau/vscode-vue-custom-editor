@@ -2,9 +2,6 @@
   /* display styles */
   @apply overflow-auto;
 
-  /* visual styles */
-  @apply text-workbench-foreground;
-
   /* sizes */
   @apply w-full h-full;
 }
