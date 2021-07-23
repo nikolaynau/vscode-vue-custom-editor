@@ -1,6 +1,5 @@
 html {
   scrollbar-color: var(--vscode-scrollbarSlider-background) var(--vscode-editor-background);
-  background-color: var(--vscode-editor-background);
 }
 
 body {
@@ -26,7 +25,10 @@ a:hover {
   color: var(--vscode-textLink-activeForeground);
 }
 
-a:focus, input:focus, select:focus, textarea:focus {
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
   outline: 1px solid -webkit-focus-ring-color;
   outline-offset: -1px;
 }
@@ -45,6 +47,7 @@ kbd {
   border-radius: 3px;
   vertical-align: middle;
   padding: 1px 3px;
+
   background-color: hsla(0, 0%, 50%, .17);
   border: 1px solid rgba(71, 71, 71, .4);
   border-bottom-color: rgba(88, 88, 88, .4);
