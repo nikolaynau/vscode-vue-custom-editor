@@ -1,7 +1,7 @@
 import { ref, watch, onBeforeUnmount } from "vue"
 import { ExthostRpc } from './exthost-rpc';
 
-export default function useEditor(vscode) {
+export default function useEditor(vscode, inspectorEnabled) {
   const rpc = new ExthostRpc(vscode);
   const editor = ref(null);
   let pendingInitialData = null;
@@ -30,7 +30,10 @@ export default function useEditor(vscode) {
   rpc.provider.registerRpcHandler("setFileData", setFileData);
   rpc.provider.registerRpcHandler("applyEdits", applyEdits);
   rpc.provider.registerRpcHandler("setInitialData", setInitialData);
-  rpc.provider.registerSignalHandler("needUpdateInspector", needUpdateInspector);
+
+  if (inspectorEnabled.value) {
+    rpc.provider.registerSignalHandler("needUpdateInspector", needUpdateInspector);
+  }
 
   function getFileData() {
     if (!editor.value) return "";
@@ -44,7 +47,7 @@ export default function useEditor(vscode) {
   function applyEdits({ editOperations, notify }) {
     editor.value?.model.applyEdits(editOperations, !!notify);
 
-    if (!notify) {
+    if (!notify && inspectorEnabled.value) {
       needUpdateInspector();
     }
   }

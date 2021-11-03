@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { inject } from "vue";
+import { inject, toRefs } from "vue";
 import useEditor from "./composables/use-editor";
 
 export default {
@@ -23,9 +23,13 @@ export default {
       default: false
     }
   },
-  setup() {
+  setup(props) {
+    const { inspectorEnabled } = toRefs(props);
     const vscode = inject("$vscode");
-    const { editor, onChangeValue, onUpdateInspector } = useEditor(vscode);
+    const { editor, onChangeValue, onUpdateInspector } = useEditor(
+      vscode,
+      inspectorEnabled
+    );
 
     return {
       editor,
