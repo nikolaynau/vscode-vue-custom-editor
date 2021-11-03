@@ -1,15 +1,9 @@
 import kebabCase from "lodash/kebabCase";
-
-const requireComponent = require.context(
-  "@/components",
-  true,
-  /v-[a-z0-9-]*.(vue|js)$/
-);
+const components = import.meta.globEager("../components/**/*.(vue|js)");
 
 export default {
   install: (app) => {
-    requireComponent.keys().forEach(fileName => {
-      const componentConfig = requireComponent(fileName);
+    for (const [fileName, componentConfig] of Object.entries(components)) {
       const componentName =
         kebabCase(
           fileName
@@ -17,11 +11,10 @@ export default {
             .pop()
             .replace(/\.\w+$/, "")
         );
-
       app.component(
         componentName,
         componentConfig.default || componentConfig
       );
-    });
+    }
   }
 }

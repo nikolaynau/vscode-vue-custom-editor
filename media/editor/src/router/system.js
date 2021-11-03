@@ -1,4 +1,4 @@
-import NotFound from "@/views/not-found";
+import NotFound from "@/views/not-found.vue";
 
 export default [
   {
