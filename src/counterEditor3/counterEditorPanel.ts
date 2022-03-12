@@ -5,10 +5,10 @@ import { getNonce } from '../common/util';
 export class CounterEditorPanel extends BaseEditorPanelWithInspector<string> {
 
   protected getHtmlForWebview(webview: vscode.Webview): string {
-    const scriptPathOnDisk = vscode.Uri.joinPath(this.extensionUri, this.mediaFolderName, 'editor', 'dist', 'assets', 'js', 'app.js');
+    const scriptPathOnDisk = vscode.Uri.joinPath(this.extensionUri, this.mediaFolderName, 'editor', 'dist', 'index.js');
     const scriptUri = webview.asWebviewUri(scriptPathOnDisk);
 
-    const stylesPathOnDisk = vscode.Uri.joinPath(this.extensionUri, this.mediaFolderName, 'editor', 'dist', 'assets', 'css', 'app.css');
+    const stylesPathOnDisk = vscode.Uri.joinPath(this.extensionUri, this.mediaFolderName, 'editor', 'dist', 'style.css');
     const stylesUri = webview.asWebviewUri(stylesPathOnDisk);
 
     const nonce = getNonce();

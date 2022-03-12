@@ -16,7 +16,6 @@ import { inject } from "vue";
 import useEditor from "./composables/use-editor";
 
 export default {
-  name: "editor",
   props: {
     inspectorEnabled: {
       type: Boolean,
@@ -25,7 +24,11 @@ export default {
   },
   setup() {
     const vscode = inject("$vscode");
-    const { editor, onChangeValue, onUpdateInspector } = useEditor(vscode);
+    const {
+      editor,
+      onChangeValue,
+      onUpdateInspector
+    } = useEditor(vscode);
 
     return {
       editor,

@@ -11,6 +11,7 @@ export default function useEditor(vscode) {
       editor.value.model.setValue(pendingInitialData.data);
       editor.value.model.applyEdits(pendingInitialData.editOperations, false);
       pendingInitialData = null;
+      needUpdateInspector();
     }
   });
 
@@ -33,7 +34,9 @@ export default function useEditor(vscode) {
   rpc.provider.registerSignalHandler("needUpdateInspector", needUpdateInspector);
 
   function getFileData() {
-    if (!editor.value) return "";
+    if (!editor.value) {
+      return "";
+    }
     return JSON.stringify(editor.value.model.getValue(), null, 2);
   }
 
@@ -53,6 +56,7 @@ export default function useEditor(vscode) {
     if (editor.value) {
       editor.value.model.setValue(data);
       editor.value.model.applyEdits(editOperations, false);
+      needUpdateInspector();
     } else {
       pendingInitialData = { data, editOperations };
     }

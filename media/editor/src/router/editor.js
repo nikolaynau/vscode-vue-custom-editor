@@ -1,16 +1,16 @@
 
-import Editor from "@/views/editor";
+import CEditor from "@/views/c-editor.vue";
 
 export default [
   {
     path: "/",
     name: "editor",
-    component: Editor
+    component: CEditor
   },
   {
     path: "/editor-with-inspector",
     name: "editorWithInspector",
     props: { inspectorEnabled: true },
-    component: Editor
+    component: CEditor
   }
 ]

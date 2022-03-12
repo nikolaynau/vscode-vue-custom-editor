@@ -9,7 +9,6 @@ import { inject } from "vue";
 import useInspector from "./composables/use-inspector";
 
 export default {
-  name: "inspector",
   setup() {
     const vscode = inject("$vscode");
     const { dataModel, onEdit } = useInspector(vscode);
