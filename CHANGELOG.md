@@ -1,6 +1,6 @@
 # Change Log
 
-## [0.2.1] - 2022-03-12
+## [0.2.2] - 2022-03-12
 ### Added
 - Build vue editor with vite.
 ### Fixed
