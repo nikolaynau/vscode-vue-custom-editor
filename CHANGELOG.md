@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.2.1] - 2022-03-12
+### Added
+- Build vue editor with vite.
+### Fixed
+- No initial updates inspector.
+
 ## [0.2.0] - 2021-07-15
 ### Added
 - Counter editor 3 with inspector.
