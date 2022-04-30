@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npm run dev",
+    "start": "vite",
     "dev": "vite",
     "watch": "vite build --watch",
     "build": "vite build",
@@ -15,18 +15,18 @@
     "eventemitter3": "4.0.7",
     "is-plain-object": "5.0.0",
     "lodash": "4.17.21",
-    "vue": "3.2.31",
+    "vue": "3.2.33",
     "vue-router": "4.0.14",
     "worker-rpc": "0.2.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.2.4",
-    "autoprefixer": "^10.4.2",
-    "eslint": "^8.11.0",
-    "eslint-plugin-vue": "^8.5.0",
-    "postcss": "^8.4.8",
-    "postcss-import": "^14.0.2",
+    "@vitejs/plugin-vue": "^2.3.1",
+    "autoprefixer": "^10.4.5",
+    "eslint": "^8.14.0",
+    "eslint-plugin-vue": "^8.7.1",
+    "postcss": "^8.4.13",
+    "postcss-import": "^14.1.0",
     "tailwindcss": "^2.2.19",
-    "vite": "^2.8.6"
+    "vite": "^2.9.6"
   }
 }
