@@ -1,7 +1,7 @@
 import { ref, watch, onBeforeUnmount } from 'vue';
 import { ExthostRpc } from './exthost-rpc';
 
-export default function useEditor(vscode) {
+export default function useEditor(vscode, inspectorEnabled) {
   const rpc = new ExthostRpc(vscode);
   const editor = ref(null);
   let pendingInitialData = null;
@@ -20,7 +20,9 @@ export default function useEditor(vscode) {
   };
 
   const onUpdateInspector = e => {
-    rpc.provider.signal('updateInspector', e);
+    if (inspectorEnabled.value) {
+      rpc.provider.signal('updateInspector', e);
+    }
   };
 
   onBeforeUnmount(() => {
