@@ -13,11 +13,11 @@
 
 <script>
 export default {
-  name: "v-action",
+  name: 'v-action',
   props: {
     tag: {
       type: String,
-      default: "a"
+      default: 'a'
     },
     icon: {
       type: String,
@@ -28,10 +28,10 @@ export default {
       default: null
     }
   },
-  emits: ["click"],
+  emits: ['click'],
   setup(props, { emit }) {
-    const onClick = (e) => {
-      emit("click", e);
+    const onClick = e => {
+      emit('click', e);
     };
 
     return {
@@ -42,5 +42,5 @@ export default {
 </script>
 
 <style>
-@import "action";
+@import 'action';
 </style>

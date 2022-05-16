@@ -18,9 +18,15 @@
       <div class="v-editor__controls">
         <v-editor-buttons :items="model.leftButtons" @click="onPlus($event)" />
       </div>
-      <div ref="input" class="v-editor__input" tabindex="0">{{ model.counter }}</div>
+      <div ref="input" class="v-editor__input" tabindex="0">
+        {{ model.counter }}
+      </div>
       <div class="v-editor__controls">
-        <v-action @click="onClear" title="Clear Counter (Delete)" icon="clear-all" />
+        <v-action
+          @click="onClear"
+          title="Clear Counter (Delete)"
+          icon="clear-all"
+        />
         <v-editor-buttons :items="model.rightButtons" @click="onPlus($event)" />
       </div>
     </div>
@@ -31,13 +37,13 @@
 </template>
 
 <script>
-import { toRefs } from "vue";
-import useEditor from "./composables/use-editor";
-import useKeyboard from "./composables/use-keyboard";
-import useInspector from "./composables/use-inspector";
+import { toRefs } from 'vue';
+import useEditor from './composables/use-editor';
+import useKeyboard from './composables/use-keyboard';
+import useInspector from './composables/use-inspector';
 
 export default {
-  name: "v-editor",
+  name: 'v-editor',
   props: {
     value: {
       type: String,
@@ -56,22 +62,11 @@ export default {
       default: false
     }
   },
-  emits: ["change-value", "update-inspector"],
+  emits: ['change-value', 'update-inspector'],
   setup(props, { emit }) {
-    const {
-      value,
-      focusOnStart,
-      inspectorEnabled
-    } = toRefs(props);
+    const { value, focusOnStart, inspectorEnabled } = toRefs(props);
 
-    const {
-      model,
-      input,
-      onPlus,
-      onReplace,
-      onClick,
-      onClear
-    } = useEditor({
+    const { model, input, onPlus, onReplace, onClick, onClear } = useEditor({
       value,
       focusOnStart,
       emit
@@ -114,5 +109,5 @@ export default {
 </script>
 
 <style>
-@import "editor";
+@import 'editor';
 </style>

@@ -1,12 +1,12 @@
-import { ref, watch, onMounted, nextTick } from "vue";
-import createModel from "./document-model";
+import { ref, watch, onMounted, nextTick } from 'vue';
+import createModel from './document-model';
 
 export default function useEditor({ value, focusOnStart, emit }) {
   const input = ref(null);
   const model = ref(createModel(value.value));
 
-  model.value.on("change", e => {
-    emit("change-value", e);
+  model.value.on('change', e => {
+    emit('change-value', e);
   });
 
   watch(value, () => {
@@ -19,13 +19,13 @@ export default function useEditor({ value, focusOnStart, emit }) {
     }
   });
 
-  const onPlus = (num) => {
-    const editOperation = { name: "plus", payload: { value: num } };
+  const onPlus = num => {
+    const editOperation = { name: 'plus', payload: { value: num } };
     model.value.applyEdits([editOperation]);
   };
 
-  const onReplace = (num) => {
-    const editOperation = { name: "replace", payload: { value: num } };
+  const onReplace = num => {
+    const editOperation = { name: 'replace', payload: { value: num } };
     model.value.applyEdits([editOperation]);
   };
 
@@ -36,7 +36,7 @@ export default function useEditor({ value, focusOnStart, emit }) {
 
   const onClick = () => {
     focusInput();
-  }
+  };
 
   function focusInput() {
     input.value?.focus();

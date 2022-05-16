@@ -23,10 +23,10 @@
 </template>
 
 <script>
-import { computed, ref, toRefs } from "vue";
+import { computed, ref, toRefs } from 'vue';
 
 export default {
-  name: "v-input",
+  name: 'v-input',
   inheritAttrs: false,
   props: {
     modelValue: {
@@ -35,7 +35,7 @@ export default {
     },
     type: {
       type: String,
-      default: "text"
+      default: 'text'
     },
     tabIndex: {
       type: Number,
@@ -58,7 +58,7 @@ export default {
       default: false
     }
   },
-  emits: ["update:modelValue", "icon-click"],
+  emits: ['update:modelValue', 'icon-click'],
   setup(props, { emit }) {
     const { modelValue, iconClickable, className, disabled, readonly } =
       toRefs(props);
@@ -66,23 +66,23 @@ export default {
 
     const value = computed({
       get: () => modelValue.value,
-      set: (val) => emit("update:modelValue", val)
+      set: val => emit('update:modelValue', val)
     });
 
     const iconClasses = computed(() => ({
-      "v-input__icon--clickable":
+      'v-input__icon--clickable':
         !disabled.value && !readonly.value && iconClickable.value
     }));
 
     const layoutClasses = computed(() => ({
       [className.value]: !!className.value,
-      "v-input-layout--disabled": disabled.value,
-      "v-input-layout--readonly": readonly.value
+      'v-input-layout--disabled': disabled.value,
+      'v-input-layout--readonly': readonly.value
     }));
 
-    const onIconClick = (e) => {
+    const onIconClick = e => {
       if (!iconClickable.value || disabled.value || readonly.value) return;
-      emit("icon-click", e);
+      emit('icon-click', e);
     };
 
     return {
@@ -97,5 +97,5 @@ export default {
 </script>
 
 <style>
-@import "input";
+@import 'input';
 </style>

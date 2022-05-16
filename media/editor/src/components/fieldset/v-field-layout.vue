@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import { computed, toRefs } from "vue";
+import { computed, toRefs } from 'vue';
 
 export default {
-  name: "v-field-layout",
+  name: 'v-field-layout',
   props: {
     vertical: {
       type: Boolean,
@@ -28,8 +28,8 @@ export default {
     const { vertical } = toRefs(props);
 
     const cssClasses = computed(() => ({
-      "v-field-layout--horizontal": !vertical.value,
-      "v-field-layout--vertical": vertical.value
+      'v-field-layout--horizontal': !vertical.value,
+      'v-field-layout--vertical': vertical.value
     }));
 
     return {
@@ -40,5 +40,5 @@ export default {
 </script>
 
 <style>
-@import "field-layout";
+@import 'field-layout';
 </style>

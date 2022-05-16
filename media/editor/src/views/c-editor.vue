@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import { inject } from "vue";
-import useEditor from "./composables/use-editor";
+import { inject } from 'vue';
+import useEditor from './composables/use-editor';
 
 export default {
   props: {
@@ -23,12 +23,8 @@ export default {
     }
   },
   setup() {
-    const vscode = inject("$vscode");
-    const {
-      editor,
-      onChangeValue,
-      onUpdateInspector
-    } = useEditor(vscode);
+    const vscode = inject('$vscode');
+    const { editor, onChangeValue, onUpdateInspector } = useEditor(vscode);
 
     return {
       editor,
@@ -40,5 +36,5 @@ export default {
 </script>
 
 <style>
-@import "editor";
+@import 'editor';
 </style>

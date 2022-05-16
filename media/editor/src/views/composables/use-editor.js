@@ -1,4 +1,4 @@
-import { ref, watch, onBeforeUnmount } from "vue"
+import { ref, watch, onBeforeUnmount } from 'vue';
 import { ExthostRpc } from './exthost-rpc';
 
 export default function useEditor(vscode) {
@@ -15,27 +15,30 @@ export default function useEditor(vscode) {
     }
   });
 
-  const onChangeValue = (e) => {
-    rpc.provider.signal("edit", e);
-  }
+  const onChangeValue = e => {
+    rpc.provider.signal('edit', e);
+  };
 
-  const onUpdateInspector = (e) => {
-    rpc.provider.signal("updateInspector", e);
-  }
+  const onUpdateInspector = e => {
+    rpc.provider.signal('updateInspector', e);
+  };
 
   onBeforeUnmount(() => {
     rpc.destroy();
   });
 
-  rpc.provider.registerRpcHandler("getFileData", getFileData);
-  rpc.provider.registerRpcHandler("setFileData", setFileData);
-  rpc.provider.registerRpcHandler("applyEdits", applyEdits);
-  rpc.provider.registerRpcHandler("setInitialData", setInitialData);
-  rpc.provider.registerSignalHandler("needUpdateInspector", needUpdateInspector);
+  rpc.provider.registerRpcHandler('getFileData', getFileData);
+  rpc.provider.registerRpcHandler('setFileData', setFileData);
+  rpc.provider.registerRpcHandler('applyEdits', applyEdits);
+  rpc.provider.registerRpcHandler('setInitialData', setInitialData);
+  rpc.provider.registerSignalHandler(
+    'needUpdateInspector',
+    needUpdateInspector
+  );
 
   function getFileData() {
     if (!editor.value) {
-      return "";
+      return '';
     }
     return JSON.stringify(editor.value.model.getValue(), null, 2);
   }
@@ -70,5 +73,5 @@ export default function useEditor(vscode) {
     editor,
     onChangeValue,
     onUpdateInspector
-  }
+  };
 }

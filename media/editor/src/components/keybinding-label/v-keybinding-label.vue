@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import { computed, toRefs } from "vue";
+import { computed, toRefs } from 'vue';
 
 export default {
-  name: "v-keybinding-label",
+  name: 'v-keybinding-label',
   props: {
     value: {
       type: String,
@@ -21,16 +21,16 @@ export default {
     },
     separator: {
       type: String,
-      default: "+"
+      default: '+'
     }
   },
   setup(props) {
     const { value, separator } = toRefs(props);
 
     const parts = computed(() => {
-      const keyParts = (value.value || "")
+      const keyParts = (value.value || '')
         .split(separator.value)
-        .filter((item) => !!item);
+        .filter(item => !!item);
       return keyParts;
     });
 
@@ -42,5 +42,5 @@ export default {
 </script>
 
 <style>
-@import "keybinding-label";
+@import 'keybinding-label';
 </style>

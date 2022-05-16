@@ -12,10 +12,10 @@ export default {
       default: () => []
     }
   },
-  emits: ["click"],
+  emits: ['click'],
   setup(props, { emit }) {
-    const onClick = (button) => {
-      emit("click", button.value);
+    const onClick = button => {
+      emit('click', button.value);
     };
 
     return {

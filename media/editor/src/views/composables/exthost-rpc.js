@@ -9,7 +9,7 @@ export class ExthostRpc {
     this.handleError = this.handleError.bind(this);
 
     this.provider.error.addHandler(this.handleError);
-    window.addEventListener("message", this.onMessage);
+    window.addEventListener('message', this.onMessage);
   }
 
   onMessage(e) {
@@ -17,11 +17,11 @@ export class ExthostRpc {
   }
 
   handleError(err) {
-    logger.error("[ExthostRpc]: rpc provider error", err);
+    logger.error('[ExthostRpc]: rpc provider error', err);
   }
 
   destroy() {
-    window.removeEventListener("message", this.onMessage);
+    window.removeEventListener('message', this.onMessage);
     this.provider._dispatch = null;
     this.provider._rpcHandlers = [];
     this.provider._signalHandlers = {};

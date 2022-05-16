@@ -4,10 +4,10 @@
 
 <script>
 export default {
-  name: "App"
+  name: 'app'
 };
 </script>
 
 <style>
-@import "./assets/css/style";
+@import './assets/css/style';
 </style>

@@ -5,12 +5,12 @@
 </template>
 
 <script>
-import { inject } from "vue";
-import useInspector from "./composables/use-inspector";
+import { inject } from 'vue';
+import useInspector from './composables/use-inspector';
 
 export default {
   setup() {
-    const vscode = inject("$vscode");
+    const vscode = inject('$vscode');
     const { dataModel, onEdit } = useInspector(vscode);
 
     return {
@@ -22,5 +22,5 @@ export default {
 </script>
 
 <style>
-@import "inspector";
+@import 'inspector';
 </style>

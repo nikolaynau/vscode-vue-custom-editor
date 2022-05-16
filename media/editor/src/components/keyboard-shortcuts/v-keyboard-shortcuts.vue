@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import { computed, toRefs } from "vue";
+import { computed, toRefs } from 'vue';
 
 export default {
-  name: "v-keyboard-shortcuts",
+  name: 'v-keyboard-shortcuts',
   props: {
     items: {
       type: Array,
@@ -21,15 +21,15 @@ export default {
     },
     labelAlign: {
       type: String,
-      default: "left"
+      default: 'left'
     }
   },
   setup(props) {
     const { labelAlign } = toRefs(props);
 
     const cssClasses = computed(() => ({
-      "v-keyboard-shortcuts--label-left": labelAlign.value === "left",
-      "v-keyboard-shortcuts--label-right": labelAlign.value === "right"
+      'v-keyboard-shortcuts--label-left': labelAlign.value === 'left',
+      'v-keyboard-shortcuts--label-right': labelAlign.value === 'right'
     }));
 
     return {
@@ -40,5 +40,5 @@ export default {
 </script>
 
 <style>
-@import "keyboard-shortcuts";
+@import 'keyboard-shortcuts';
 </style>

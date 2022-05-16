@@ -14,4 +14,4 @@ export default {
   error(message, ...args) {
     console.error(`[browser ${now()}]`, message, ...args);
   }
-}
+};

@@ -1,9 +1,9 @@
-import CNotFound from "@/views/c-not-found.vue";
+import CNotFound from '@/views/c-not-found.vue';
 
 export default [
   {
-    path: "/:pathMatch(.*)",
-    name: "not-found",
+    path: '/:pathMatch(.*)',
+    name: 'not-found',
     component: CNotFound
   }
-]
+];

@@ -2,39 +2,39 @@ export function createButtons() {
   return [
     {
       id: 1,
-      label: "-10",
+      label: '-10',
       value: -10,
-      side: "left"
+      side: 'left'
     },
     {
       id: 2,
-      label: "-5",
+      label: '-5',
       value: -5,
-      side: "left"
+      side: 'left'
     },
     {
       id: 3,
-      label: "-1",
+      label: '-1',
       value: -1,
-      side: "left"
+      side: 'left'
     },
     {
       id: 4,
-      label: "+1",
+      label: '+1',
       value: 1,
-      side: "right"
+      side: 'right'
     },
     {
       id: 5,
-      label: "+5",
+      label: '+5',
       value: 5,
-      side: "right"
+      side: 'right'
     },
     {
       id: 6,
-      label: "+10",
+      label: '+10',
       value: 10,
-      side: "right"
+      side: 'right'
     }
-  ]
+  ];
 }

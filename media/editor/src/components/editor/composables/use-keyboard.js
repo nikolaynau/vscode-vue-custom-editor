@@ -1,23 +1,23 @@
-import { reactive } from "vue";
-import { nextFocusElement, prevFocusElement } from "./util";
+import { reactive } from 'vue';
+import { nextFocusElement, prevFocusElement } from './util';
 
 export default function useKeyboard({ onPlus, onReplace }) {
   const shortcuts = reactive([
     {
-      title: "Increase Сounter",
-      key: "UpArrow"
+      title: 'Increase Сounter',
+      key: 'UpArrow'
     },
     {
-      title: "Decrease Сounter",
-      key: "DownArrow"
+      title: 'Decrease Сounter',
+      key: 'DownArrow'
     },
     {
-      title: "Clear Сounter",
-      key: "Delete"
+      title: 'Clear Сounter',
+      key: 'Delete'
     },
     {
-      title: "Clear Сounter",
-      key: "Backspace"
+      title: 'Clear Сounter',
+      key: 'Backspace'
     }
   ]);
 
@@ -38,7 +38,7 @@ export default function useKeyboard({ onPlus, onReplace }) {
   };
 
   const onRightKey = () => {
-    nextFocusElement()
+    nextFocusElement();
   };
 
   return {
@@ -48,5 +48,5 @@ export default function useKeyboard({ onPlus, onReplace }) {
     onLeftKey,
     onRightKey,
     onDeleteKey
-  }
+  };
 }

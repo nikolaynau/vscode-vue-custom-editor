@@ -1,8 +1,8 @@
-import { reactive, computed } from "vue";
-import { isPlainObject } from "is-plain-object";
-import { isDefined } from "@/utils/types";
-import EventEmitter from "eventemitter3";
-import { createButtons } from "./buttons";
+import { reactive, computed } from 'vue';
+import { isPlainObject } from 'is-plain-object';
+import { isDefined } from '@/utils/types';
+import EventEmitter from 'eventemitter3';
+import { createButtons } from './buttons';
 
 export class DocumentModel extends EventEmitter {
   constructor(value) {
@@ -16,9 +16,11 @@ export class DocumentModel extends EventEmitter {
 
   initComputed() {
     this.leftButtons = computed(() =>
-      this.buttons.filter(b => b.side === "left"));
+      this.buttons.filter(b => b.side === 'left')
+    );
     this.rightButtons = computed(() =>
-      this.buttons.filter(b => b.side === "right"));
+      this.buttons.filter(b => b.side === 'right')
+    );
   }
 
   getValue() {
@@ -84,11 +86,11 @@ export class DocumentModel extends EventEmitter {
     const { name, payload } = editOperation;
 
     switch (name) {
-      case "plus":
+      case 'plus':
         return this._applyPlusOperation(name, payload);
-      case "replace":
+      case 'replace':
         return this._applyReplaceOperation(name, payload);
-      case "change-button":
+      case 'change-button':
         return this._applyChangeButtonOperation(name, payload);
     }
 
@@ -116,7 +118,7 @@ export class DocumentModel extends EventEmitter {
           value: -value
         }
       }
-    }
+    };
   }
 
   _applyReplaceOperation(name, payload) {
@@ -142,7 +144,7 @@ export class DocumentModel extends EventEmitter {
           value: oldValue
         }
       }
-    }
+    };
   }
 
   _applyChangeButtonOperation(name, payload) {
@@ -151,7 +153,7 @@ export class DocumentModel extends EventEmitter {
     }
 
     const { buttonId, value } = payload;
-    if (typeof value !== "number") {
+    if (typeof value !== 'number') {
       return null;
     }
 
@@ -179,7 +181,7 @@ export class DocumentModel extends EventEmitter {
           value: oldValue
         }
       }
-    }
+    };
   }
 
   _getValueFromPayload(payload) {
@@ -188,7 +190,7 @@ export class DocumentModel extends EventEmitter {
     }
 
     const { value } = payload;
-    if (typeof value !== "number") {
+    if (typeof value !== 'number') {
       return null;
     }
 
@@ -202,7 +204,7 @@ export class DocumentModel extends EventEmitter {
   _buildValue() {
     return {
       counter: this.counter
-    }
+    };
   }
 
   _parseValue(value) {
@@ -217,8 +219,8 @@ export class DocumentModel extends EventEmitter {
       }
       return;
     }
-    if (typeof value !== "string") {
-      this.error = new Error("Argument value must be a string");
+    if (typeof value !== 'string') {
+      this.error = new Error('Argument value must be a string');
       return;
     }
     if (!value.length) {
@@ -229,7 +231,7 @@ export class DocumentModel extends EventEmitter {
       if (isDefined(data) && isPlainObject(data)) {
         this._parseData(data);
       } else {
-        this.error = new Error("The value must contain an object");
+        this.error = new Error('The value must contain an object');
       }
     } catch (err) {
       this.error = err;
@@ -237,13 +239,13 @@ export class DocumentModel extends EventEmitter {
   }
 
   _parseData(data) {
-    if (typeof data.counter === "number") {
+    if (typeof data.counter === 'number') {
       this.counter = data.counter;
     }
   }
 
   _emitChangeEvent(changes) {
-    this.emit("change", {
+    this.emit('change', {
       changes,
       versionId: this.versionId
     });

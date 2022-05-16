@@ -6,14 +6,14 @@
 </template>
 
 <script>
-import { toRefs, computed } from "vue";
+import { toRefs, computed } from 'vue';
 
 export default {
-  name: "v-fieldset",
+  name: 'v-fieldset',
   props: {
     tag: {
       type: String,
-      default: "div"
+      default: 'div'
     },
     label: {
       type: String,
@@ -36,9 +36,9 @@ export default {
     const { padding, tBorder, bBorder } = toRefs(props);
 
     const cssClasses = computed(() => ({
-      "v-fieldset--t-border": tBorder.value,
-      "v-fieldset--b-border": bBorder.value,
-      "v-fieldset--padding": padding.value
+      'v-fieldset--t-border': tBorder.value,
+      'v-fieldset--b-border': bBorder.value,
+      'v-fieldset--padding': padding.value
     }));
 
     return {
@@ -49,5 +49,5 @@ export default {
 </script>
 
 <style>
-@import "fieldset";
+@import 'fieldset';
 </style>

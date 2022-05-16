@@ -1,11 +1,11 @@
 export default function useInspector({ model, inspectorEnabled, emit }) {
   if (inspectorEnabled.value) {
-    model.value.on("change", updateInspector);
+    model.value.on('change', updateInspector);
     updateInspector();
   }
 
   function updateInspector() {
-    emit("update-inspector", createDataModel());
+    emit('update-inspector', createDataModel());
   }
 
   function createDataModel() {
@@ -15,10 +15,10 @@ export default function useInspector({ model, inspectorEnabled, emit }) {
         id: button.id,
         value: button.value
       }))
-    }
+    };
   }
 
   return {
     updateInspector
-  }
+  };
 }
