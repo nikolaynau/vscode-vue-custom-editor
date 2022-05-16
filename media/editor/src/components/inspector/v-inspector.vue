@@ -26,7 +26,7 @@
         <template #value>
           <v-input
             :model-value="button.value"
-            @update:modelValue="onUpdateButton(button, $event)"
+            @update:model-value="onUpdateButton(button, $event)"
             type="text"
             placeholder="Enter number"
           />
@@ -37,11 +37,11 @@
 </template>
 
 <script>
-import { toRefs } from "vue";
-import useInspector from "./composables/use-inspector";
+import { toRefs } from 'vue';
+import useInspector from './composables/use-inspector';
 
 export default {
-  name: "v-inspector",
+  name: 'v-inspector',
   props: {
     dataModel: {
       type: Object,
@@ -52,7 +52,7 @@ export default {
       default: 500
     }
   },
-  emits: ["edit"],
+  emits: ['edit'],
   setup(props, { emit }) {
     const { dataModel, editDelay } = toRefs(props);
     const { counterValueModel, buttonInputs, onUpdateButton } = useInspector({
