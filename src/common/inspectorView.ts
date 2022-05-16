@@ -1,6 +1,9 @@
-import * as vscode from "vscode";
-import { RunOnceScheduler } from "./async";
-import { InspectorViewEditEvent, InspectorWebviewView } from "./inspectorWebviewView";
+import * as vscode from 'vscode';
+import { RunOnceScheduler } from './async';
+import {
+  InspectorViewEditEvent,
+  InspectorWebviewView
+} from './inspectorWebviewView';
 
 export interface InspectorView {
   readonly view?: InspectorWebviewView;
@@ -15,24 +18,32 @@ export interface InspectorView {
   focusView(): void;
 }
 
-export abstract class BaseInspectorView implements vscode.WebviewViewProvider, InspectorView {
-
+export abstract class BaseInspectorView
+  implements vscode.WebviewViewProvider, InspectorView
+{
   private _view?: InspectorWebviewView;
   private _lastData: any;
 
-  private readonly _onDidEdit = new vscode.EventEmitter<InspectorViewEditEvent>();
+  private readonly _onDidEdit =
+    new vscode.EventEmitter<InspectorViewEditEvent>();
   public readonly onDidEdit = this._onDidEdit.event;
 
   public constructor(
     private readonly _extensionUri: vscode.Uri,
     private readonly _viewType: string
-  ) { }
+  ) {}
 
-  public get view() { return this._view; }
+  public get view() {
+    return this._view;
+  }
 
-  public get isAutoReveal(): boolean { return true; }
+  public get isAutoReveal(): boolean {
+    return true;
+  }
 
-  public get revealDelay(): number { return 0; }
+  public get revealDelay(): number {
+    return 0;
+  }
 
   public resolveWebviewView(
     webviewView: vscode.WebviewView,
@@ -40,7 +51,7 @@ export abstract class BaseInspectorView implements vscode.WebviewViewProvider, I
     _token: vscode.CancellationToken
   ): void {
     this._view = this.createView(webviewView, this._extensionUri);
-    this._view.onDidDispose(() => this._view = undefined);
+    this._view.onDidDispose(() => (this._view = undefined));
     this._view.onDidReady(() => this._view?.webviewView.show());
     this._view.onDidReceiveEdit(e => this._onDidEdit.fire(e));
 
@@ -55,7 +66,10 @@ export abstract class BaseInspectorView implements vscode.WebviewViewProvider, I
     }
   }
 
-  protected abstract createView(webviewView: vscode.WebviewView, extensionUri: vscode.Uri): InspectorWebviewView;
+  protected abstract createView(
+    webviewView: vscode.WebviewView,
+    extensionUri: vscode.Uri
+  ): InspectorWebviewView;
 
   public async setData(data: any): Promise<void> {
     this._lastData = data;
@@ -85,7 +99,9 @@ export abstract class BaseInspectorView implements vscode.WebviewViewProvider, I
       return;
     }
 
-    const showView = new RunOnceScheduler(() => { this.show(forceFocus); }, this.revealDelay);
+    const showView = new RunOnceScheduler(() => {
+      this.show(forceFocus);
+    }, this.revealDelay);
     showView.schedule();
   }
 

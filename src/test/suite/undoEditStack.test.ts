@@ -123,8 +123,8 @@ suite('Undo edit stack', () => {
 });
 
 class EditStackElementTest implements EditStackElement {
-  constructor(public id: number) { }
+  constructor(public id: number) {}
 
-  undo(): void { }
-  redo(): void { }
+  undo(): void {}
+  redo(): void {}
 }

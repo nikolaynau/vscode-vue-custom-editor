@@ -1,10 +1,10 @@
-import * as vscode from "vscode";
-import { BaseInspectorView } from "../common/inspectorView";
-import { InspectorWebviewView } from "../common/inspectorWebviewView";
-import { CounterInspectorWebviewView } from "./counterInspectorWebviewView";
+import * as vscode from 'vscode';
+import { BaseInspectorView } from '../common/inspectorView';
+import { InspectorWebviewView } from '../common/inspectorWebviewView';
+import { CounterInspectorWebviewView } from './counterInspectorWebviewView';
 
 export class CounterInspectorView extends BaseInspectorView {
-  public static readonly viewType = "vscodeVueCustomEditor.inpsectorView";
+  public static readonly viewType = 'vscodeVueCustomEditor.inpsectorView';
 
   public static current: CounterInspectorView | undefined;
 
@@ -28,14 +28,21 @@ export class CounterInspectorView extends BaseInspectorView {
   }
 
   public get isAutoReveal(): boolean {
-    return vscode.workspace.getConfiguration("vscodeVueCustomEditor.inspector").get("autoReveal", false);
+    return vscode.workspace
+      .getConfiguration('vscodeVueCustomEditor.inspector')
+      .get('autoReveal', false);
   }
 
   public get revealDelay(): number {
-    return vscode.workspace.getConfiguration("vscodeVueCustomEditor.inspector").get("revealDelay", 0);
+    return vscode.workspace
+      .getConfiguration('vscodeVueCustomEditor.inspector')
+      .get('revealDelay', 0);
   }
 
-  protected createView(webviewView: vscode.WebviewView, extensionUri: vscode.Uri): InspectorWebviewView {
+  protected createView(
+    webviewView: vscode.WebviewView,
+    extensionUri: vscode.Uri
+  ): InspectorWebviewView {
     return new CounterInspectorWebviewView(webviewView, extensionUri);
   }
 }

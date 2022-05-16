@@ -17,13 +17,20 @@ export interface EditorPanel<TData> extends DisposableEvent {
   setInitialData(data: TData, editOperations: EditOperation[]): Promise<void>;
 }
 
-export abstract class BaseEditorPanel<TData> extends Disposable implements EditorPanel<TData> {
+export abstract class BaseEditorPanel<TData>
+  extends Disposable
+  implements EditorPanel<TData>
+{
   private static _nextId: number = 1;
 
-  private readonly _onDidDispose = this._register(new vscode.EventEmitter<void>());
+  private readonly _onDidDispose = this._register(
+    new vscode.EventEmitter<void>()
+  );
   public readonly onDidDispose = this._onDidDispose.event;
 
-  private readonly _onDidRecieveEdit = this._register(new vscode.EventEmitter<DocumentEdit>());
+  private readonly _onDidRecieveEdit = this._register(
+    new vscode.EventEmitter<DocumentEdit>()
+  );
   public readonly onDidReceiveEdit = this._onDidRecieveEdit.event;
 
   protected readonly _rpcProvider: RpcProvider;
@@ -45,47 +52,69 @@ export abstract class BaseEditorPanel<TData> extends Disposable implements Edito
     this._register(this._panel.onDidDispose(() => this.dispose()));
   }
 
-  public get panel() { return this._panel; }
+  public get panel() {
+    return this._panel;
+  }
 
-  public get extensionUri() { return this._extensionUri; }
+  public get extensionUri() {
+    return this._extensionUri;
+  }
 
-  public get visible() { return this._panel.visible; }
+  public get visible() {
+    return this._panel.visible;
+  }
 
-  public get active() { return this._panel.active; }
+  public get active() {
+    return this._panel.active;
+  }
 
-  public get mediaFolderName() { return "media"; }
+  public get mediaFolderName() {
+    return 'media';
+  }
 
   protected abstract getHtmlForWebview(webview: vscode.Webview): string;
 
   protected getWebviewOptions(): vscode.WebviewOptions {
     return {
       enableScripts: true,
-      localResourceRoots: [vscode.Uri.joinPath(this._extensionUri, this.mediaFolderName)]
+      localResourceRoots: [
+        vscode.Uri.joinPath(this._extensionUri, this.mediaFolderName)
+      ]
     };
   }
 
   public getFileData(): Promise<TData> {
-    return this._rpcProvider.rpc<void, TData>("getFileData");
+    return this._rpcProvider.rpc<void, TData>('getFileData');
   }
 
   public setFileData(data: TData): Promise<void> {
-    return this._rpcProvider.rpc<TData>("setFileData", data);
+    return this._rpcProvider.rpc<TData>('setFileData', data);
   }
 
-  public applyEdits(editOperations: EditOperation[], notify: boolean): Promise<void> {
-    return this._rpcProvider.rpc("applyEdits", { editOperations, notify });
+  public applyEdits(
+    editOperations: EditOperation[],
+    notify: boolean
+  ): Promise<void> {
+    return this._rpcProvider.rpc('applyEdits', { editOperations, notify });
   }
 
-  public setInitialData(data: TData, editOperations: EditOperation[]): Promise<void> {
-    return this._rpcProvider.rpc("setInitialData", { data, editOperations });
+  public setInitialData(
+    data: TData,
+    editOperations: EditOperation[]
+  ): Promise<void> {
+    return this._rpcProvider.rpc('setInitialData', { data, editOperations });
   }
 
   protected createRpcProvider(): RpcProvider {
-    const rpcProvider = new RpcProvider((message) => this._panel.webview.postMessage(message));
-    this._register(this._panel.webview.onDidReceiveMessage(e => rpcProvider.dispatch(e)));
+    const rpcProvider = new RpcProvider(message =>
+      this._panel.webview.postMessage(message)
+    );
+    this._register(
+      this._panel.webview.onDidReceiveMessage(e => rpcProvider.dispatch(e))
+    );
 
-    rpcProvider.error.addHandler((err) => {
-      console.error("[EditorPanel]: rpc provider error:", err);
+    rpcProvider.error.addHandler(err => {
+      console.error('[EditorPanel]: rpc provider error:', err);
     });
 
     this.registerRpcHandlers(rpcProvider);
@@ -93,7 +122,7 @@ export abstract class BaseEditorPanel<TData> extends Disposable implements Edito
   }
 
   protected registerRpcHandlers(rpcProvider: RpcProvider): void {
-    rpcProvider.registerSignalHandler<DocumentEdit>("edit", (e) => {
+    rpcProvider.registerSignalHandler<DocumentEdit>('edit', e => {
       this._onDidRecieveEdit.fire(e);
     });
   }

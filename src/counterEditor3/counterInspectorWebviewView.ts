@@ -1,14 +1,25 @@
 import * as vscode from 'vscode';
-import { BaseInspectorWebviewView } from "../common/inspectorWebviewView";
+import { BaseInspectorWebviewView } from '../common/inspectorWebviewView';
 import { getNonce } from '../common/util';
 
 export class CounterInspectorWebviewView extends BaseInspectorWebviewView {
-
   protected getHtmlForWebview(webview: vscode.Webview): string {
-    const scriptPathOnDisk = vscode.Uri.joinPath(this.extensionUri, "media", 'editor', 'dist', 'index.js');
+    const scriptPathOnDisk = vscode.Uri.joinPath(
+      this.extensionUri,
+      'media',
+      'editor',
+      'dist',
+      'index.js'
+    );
     const scriptUri = webview.asWebviewUri(scriptPathOnDisk);
 
-    const stylesPathOnDisk = vscode.Uri.joinPath(this.extensionUri, "media", 'editor', 'dist', 'style.css');
+    const stylesPathOnDisk = vscode.Uri.joinPath(
+      this.extensionUri,
+      'media',
+      'editor',
+      'dist',
+      'style.css'
+    );
     const stylesUri = webview.asWebviewUri(stylesPathOnDisk);
 
     const nonce = getNonce();

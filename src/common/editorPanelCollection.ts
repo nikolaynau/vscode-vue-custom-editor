@@ -2,7 +2,6 @@ import type * as vscode from 'vscode';
 import { DisposableEvent } from './dispose';
 
 export class EditorPanelCollection<T extends DisposableEvent> {
-
   private readonly _panels = new Set<{
     readonly resource: string;
     readonly editorPanel: T;

@@ -41,7 +41,11 @@ export interface IDocumentModel<TData> {
   revertValue(value: TData, notify?: boolean): void;
   saveValue(value: TData, notify?: boolean): void;
 
-  makeEdit(changes: DocumentChangeElement[], panelId?: number, notify?: boolean): IDocumentEditStackElement | undefined;
+  makeEdit(
+    changes: DocumentChangeElement[],
+    panelId?: number,
+    notify?: boolean
+  ): IDocumentEditStackElement | undefined;
   applyUndo(editOperations: EditOperation[], notify?: boolean): void;
   applyRedo(editOperations: EditOperation[], notify?: boolean): void;
 
@@ -52,7 +56,6 @@ export interface IDocumentModel<TData> {
 }
 
 export class DocumentEditStackElement<T> implements IDocumentEditStackElement {
-
   private readonly _label: string;
   private readonly _appliedChanges: EditOperation[];
   private readonly _reverseChanges: EditOperation[];
@@ -61,18 +64,26 @@ export class DocumentEditStackElement<T> implements IDocumentEditStackElement {
     private readonly _model: IDocumentModel<T>,
     private readonly _changes: DocumentChangeElement[]
   ) {
-    this._label = this._changes[0]?.applied?.name ?? "unknown edit";
+    this._label = this._changes[0]?.applied?.name ?? 'unknown edit';
     this._appliedChanges = this._changes.map(c => c.applied);
     this._reverseChanges = this._changes.map(c => c.reverse).reverse();
   }
 
-  public get changes() { return this._changes; }
+  public get changes() {
+    return this._changes;
+  }
 
-  public get label() { return this._label; }
+  public get label() {
+    return this._label;
+  }
 
-  public get appliedChanges() { return this._appliedChanges; }
+  public get appliedChanges() {
+    return this._appliedChanges;
+  }
 
-  public get reverseChanges() { return this._reverseChanges; }
+  public get reverseChanges() {
+    return this._reverseChanges;
+  }
 
   public undo(): void {
     this._model.applyUndo(this._reverseChanges, true);
@@ -84,17 +95,22 @@ export class DocumentEditStackElement<T> implements IDocumentEditStackElement {
 }
 
 export class DocumentModel<TData> implements IDocumentModel<TData> {
-
-  private readonly _onDidChangeValue = new vscode.EventEmitter<DocumentChangeContentEvent<TData>>();
+  private readonly _onDidChangeValue = new vscode.EventEmitter<
+    DocumentChangeContentEvent<TData>
+  >();
   public readonly onDidChangeValue = this._onDidChangeValue.event;
 
-  private readonly _undoEditStack = new UndoRedoStack<DocumentEditStackElement<TData>>();
+  private readonly _undoEditStack = new UndoRedoStack<
+    DocumentEditStackElement<TData>
+  >();
 
   public storeChanges: boolean = true;
 
-  constructor(private _value: TData) { }
+  constructor(private _value: TData) {}
 
-  public get undoEditStack() { return this._undoEditStack; }
+  public get undoEditStack() {
+    return this._undoEditStack;
+  }
 
   public getValue(): TData {
     return this._value;
@@ -120,7 +136,11 @@ export class DocumentModel<TData> implements IDocumentModel<TData> {
     }
   }
 
-  public makeEdit(changes: DocumentChangeElement[], panelId?: number, notify?: boolean): DocumentEditStackElement<TData> | undefined {
+  public makeEdit(
+    changes: DocumentChangeElement[],
+    panelId?: number,
+    notify?: boolean
+  ): DocumentEditStackElement<TData> | undefined {
     if (changes.length === 0) {
       return undefined;
     }
@@ -131,7 +151,10 @@ export class DocumentModel<TData> implements IDocumentModel<TData> {
     }
 
     if (notify) {
-      this._onDidChangeValue.fire({ changes: stackElement.appliedChanges, panelId });
+      this._onDidChangeValue.fire({
+        changes: stackElement.appliedChanges,
+        panelId
+      });
     }
 
     return stackElement;

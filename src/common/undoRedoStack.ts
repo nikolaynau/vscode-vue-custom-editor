@@ -4,7 +4,6 @@ export interface EditStackElement {
 }
 
 export class UndoRedoStack<T extends EditStackElement> {
-
   private readonly _elements: T[] = [];
   private _savePointIndex: number = -1;
   private _currentEditIndex: number = -1;
@@ -46,14 +45,20 @@ export class UndoRedoStack<T extends EditStackElement> {
 
   public getLeftElements(): T[] {
     if (this._currentEditIndex < this._savePointIndex) {
-      return this._elements.slice(this._currentEditIndex + 1, this._savePointIndex + 1);
+      return this._elements.slice(
+        this._currentEditIndex + 1,
+        this._savePointIndex + 1
+      );
     }
     return [];
   }
 
   public getRightElements() {
     if (this._currentEditIndex > this._savePointIndex) {
-      return this._elements.slice(this._savePointIndex + 1, this._currentEditIndex + 1);
+      return this._elements.slice(
+        this._savePointIndex + 1,
+        this._currentEditIndex + 1
+      );
     }
     return [];
   }

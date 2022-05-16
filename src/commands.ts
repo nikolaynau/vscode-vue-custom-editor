@@ -5,7 +5,7 @@ import { CounterEditorProvider as CounterEditorProvider2 } from './counterEditor
 import { CounterEditorProvider as CounterEditorProvider3 } from './counterEditor3/counterEditorProvider';
 
 export class NewCounterFileCommand {
-  public static readonly id = "vscodeVueCustomEditor.counterEditor.new";
+  public static readonly id = 'vscodeVueCustomEditor.counterEditor.new';
 
   private static newUntitledId = 1;
 
@@ -15,17 +15,23 @@ export class NewCounterFileCommand {
 
     let uri;
     if (workspaceFolders) {
-      uri = vscode.Uri.joinPath(workspaceFolders[0].uri, newFileName).with({ scheme: 'untitled' });
+      uri = vscode.Uri.joinPath(workspaceFolders[0].uri, newFileName).with({
+        scheme: 'untitled'
+      });
     } else {
       uri = vscode.Uri.parse(`untitled:${newFileName}`);
     }
 
-    vscode.commands.executeCommand('vscode.openWith', uri, CounterEditorProvider.viewType);
+    vscode.commands.executeCommand(
+      'vscode.openWith',
+      uri,
+      CounterEditorProvider.viewType
+    );
   }
 }
 
 export class NewCounter2FileCommand {
-  public static readonly id = "vscodeVueCustomEditor.counterEditor2.new";
+  public static readonly id = 'vscodeVueCustomEditor.counterEditor2.new';
 
   private static newUntitledId = 1;
 
@@ -35,17 +41,23 @@ export class NewCounter2FileCommand {
 
     let uri;
     if (workspaceFolders) {
-      uri = vscode.Uri.joinPath(workspaceFolders[0].uri, newFileName).with({ scheme: 'untitled' });
+      uri = vscode.Uri.joinPath(workspaceFolders[0].uri, newFileName).with({
+        scheme: 'untitled'
+      });
     } else {
       uri = vscode.Uri.parse(`untitled:${newFileName}`);
     }
 
-    vscode.commands.executeCommand('vscode.openWith', uri, CounterEditorProvider2.viewType);
+    vscode.commands.executeCommand(
+      'vscode.openWith',
+      uri,
+      CounterEditorProvider2.viewType
+    );
   }
 }
 
 export class NewCounter3FileCommand {
-  public static readonly id = "vscodeVueCustomEditor.counterEditor3.new";
+  public static readonly id = 'vscodeVueCustomEditor.counterEditor3.new';
 
   private static newUntitledId = 1;
 
@@ -55,26 +67,33 @@ export class NewCounter3FileCommand {
 
     let uri;
     if (workspaceFolders) {
-      uri = vscode.Uri.joinPath(workspaceFolders[0].uri, newFileName).with({ scheme: 'untitled' });
+      uri = vscode.Uri.joinPath(workspaceFolders[0].uri, newFileName).with({
+        scheme: 'untitled'
+      });
     } else {
       uri = vscode.Uri.parse(`untitled:${newFileName}`);
     }
 
-    vscode.commands.executeCommand('vscode.openWith', uri, CounterEditorProvider3.viewType);
+    vscode.commands.executeCommand(
+      'vscode.openWith',
+      uri,
+      CounterEditorProvider3.viewType
+    );
   }
 }
 
 export class ResetCounterCommand {
-  public static readonly id = "vscodeVueCustomEditor.counterEditor.reset";
+  public static readonly id = 'vscodeVueCustomEditor.counterEditor.reset';
 
   public static execute(): any {
-    const activeEditorPanel = CounterEditorProvider.current?.activeCustomEditor?.getActivePanel();
+    const activeEditorPanel =
+      CounterEditorProvider.current?.activeCustomEditor?.getActivePanel();
     if (!activeEditorPanel) {
       return;
     }
 
     const editOperation = {
-      name: "replace",
+      name: 'replace',
       payload: {
         value: 0
       }
@@ -84,21 +103,24 @@ export class ResetCounterCommand {
 }
 
 export class AddNumberCommand {
-  public static readonly id = "vscodeVueCustomEditor.counterEditor.add";
+  public static readonly id = 'vscodeVueCustomEditor.counterEditor.add';
 
   public static async execute(): Promise<any> {
-    const activeEditorPanel = CounterEditorProvider.current?.activeCustomEditor?.getActivePanel();
+    const activeEditorPanel =
+      CounterEditorProvider.current?.activeCustomEditor?.getActivePanel();
     if (!activeEditorPanel) {
       return;
     }
 
-    const result = await openNumberInput("Enter the number to increase the counter");
+    const result = await openNumberInput(
+      'Enter the number to increase the counter'
+    );
     if (!isDefined(result)) {
       return;
     }
 
     const editOperation = {
-      name: "plus",
+      name: 'plus',
       payload: {
         value: result
       }
@@ -108,21 +130,24 @@ export class AddNumberCommand {
 }
 
 export class SubtractNumberCommand {
-  public static readonly id = "vscodeVueCustomEditor.counterEditor.subtract";
+  public static readonly id = 'vscodeVueCustomEditor.counterEditor.subtract';
 
   public static async execute(): Promise<any> {
-    const activeEditorPanel = CounterEditorProvider.current?.activeCustomEditor?.getActivePanel();
+    const activeEditorPanel =
+      CounterEditorProvider.current?.activeCustomEditor?.getActivePanel();
     if (!activeEditorPanel) {
       return;
     }
 
-    const result = await openNumberInput("Enter the number to decrease the counter");
+    const result = await openNumberInput(
+      'Enter the number to decrease the counter'
+    );
     if (!isDefined(result)) {
       return;
     }
 
     const editOperation = {
-      name: "plus",
+      name: 'plus',
       payload: {
         value: -result!
       }
@@ -131,7 +156,9 @@ export class SubtractNumberCommand {
   }
 }
 
-async function openNumberInput(placeHolder?: string): Promise<number | undefined> {
+async function openNumberInput(
+  placeHolder?: string
+): Promise<number | undefined> {
   const result = await vscode.window.showInputBox({
     placeHolder,
     validateInput: text => {
@@ -140,7 +167,7 @@ async function openNumberInput(placeHolder?: string): Promise<number | undefined
       }
       const num = Number.parseInt(text, 10);
       if (Number.isNaN(num)) {
-        return "Please enter the correct number";
+        return 'Please enter the correct number';
       }
       return null;
     }

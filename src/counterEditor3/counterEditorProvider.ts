@@ -5,8 +5,11 @@ import { InspectorView } from '../common/inspectorView';
 import { CounterDocument } from './counterDocument';
 import { CounterEditor } from './counterEditor';
 
-export class CounterEditorProvider extends BaseEditorProviderWithInspector<CounterDocument, CounterEditor> {
-  public static readonly viewType = "vscodeVueCustomEditor.counterEditor3";
+export class CounterEditorProvider extends BaseEditorProviderWithInspector<
+  CounterDocument,
+  CounterEditor
+> {
+  public static readonly viewType = 'vscodeVueCustomEditor.counterEditor3';
 
   private static options: EditorProviderOptions = {
     webviewOptions: {
@@ -15,7 +18,10 @@ export class CounterEditorProvider extends BaseEditorProviderWithInspector<Count
     supportsMultipleEditorsPerDocument: false
   };
 
-  public static register(context: vscode.ExtensionContext, inspectorView: InspectorView): vscode.Disposable {
+  public static register(
+    context: vscode.ExtensionContext,
+    inspectorView: InspectorView
+  ): vscode.Disposable {
     return vscode.window.registerCustomEditorProvider(
       CounterEditorProvider.viewType,
       new CounterEditorProvider(context, inspectorView),
@@ -23,11 +29,17 @@ export class CounterEditorProvider extends BaseEditorProviderWithInspector<Count
     );
   }
 
-  protected createDocument(uri: vscode.Uri, openContext: vscode.CustomDocumentOpenContext): Promise<CounterDocument> {
+  protected createDocument(
+    uri: vscode.Uri,
+    openContext: vscode.CustomDocumentOpenContext
+  ): Promise<CounterDocument> {
     return CounterDocument.create(uri, openContext.backupId);
   }
 
-  protected createEditor(extensionUri: vscode.Uri, document: CounterDocument): CounterEditor {
+  protected createEditor(
+    extensionUri: vscode.Uri,
+    document: CounterDocument
+  ): CounterEditor {
     return CounterEditor.create(extensionUri, document, this.inspectorView);
   }
 }

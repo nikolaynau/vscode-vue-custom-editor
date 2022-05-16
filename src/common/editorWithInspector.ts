@@ -1,16 +1,20 @@
 import type * as vscode from 'vscode';
-import { Document } from "./document";
-import { BaseEditor, Editor } from "./editor";
+import { Document } from './document';
+import { BaseEditor, Editor } from './editor';
 import { EditorPanelWithInspector } from './editorPanelWithInspector';
 import { InspectorView } from './inspectorView';
 
 export interface EditorWithInspector extends Editor {
-  readonly inspectorView: InspectorView
+  readonly inspectorView: InspectorView;
 }
 
-export abstract class BaseEditorWithInspector<TDocument extends Document<any>, TPanel extends EditorPanelWithInspector<any>>
-  extends BaseEditor<TDocument, TPanel> implements EditorWithInspector {
-
+export abstract class BaseEditorWithInspector<
+    TDocument extends Document<any>,
+    TPanel extends EditorPanelWithInspector<any>
+  >
+  extends BaseEditor<TDocument, TPanel>
+  implements EditorWithInspector
+{
   public constructor(
     extensionUri: vscode.Uri,
     document: TDocument,
@@ -20,18 +24,22 @@ export abstract class BaseEditorWithInspector<TDocument extends Document<any>, T
     this._registerInspectorListeners();
   }
 
-  public get inspectorView() { return this._inspectorView; }
+  public get inspectorView() {
+    return this._inspectorView;
+  }
 
   private _registerInspectorListeners() {
-    this._register(this._inspectorView.onDidEdit((e) => {
-      this.getActivePanel()?.applyEdits(e.changes, true);
-    }));
+    this._register(
+      this._inspectorView.onDidEdit(e => {
+        this.getActivePanel()?.applyEdits(e.changes, true);
+      })
+    );
 
-    this.onDidCreateViewPanel((e) => {
+    this.onDidCreateViewPanel(e => {
       const { editorPanel } = e;
       this._inspectorView.scheduleShow();
 
-      editorPanel.onDidUpdateInspector((e) => {
+      editorPanel.onDidUpdateInspector(e => {
         this._inspectorView.setData(e);
       });
 
