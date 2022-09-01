@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.2.3] - 2022-09-01
+### Changed
+- Up dependency versions.
+
 ## [0.2.2] - 2022-03-12
 ### Added
 - Build vue editor with vite.
@@ -16,7 +20,7 @@
 
 ## [0.1.12] - 2021-06-02
 ### Added
-- The editor uses icons from the [vscode-codicons](https://github.com/microsoft/vscode-codicons).
+- Icons [vscode-codicons](https://github.com/microsoft/vscode-codicons).
 - Clear counter action in editor.
 
 ## [0.1.11] - 2021-05-28
