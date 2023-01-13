@@ -8,5 +8,16 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  build: {
+    assetsDir: './',
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+        entryFileNames: '[name].js',
+        assetFileNames: '[name].[ext]'
+      }
+    },
+    cssCodeSplit: false
   }
 });

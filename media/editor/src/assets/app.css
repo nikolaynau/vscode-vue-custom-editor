@@ -1,0 +1,9 @@
+#app {
+  /* sizes */
+  @apply w-full h-full;
+}
+
+.not-found {
+  /* sizes */
+  @apply pl-5 pr-10sp;
+}

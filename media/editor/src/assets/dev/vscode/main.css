@@ -1,0 +1,5 @@
+@import 'vscode-default/all';
+
+body {
+  background-color: var(--vscode-editor-background);
+}
