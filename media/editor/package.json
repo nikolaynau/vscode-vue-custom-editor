@@ -15,6 +15,7 @@
     "format": "prettier --write \"src/**/*.{js,ts,vue,css}\""
   },
   "dependencies": {
+    "@vscode/codicons": "0.0.32",
     "debounce": "1.2.1",
     "eventemitter3": "5.0.0",
     "is-plain-object": "5.0.0",
