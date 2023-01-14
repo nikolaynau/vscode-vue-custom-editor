@@ -9,7 +9,7 @@ describe('VAction', () => {
     expect(wrapper.classes('v-action')).toBe(true);
     expect(wrapper.attributes('tabindex')).toBe('0');
     expect(wrapper.attributes('title')).toBeUndefined();
-    expect(wrapper.findComponent('span').exists()).toBe(false);
+    expect(wrapper.html()).toMatchSnapshot();
   });
 
   it('tag prop', () => {

@@ -1,3 +1,9 @@
 // Vitest Snapshot v1
 
+exports[`VAction > default render props 1`] = `
+"<div class=\\"v-action\\" tabindex=\\"0\\">
+  <!--v-if-->
+</div>"
+`;
+
 exports[`VAction > icon prop 1`] = `"<div class=\\"v-action\\" tabindex=\\"0\\"><span class=\\"codicon codicon-clear-all\\"></span></div>"`;

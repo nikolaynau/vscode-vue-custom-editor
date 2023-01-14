@@ -1,0 +1,7 @@
+// Vitest Snapshot v1
+
+exports[`VButton > default render props 1`] = `"<a class=\\"v-button\\" tabindex=\\"0\\"></a>"`;
+
+exports[`VButton > default slot 1`] = `"<a class=\\"v-button\\" tabindex=\\"0\\">Button</a>"`;
+
+exports[`VButton > disabled prop 1`] = `"<a class=\\"v-button v-button--disabled\\"></a>"`;
