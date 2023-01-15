@@ -1,0 +1,7 @@
+// Vitest Snapshot v1
+
+exports[`VInput > default render props 1`] = `
+"<div class=\\"v-input-layout\\"><input class=\\"v-input\\" type=\\"text\\" tabindex=\\"0\\">
+  <!--v-if-->
+</div>"
+`;
