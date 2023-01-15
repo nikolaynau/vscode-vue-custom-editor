@@ -43,24 +43,27 @@ const value = computed<string>({
   set: val => emit('update:modelValue', val)
 });
 
-const iconClasses = computed(() => ({
-  'v-input__icon--clickable':
-    !disabled.value && !readonly.value && iconClickable.value
-}));
-
 const layoutClasses = computed(() => ({
   [className.value as string]: !!className.value,
   'v-input-layout--disabled': disabled.value,
   'v-input-layout--readonly': readonly.value
 }));
 
-const iconClickEnabled = computed(
+const iconClickDisabled = computed(
   () => !iconClickable.value || disabled.value || readonly.value
 );
+
+const iconClasses = computed(() => ({
+  'v-input__icon--clickable': !iconClickDisabled.value
+}));
 
 function onIconClick(e: MouseEvent) {
   emit('icon-click', e);
 }
+
+defineExpose({
+  inputEl
+});
 </script>
 
 <template>
@@ -80,7 +83,7 @@ function onIconClick(e: MouseEvent) {
       v-if="$slots.icon"
       class="v-input__icon"
       :class="iconClasses"
-      @click="iconClickEnabled ? onIconClick($event) : null"
+      @click="iconClickDisabled ? null : onIconClick($event)"
     >
       <slot name="icon"></slot>
     </span>
