@@ -1,0 +1,31 @@
+// Vitest Snapshot v1
+
+exports[`VFieldset > default render props 1`] = `
+"<div class=\\"v-fieldset v-fieldset--padding\\">
+  <!--v-if-->
+</div>"
+`;
+
+exports[`VFieldset > default slot 1`] = `
+"<div class=\\"v-fieldset v-fieldset--padding\\">
+  <!--v-if-->Text
+</div>"
+`;
+
+exports[`VFieldset > label prop 1`] = `
+"<div class=\\"v-fieldset v-fieldset--padding\\">
+  <div class=\\"v-fieldset__label\\">Some label</div>
+</div>"
+`;
+
+exports[`VFieldset > label with text 1`] = `
+"<div class=\\"v-fieldset v-fieldset--padding\\">
+  <div class=\\"v-fieldset__label\\">Some label</div>Text
+</div>"
+`;
+
+exports[`VFieldset > render label prop with text 1`] = `
+"<div class=\\"v-fieldset v-fieldset--padding\\">
+  <div class=\\"v-fieldset__label\\">Some label</div>Text
+</div>"
+`;
