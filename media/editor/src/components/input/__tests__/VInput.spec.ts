@@ -8,7 +8,7 @@ describe('VInput', () => {
     expect(wrapper.html()).toMatchSnapshot();
   });
 
-  it('model value event', async () => {
+  it('update model value event', async () => {
     const wrapper = mount(VInput);
     const inputText = 'input text';
     await wrapper.find('input').setValue(inputText);
