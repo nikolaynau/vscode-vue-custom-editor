@@ -1,0 +1,5 @@
+// Vitest Snapshot v1
+
+exports[`VLabel > default render props 1`] = `"<label class=\\"v-label\\"></label>"`;
+
+exports[`VLabel > default slot 1`] = `"<label class=\\"v-label\\">Label text</label>"`;
