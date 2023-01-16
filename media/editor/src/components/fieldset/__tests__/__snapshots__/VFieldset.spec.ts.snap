@@ -18,12 +18,6 @@ exports[`VFieldset > label prop 1`] = `
 </div>"
 `;
 
-exports[`VFieldset > label with text 1`] = `
-"<div class=\\"v-fieldset v-fieldset--padding\\">
-  <div class=\\"v-fieldset__label\\">Some label</div>Text
-</div>"
-`;
-
 exports[`VFieldset > render label prop with text 1`] = `
 "<div class=\\"v-fieldset v-fieldset--padding\\">
   <div class=\\"v-fieldset__label\\">Some label</div>Text

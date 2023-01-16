@@ -64,15 +64,19 @@ export function useInspector(
       updateButtonValueFns = {};
     }
     if (!updateButtonValueFns[btnId]) {
-      updateButtonValueFns[btnId] = debounce<UpdateValueFunction>(value => {
-        const command = {
-          name: 'change-button',
-          payload: { btnId, value }
-        } as ChangeButtonValueCommand;
-        onEdit?.([command]);
-      }, editDelay);
+      updateButtonValueFns[btnId] = createUpdateButtonValueFn(btnId);
     }
     return updateButtonValueFns[btnId];
+  }
+
+  function createUpdateButtonValueFn(btnId: number): UpdateValueFunction {
+    return debounce<UpdateValueFunction>(value => {
+      const command = {
+        name: 'change-button',
+        payload: { btnId, value }
+      } as ChangeButtonValueCommand;
+      onEdit?.([command]);
+    }, editDelay);
   }
 
   onUnmounted(() => {
