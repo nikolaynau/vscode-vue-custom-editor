@@ -1,4 +1,4 @@
-import { computed, type Ref } from 'vue';
+import { computed, type Ref, onUnmounted } from 'vue';
 import debounce from 'debounce';
 import type {
   EditorDataModel,
@@ -14,30 +14,23 @@ export interface UseInspectorOptions {
   onEdit?: (edits: EditCommandArray) => void;
 }
 
+type UpdateValueFunction = (value: number) => void;
+
 export function useInspector(
   dataModel: Ref<EditorDataModel | undefined>,
   options?: UseInspectorOptions
 ) {
   const { editDelay, onEdit } = options ?? {};
+  let updateButtonValueFns: Record<number, UpdateValueFunction> | undefined =
+    undefined;
 
-  const updateCounterValue = debounce<(value: number) => void>(value => {
+  const updateCounterValue = debounce<UpdateValueFunction>(value => {
     const command = {
       name: 'replace',
       payload: { value }
     } as ReplaceValueCommand;
     onEdit?.([command]);
   }, editDelay);
-
-  const updateButtonValue = debounce<(btnId: number, value: number) => void>(
-    (btnId, value) => {
-      const command = {
-        name: 'change-button',
-        payload: { btnId, value }
-      } as ChangeButtonValueCommand;
-      onEdit?.([command]);
-    },
-    editDelay
-  );
 
   const inputs = computed<Array<{ btnId: number; value: number }>>(
     () =>
@@ -58,11 +51,33 @@ export function useInspector(
   });
 
   function onButtonInput(btnId: number, val: string) {
-    const numericalValue = toInt(val);
-    if (isDefined(numericalValue)) {
-      updateButtonValue(btnId, numericalValue as number);
+    const intValue = toInt(val);
+    if (isDefined(intValue)) {
+      getOrCreateUpdateButtonValueFn(btnId)(intValue as number);
     }
   }
+
+  function getOrCreateUpdateButtonValueFn(
+    btnId: number
+  ): (value: number) => void {
+    if (!updateButtonValueFns) {
+      updateButtonValueFns = {};
+    }
+    if (!updateButtonValueFns[btnId]) {
+      updateButtonValueFns[btnId] = debounce<UpdateValueFunction>(value => {
+        const command = {
+          name: 'change-button',
+          payload: { btnId, value }
+        } as ChangeButtonValueCommand;
+        onEdit?.([command]);
+      }, editDelay);
+    }
+    return updateButtonValueFns[btnId];
+  }
+
+  onUnmounted(() => {
+    updateButtonValueFns = undefined;
+  });
 
   return {
     inputs,
