@@ -1,0 +1,15 @@
+// Vitest Snapshot v1
+
+exports[`VKeybindingLabel > default render props 1`] = `"<!--v-if-->"`;
+
+exports[`VKeybindingLabel > separator prop 1`] = `
+"<div class=\\"v-keybinding-label\\" title=\\"Ctrl Enter\\">
+  <!--v-if--><span class=\\"v-keybinding-label__key\\">Ctrl</span><span class=\\"v-keybinding-label__separator\\"> </span><span class=\\"v-keybinding-label__key\\">Enter</span>
+</div>"
+`;
+
+exports[`VKeybindingLabel > value prop 1`] = `
+"<div class=\\"v-keybinding-label\\" title=\\"Ctrl+Enter\\">
+  <!--v-if--><span class=\\"v-keybinding-label__key\\">Ctrl</span><span class=\\"v-keybinding-label__separator\\">+</span><span class=\\"v-keybinding-label__key\\">Enter</span>
+</div>"
+`;
