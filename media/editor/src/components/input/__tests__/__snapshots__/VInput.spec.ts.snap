@@ -5,3 +5,17 @@ exports[`VInput > default render props 1`] = `
   <!--v-if-->
 </div>"
 `;
+
+exports[`VInput > input with icon 1`] = `"<div class=\\"v-input-layout\\"><input class=\\"v-input v-input--icon\\" type=\\"text\\" tabindex=\\"0\\"><span class=\\"v-input__icon\\">edit icon</span></div>"`;
+
+exports[`VInput > tabIndex prop 1`] = `
+"<div class=\\"v-input-layout\\"><input class=\\"v-input\\" type=\\"text\\" tabindex=\\"1\\">
+  <!--v-if-->
+</div>"
+`;
+
+exports[`VInput > type prop 1`] = `
+"<div class=\\"v-input-layout\\"><input class=\\"v-input\\" type=\\"checkbox\\" tabindex=\\"0\\">
+  <!--v-if-->
+</div>"
+`;
