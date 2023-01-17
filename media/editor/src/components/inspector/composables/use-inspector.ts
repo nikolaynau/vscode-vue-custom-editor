@@ -1,11 +1,10 @@
 import { computed, type Ref, onUnmounted } from 'vue';
 import debounce from 'debounce';
 import type {
-  EditorDataModel,
   ReplaceValueCommand,
   ChangeButtonValueCommand,
   EditCommandArray
-} from '@/utils/editor';
+} from '@/components/editor/utils/types';
 import { toInt } from '@/utils/numbers';
 import { isDefined } from '@/utils/types';
 
@@ -14,10 +13,15 @@ export interface UseInspectorOptions {
   onEdit?: (edits: EditCommandArray) => void;
 }
 
+export interface InspectorDataModel {
+  counterValue: number;
+  buttons: Array<{ id: number; value: number }>;
+}
+
 type UpdateValueFunction = (value: number) => void;
 
 export function useInspector(
-  dataModel: Ref<EditorDataModel | undefined>,
+  dataModel: Ref<InspectorDataModel | undefined>,
   options?: UseInspectorOptions
 ) {
   const { editDelay, onEdit } = options ?? {};

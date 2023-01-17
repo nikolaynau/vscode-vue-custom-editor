@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { nextTick } from 'vue';
 import { mount } from '@vue/test-utils';
 import VInspector from '../VInspector.vue';
-import type { EditorDataModel } from '@/utils/editor';
+import type { InspectorDataModel } from '../composables/use-inspector';
 
 describe('VInspector', () => {
   it('default render props', () => {
@@ -11,7 +11,7 @@ describe('VInspector', () => {
   });
 
   it('render inspector with data model', () => {
-    const dataModel: EditorDataModel = {
+    const dataModel: InspectorDataModel = {
       counterValue: 1,
       buttons: [
         { id: 1, value: 2 },
@@ -38,7 +38,7 @@ describe('VInspector', () => {
     });
 
     it('edit event', async () => {
-      const dataModel: EditorDataModel = {
+      const dataModel: InspectorDataModel = {
         counterValue: 1,
         buttons: [
           { id: 1, value: 2 },

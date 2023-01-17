@@ -1,0 +1,59 @@
+.v-editor {
+  /* display styles */
+  @apply flex items-center justify-start xs:justify-center;
+
+  /* sizes */
+  @apply h-full px-5 w-auto xs:w-full;
+}
+
+.v-editor__content {
+  /* display styles */
+  @apply flex;
+
+  /* visual styles */
+  @apply text-editor-foreground;
+}
+
+.v-editor__input {
+  /* sizes */
+  @apply mx-1 py-0.5 px-3.5;
+
+  /* focus */
+  @apply focus:outline-blue;
+
+  /* active */
+  @apply active:outline-none;
+}
+
+.v-editor__content .v-button {
+  @apply ml-1 first:ml-0;
+}
+
+.v-editor__controls {
+  /* display styles */
+  @apply flex items-center;
+
+  /* visual styles */
+  @apply whitespace-nowrap;
+}
+
+.v-editor__shortcuts {
+  /* display styles */
+  @apply absolute overflow-hidden pointer-events-none;
+
+  /* visual styles */
+  @apply text-black text-opacity-70 text-center whitespace-nowrap opacity-80;
+
+  /* sizes */
+  @apply w-full;
+
+  top: calc(50% + 3.4375rem);
+}
+
+.v-editor__shortcuts .v-keyboard-shortcuts > dl > dt {
+  @apply text-black text-opacity-70;
+}
+
+.vscode-dark .v-editor__shortcuts .v-keyboard-shortcuts > dl > dt {
+  @apply text-white text-opacity-60;
+}

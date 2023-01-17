@@ -1,7 +1,8 @@
-export interface EditorDataModel {
-  counterValue: number;
-  buttons: Array<{ id: number; value: number }>;
+export interface DocumentObject {
+  counter: number;
 }
+export type RawJsonDocument = string;
+export type RawDocument = RawJsonDocument | DocumentObject;
 
 export interface EditCommand<T = unknown> {
   name: string;
@@ -15,6 +16,10 @@ export interface ReplaceValueCommand extends EditCommand<{ value: number }> {
 export interface ChangeButtonValueCommand
   extends EditCommand<{ btnId: number; value: number }> {
   name: 'change-button';
+}
+
+export interface PlusValueCommand extends EditCommand<{ value: number }> {
+  name: 'plus';
 }
 
 export type EditCommandArray<T = unknown> = Array<EditCommand<T>>;

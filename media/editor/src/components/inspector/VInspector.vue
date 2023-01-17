@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { toRefs } from 'vue';
-import type { EditorDataModel } from '@/utils/editor';
 import VFieldLayout from '../fieldset/VFieldLayout.vue';
 import VFieldset from '../fieldset/VFieldset.vue';
 import VInput from '../input/VInput.vue';
 import VLabel from '../label/VLabel.vue';
-import { useInspector } from './composables/use-inspector';
-import type { EditCommandArray } from '@/utils/editor';
+import {
+  useInspector,
+  type InspectorDataModel
+} from './composables/use-inspector';
+import type { EditCommandArray } from '../editor/utils/types';
 
 export interface Props {
-  dataModel?: EditorDataModel;
+  dataModel?: InspectorDataModel;
   editDelay?: number;
 }
 
