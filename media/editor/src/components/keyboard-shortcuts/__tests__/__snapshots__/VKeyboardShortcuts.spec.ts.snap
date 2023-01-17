@@ -1,7 +1,5 @@
 // Vitest Snapshot v1
 
-exports[`VKeyboardShortcuts > default render props 1`] = `"<div class=\\"v-keyboard-shortcuts v-keyboard-shortcuts--label-left\\"></div>"`;
-
 exports[`VKeyboardShortcuts > items prop 1`] = `
 "<div class=\\"v-keyboard-shortcuts v-keyboard-shortcuts--label-left\\">
   <dl>
@@ -38,3 +36,5 @@ exports[`VKeyboardShortcuts > items prop 1`] = `
   </dl>
 </div>"
 `;
+
+exports[`VKeyboardShortcuts > render default props 1`] = `"<div class=\\"v-keyboard-shortcuts v-keyboard-shortcuts--label-left\\"></div>"`;

@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 import VLabel from '../VLabel.vue';
 
 describe('VLabel', () => {
-  it('default render props', () => {
+  it('render default props', () => {
     const wrapper = mount(VLabel);
     expect(wrapper.html()).toMatchSnapshot();
   });

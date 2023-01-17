@@ -1,12 +1,12 @@
 // Vitest Snapshot v1
 
-exports[`VInput > default render props 1`] = `
+exports[`VInput > input with icon 1`] = `"<div class=\\"v-input-layout\\"><input class=\\"v-input v-input--icon\\" type=\\"text\\" tabindex=\\"0\\"><span class=\\"v-input__icon\\">edit icon</span></div>"`;
+
+exports[`VInput > render default props 1`] = `
 "<div class=\\"v-input-layout\\"><input class=\\"v-input\\" type=\\"text\\" tabindex=\\"0\\">
   <!--v-if-->
 </div>"
 `;
-
-exports[`VInput > input with icon 1`] = `"<div class=\\"v-input-layout\\"><input class=\\"v-input v-input--icon\\" type=\\"text\\" tabindex=\\"0\\"><span class=\\"v-input__icon\\">edit icon</span></div>"`;
 
 exports[`VInput > tabIndex prop 1`] = `
 "<div class=\\"v-input-layout\\"><input class=\\"v-input\\" type=\\"text\\" tabindex=\\"1\\">

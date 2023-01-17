@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 import VFieldset from '../VFieldset.vue';
 
 describe('VFieldset', () => {
-  it('default render props', () => {
+  it('render default props', () => {
     const wrapper = mount(VFieldset);
     expect(wrapper.html()).toMatchSnapshot();
   });

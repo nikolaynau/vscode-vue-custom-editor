@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 import VKeyboardShortcuts from '../VKeyboardShortcuts.vue';
 
 describe('VKeyboardShortcuts', () => {
-  it('default render props', () => {
+  it('render default props', () => {
     const wrapper = mount(VKeyboardShortcuts);
     expect(wrapper.html()).toMatchSnapshot();
   });

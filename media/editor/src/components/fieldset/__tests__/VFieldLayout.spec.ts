@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 import VFieldLayout from '../VFieldLayout.vue';
 
 describe('VFieldLayout', () => {
-  it('default render props', () => {
+  it('render default props', () => {
     const wrapper = mount(VFieldLayout);
     expect(wrapper.html()).toMatchSnapshot();
   });

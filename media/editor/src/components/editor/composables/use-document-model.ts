@@ -1,21 +1,41 @@
-import { type Ref, reactive, ref, watchEffect, unref } from 'vue';
-import type { EditCommandArray } from '../utils/types';
+import { type Ref, reactive, ref, unref, watch } from 'vue';
+import type { ChangeBlock, EditCommandArray } from '../utils/types';
 import { createButtons, type ButtonDefinition } from '../utils/buttons';
 import { parseDocument } from '../utils/parser';
 import type { DocumentObject, RawDocument } from '../utils/types';
 
-export function useDocumentModel(rawData: Ref<RawDocument | null | undefined>) {
+export interface ChangeEvent {
+  changes: Array<ChangeBlock>;
+  versionId: number;
+}
+
+export interface UseDocumentModelOptions {
+  onChange?: (event: ChangeEvent) => void;
+}
+
+export function useDocumentModel(
+  rawData: Ref<RawDocument | null | undefined>,
+  options?: UseDocumentModelOptions
+) {
+  const { onChange } = options ?? {};
+
   const documentData = reactive<DocumentObject>({ counter: 0 });
   const error = ref<Error | null>(null);
   const versionId = ref(0);
   const buttons = reactive<ButtonDefinition[]>(createButtons());
 
-  watchEffect(() => {
-    const { doc, err } = parseDocument(unref(rawData));
-    documentData.counter = doc?.counter ?? 0;
-    error.value = err;
+  watch(rawData, () => {
+    parse(unref(rawData));
     increaseVersion();
   });
+
+  parse(unref(rawData));
+
+  function parse(data: RawDocument | null | undefined) {
+    const { doc, err } = parseDocument(data);
+    documentData.counter = doc?.counter ?? 0;
+    error.value = err;
+  }
 
   function increaseVersion(): void {
     versionId.value++;
@@ -31,12 +51,28 @@ export function useDocumentModel(rawData: Ref<RawDocument | null | undefined>) {
     return JSON.stringify(toJSON());
   }
 
-  function applyEdits(edits: EditCommandArray, emitChangeEvent = true) {}
+  function applyEdits(edits: EditCommandArray, triggerChangeEvent = true) {
+    const changes = applyEditOperations(edits);
+    if (changes.length > 0) {
+      increaseVersion();
+
+      if (triggerChangeEvent) {
+        onChange?.({ changes, versionId: versionId.value });
+      }
+    }
+  }
+
+  function applyEditOperations(
+    editOperations: EditCommandArray
+  ): Array<ChangeBlock> {
+    return [];
+  }
 
   return {
     documentData,
     buttons,
     error,
+    versionId,
     applyEdits,
     toJSON,
     toString

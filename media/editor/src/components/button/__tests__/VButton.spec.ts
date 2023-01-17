@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 import VButton from '../VButton.vue';
 
 describe('VButton', () => {
-  it('default render props', () => {
+  it('render default props', () => {
     const wrapper = mount(VButton);
     expect(wrapper.html()).toMatchSnapshot();
   });

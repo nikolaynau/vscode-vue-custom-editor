@@ -1,0 +1,8 @@
+// Vitest Snapshot v1
+
+exports[`VEditorButtons > items prop 1`] = `
+"<a class=\\"v-button\\" tabindex=\\"0\\">-10</a>
+<a class=\\"v-button\\" tabindex=\\"0\\">-5</a>"
+`;
+
+exports[`VEditorButtons > render default props 1`] = `""`;

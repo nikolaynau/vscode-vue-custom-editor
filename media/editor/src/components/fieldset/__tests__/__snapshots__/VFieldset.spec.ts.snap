@@ -1,11 +1,5 @@
 // Vitest Snapshot v1
 
-exports[`VFieldset > default render props 1`] = `
-"<div class=\\"v-fieldset v-fieldset--padding\\">
-  <!--v-if-->
-</div>"
-`;
-
 exports[`VFieldset > default slot 1`] = `
 "<div class=\\"v-fieldset v-fieldset--padding\\">
   <!--v-if-->Text
@@ -15,6 +9,12 @@ exports[`VFieldset > default slot 1`] = `
 exports[`VFieldset > label prop 1`] = `
 "<div class=\\"v-fieldset v-fieldset--padding\\">
   <div class=\\"v-fieldset__label\\">Some label</div>
+</div>"
+`;
+
+exports[`VFieldset > render default props 1`] = `
+"<div class=\\"v-fieldset v-fieldset--padding\\">
+  <!--v-if-->
 </div>"
 `;
 

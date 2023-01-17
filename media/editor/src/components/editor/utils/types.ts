@@ -23,3 +23,8 @@ export interface PlusValueCommand extends EditCommand<{ value: number }> {
 }
 
 export type EditCommandArray<T = unknown> = Array<EditCommand<T>>;
+
+export interface ChangeBlock<TCommand extends EditCommand = EditCommand> {
+  applied: TCommand;
+  reverse: TCommand;
+}

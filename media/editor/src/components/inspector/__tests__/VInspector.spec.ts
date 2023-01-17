@@ -5,7 +5,7 @@ import VInspector from '../VInspector.vue';
 import type { InspectorDataModel } from '../composables/use-inspector';
 
 describe('VInspector', () => {
-  it('default render props', () => {
+  it('render default props', () => {
     const wrapper = mount(VInspector);
     expect(wrapper.html()).toMatchSnapshot();
   });

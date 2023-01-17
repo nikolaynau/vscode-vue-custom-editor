@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 import VKeybindingLabel from '../VKeybindingLabel.vue';
 
 describe('VKeybindingLabel', () => {
-  it('default render props', () => {
+  it('render default props', () => {
     const wrapper = mount(VKeybindingLabel);
     expect(wrapper.html()).toMatchSnapshot();
   });

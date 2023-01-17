@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 import VAction from '../VAction.vue';
 
 describe('VAction', () => {
-  it('default render props', () => {
+  it('render default props', () => {
     const wrapper = mount(VAction);
     expect(wrapper.element.tagName).toBe('DIV');
     expect(wrapper.classes('v-action')).toBe(true);

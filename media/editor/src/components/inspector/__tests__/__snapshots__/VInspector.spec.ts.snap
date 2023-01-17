@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`VInspector > default render props 1`] = `
+exports[`VInspector > render default props 1`] = `
 "<div class=\\"v-inspector\\">
   <div class=\\"v-fieldset v-fieldset--b-border v-fieldset--padding\\">
     <div class=\\"v-fieldset__label\\">General</div>

@@ -1,13 +1,13 @@
 // Vitest Snapshot v1
 
-exports[`VFieldLayout > default render props 1`] = `"<!--v-if-->"`;
-
 exports[`VFieldLayout > label slot 1`] = `
 "<div class=\\"v-field-layout v-field-layout--horizontal\\">
   <div class=\\"v-field-layout__label\\">Some label</div>
   <!--v-if-->
 </div>"
 `;
+
+exports[`VFieldLayout > render default props 1`] = `"<!--v-if-->"`;
 
 exports[`VFieldLayout > render label and value slots 1`] = `
 "<div class=\\"v-field-layout v-field-layout--horizontal\\">
