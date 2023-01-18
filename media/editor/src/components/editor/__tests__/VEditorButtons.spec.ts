@@ -13,13 +13,11 @@ describe('VEditorButtons', () => {
     const items: ButtonDefinition[] = [
       {
         id: 1,
-        label: '-10',
         value: -10,
         side: 'left'
       },
       {
         id: 2,
-        label: '-5',
         value: -5,
         side: 'left'
       }
@@ -32,13 +30,11 @@ describe('VEditorButtons', () => {
     const items: ButtonDefinition[] = [
       {
         id: 1,
-        label: '-10',
         value: -10,
         side: 'left'
       },
       {
         id: 2,
-        label: '-5',
         value: -5,
         side: 'left'
       }

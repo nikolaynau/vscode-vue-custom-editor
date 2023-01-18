@@ -17,10 +17,14 @@ const emit = defineEmits<{
 function onClick(button: ButtonDefinition) {
   emit('click', button);
 }
+
+function getLabel(value: number) {
+  return value > 0 ? `+${value}` : `${value}`;
+}
 </script>
 
 <template>
   <VButton v-for="button in items" :key="button.id" @click="onClick(button)">
-    {{ button.label }}
+    {{ getLabel(button.value) }}
   </VButton>
 </template>
