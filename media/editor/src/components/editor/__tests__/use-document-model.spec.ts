@@ -1,6 +1,9 @@
 import { describe, it, expect, vi } from 'vitest';
 import { ref, nextTick } from 'vue';
-import { useDocumentModel } from '../composables/use-document-model';
+import {
+  useDocumentModel,
+  type ChangeEvent
+} from '../composables/use-document-model';
 import type {
   ChangeBlock,
   ChangeButtonValueCommand,
@@ -158,5 +161,100 @@ describe('useDocumentModel', () => {
       ] as ChangeBlock[],
       versionId: 1
     });
+  });
+
+  it('apply multiple operations', async () => {
+    const onChange = vi.fn();
+    const { documentData, buttons, versionId, applyEdits } = useDocumentModel(
+      ref(null),
+      {
+        onChange
+      }
+    );
+
+    const btnId = 2;
+
+    expect(documentData).toEqual({ counter: 0 });
+    expect(buttons.find(b => b.id === btnId)?.value).toBe(-5);
+    expect(versionId.value).toBe(0);
+
+    const operations = [
+      { name: 'replace', payload: { value: 2 } } as ReplaceValueCommand,
+      { name: 'plus', payload: { value: 5 } } as PlusValueCommand,
+      {
+        name: 'change-button',
+        payload: { btnId, value: 15 }
+      } as ChangeButtonValueCommand
+    ];
+    applyEdits(operations);
+
+    expect(documentData).toEqual({ counter: 7 });
+    expect(buttons.find(b => b.id === btnId)?.value).toBe(15);
+    expect(versionId.value).toBe(1);
+
+    expect(onChange.mock.calls).toHaveLength(1);
+    expect(onChange.mock.calls[0][0]).toEqual({
+      changes: [
+        {
+          applied: { name: 'replace', payload: { value: 2 } },
+          reverse: { name: 'replace', payload: { value: 0 } }
+        },
+        {
+          applied: { name: 'plus', payload: { value: 5 } },
+          reverse: { name: 'plus', payload: { value: -5 } }
+        },
+        {
+          applied: { name: 'change-button', payload: { btnId, value: 15 } },
+          reverse: { name: 'change-button', payload: { btnId, value: -5 } }
+        }
+      ] as ChangeBlock[],
+      versionId: 1
+    });
+  });
+
+  it('undo multiple operations', async () => {
+    const btnId = 2;
+    let changes: ChangeBlock[] = [];
+
+    const onChange = (event: ChangeEvent) => {
+      changes = event.changes;
+    };
+
+    const { documentData, buttons, versionId, applyEdits } = useDocumentModel(
+      ref({ counter: 1 }),
+      {
+        onChange
+      }
+    );
+
+    // Initial state
+    expect(documentData).toEqual({ counter: 1 });
+    expect(buttons.find(b => b.id === btnId)?.value).toBe(-5);
+    expect(versionId.value).toBe(0);
+
+    const operations = [
+      { name: 'replace', payload: { value: 2 } } as ReplaceValueCommand,
+      { name: 'plus', payload: { value: 5 } } as PlusValueCommand,
+      {
+        name: 'change-button',
+        payload: { btnId, value: 15 }
+      } as ChangeButtonValueCommand
+    ];
+    applyEdits(operations);
+
+    // New state
+    expect(documentData).toEqual({ counter: 7 });
+    expect(buttons.find(b => b.id === btnId)?.value).toBe(15);
+    expect(versionId.value).toBe(1);
+    expect(changes).toHaveLength(3);
+
+    // Undo operations
+    const undoOperations = changes.map(({ reverse }) => reverse).reverse();
+    applyEdits(undoOperations);
+
+    // Undo state
+    expect(documentData).toEqual({ counter: 1 });
+    expect(buttons.find(b => b.id === btnId)?.value).toBe(-5);
+    expect(versionId.value).toBe(2);
   });
 });
