@@ -257,4 +257,24 @@ describe('useDocumentModel', () => {
     expect(buttons.find(b => b.id === btnId)?.value).toBe(-5);
     expect(versionId.value).toBe(2);
   });
+
+  it('no call change callback', async () => {
+    const rawData = ref<DocumentObject>({ counter: 10 });
+    const onChange = vi.fn();
+    const { documentData, versionId, applyEdits } = useDocumentModel(rawData, {
+      onChange
+    });
+    expect(documentData).toEqual({ counter: 10 });
+    expect(versionId.value).toBe(0);
+
+    const operations = [
+      { name: 'replace', payload: { value: 5 } } as ReplaceValueCommand
+    ];
+    applyEdits(operations, false);
+
+    expect(documentData).toEqual({ counter: 5 });
+    expect(versionId.value).toBe(1);
+
+    expect(onChange.mock.calls).toHaveLength(0);
+  });
 });
