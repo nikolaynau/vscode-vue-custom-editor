@@ -12,10 +12,14 @@ import shortcutDefinitions from './utils/shortcuts';
 import type { PlusValueCommand, ReplaceValueCommand } from './utils/types';
 import type { ButtonDefinition } from './utils/buttons';
 import { nextFocusElement, prevFocusElement } from './utils/focus';
-import { useDocumentModel } from './composables/use-document-model';
+import {
+  useDocumentModel,
+  type ChangeEvent
+} from './composables/use-document-model';
 import VEditorButtons from './VEditorButtons.vue';
 import VKeyboardShortcuts from '../keyboard-shortcuts/VKeyboardShortcuts.vue';
 import VAction from '../action/VAction.vue';
+import type { InspectorDataModel } from '../inspector/composables/use-inspector';
 
 export interface Props {
   value?: string;
@@ -31,11 +35,18 @@ const props = withDefaults(defineProps<Props>(), {
   inspectorEnabled: false
 });
 
-const { value, focusOnStart } = toRefs(props);
+const emit = defineEmits<{
+  (e: 'change-value', event: ChangeEvent): void;
+  (e: 'update-inspector', model: InspectorDataModel): void;
+}>();
+
+const { value, focusOnStart, inspectorEnabled } = toRefs(props);
 const shortcuts = reactive(shortcutDefinitions);
 const output = ref<HTMLElement | null>(null);
 
-const { documentData, buttons, error, applyEdits } = useDocumentModel(value);
+const { documentData, buttons, error, applyEdits } = useDocumentModel(value, {
+  onChange
+});
 
 const leftButtons = computed(() => buttons.filter(b => b.side === 'left'));
 const rightButtons = computed(() => buttons.filter(b => b.side === 'right'));
@@ -85,10 +96,40 @@ function focusOutput() {
   output.value?.focus();
 }
 
+function onChange(event: ChangeEvent): void {
+  emit('change-value', event);
+
+  if (inspectorEnabled.value) {
+    sendInspectorModel();
+  }
+}
+
+function sendInspectorModel() {
+  emit('update-inspector', createInspectorModel());
+}
+
+function createInspectorModel(): InspectorDataModel {
+  return {
+    counterValue: documentData.counter,
+    buttons: buttons.map(button => ({
+      id: button.id,
+      value: button.value
+    }))
+  };
+}
+
 onMounted(() => {
   if (unref(focusOnStart)) {
     focusOutput();
   }
+});
+
+if (inspectorEnabled.value) {
+  sendInspectorModel();
+}
+
+defineExpose({
+  sendInspectorModel
 });
 </script>
 
