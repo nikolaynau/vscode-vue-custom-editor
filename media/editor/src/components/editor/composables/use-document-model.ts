@@ -35,7 +35,7 @@ export function useDocumentModel(
   const buttons = reactive<ButtonDefinition[]>(createButtons());
   const operationHandlers: Record<string, OprationHandler> = {};
 
-  function parse(data: RawDocument | null | undefined) {
+  function setData(data: RawDocument | null | undefined) {
     const { doc, err } = parseDocument(data);
     documentData.counter = doc?.counter ?? 0;
     error.value = err;
@@ -207,11 +207,11 @@ export function useDocumentModel(
   }
 
   watch(rawData, () => {
-    parse(unref(rawData));
+    setData(unref(rawData));
     increaseVersion();
   });
 
-  parse(unref(rawData));
+  setData(unref(rawData));
 
   registerOperationHandler('plus', plusValueHandler);
   registerOperationHandler('replace', replaceValueHandler);
@@ -224,7 +224,8 @@ export function useDocumentModel(
     versionId,
     applyEdits,
     toJSON,
-    toString
+    toString,
+    setData
   };
 }
 
