@@ -133,7 +133,8 @@ if (inspectorEnabled.value) {
 }
 
 defineExpose({
-  sendInspectorModel
+  sendInspectorModel,
+  applyEdits
 });
 </script>
 

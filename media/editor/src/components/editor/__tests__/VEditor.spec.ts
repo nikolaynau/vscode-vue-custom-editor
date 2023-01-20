@@ -1,7 +1,12 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 import VEditor from '../VEditor.vue';
-import type { DocumentObject } from '../utils/types';
+import type {
+  ChangeBlock,
+  DocumentObject,
+  PlusValueCommand
+} from '../utils/types';
+import type { InspectorDataModel } from '@/components/inspector/composables/use-inspector';
 
 describe('VEditor', () => {
   it('render default props', () => {
@@ -21,7 +26,7 @@ describe('VEditor', () => {
     expect(wrapper.html()).toMatchSnapshot();
   });
 
-  it('change value prop', async () => {
+  it('change value', async () => {
     const value = JSON.stringify({ counter: 10 } as DocumentObject);
     const wrapper = mount(VEditor, { props: { value } });
 
@@ -84,5 +89,158 @@ describe('VEditor', () => {
     const wrapper = mount(VEditor, { props: { value } });
 
     expect(wrapper.find('.v-editor__error').text()).toContain('invalid format');
+  });
+
+  it('change value event', async () => {
+    const value = JSON.stringify({ counter: 20 } as DocumentObject);
+    const wrapper = mount(VEditor, { props: { value } });
+
+    await Promise.all(
+      wrapper
+        .find('.v-editor__controls')
+        .findAll('.v-button')
+        .map(w => w.trigger('click'))
+    );
+
+    expect(wrapper.find({ ref: 'output' }).text()).toBe('4');
+
+    const changeValueEvent = wrapper.emitted('change-value') as unknown[][];
+
+    expect(changeValueEvent).toHaveLength(3);
+
+    expect(changeValueEvent[0][0]).toEqual({
+      changes: [
+        {
+          applied: {
+            name: 'plus',
+            payload: { value: -10 }
+          } as PlusValueCommand,
+          reverse: { name: 'plus', payload: { value: 10 } } as PlusValueCommand
+        }
+      ] as ChangeBlock[],
+      versionId: 1
+    });
+
+    expect(changeValueEvent[1][0]).toEqual({
+      changes: [
+        {
+          applied: {
+            name: 'plus',
+            payload: { value: -5 }
+          } as PlusValueCommand,
+          reverse: { name: 'plus', payload: { value: 5 } } as PlusValueCommand
+        }
+      ] as ChangeBlock[],
+      versionId: 2
+    });
+
+    expect(changeValueEvent[2][0]).toEqual({
+      changes: [
+        {
+          applied: {
+            name: 'plus',
+            payload: { value: -1 }
+          } as PlusValueCommand,
+          reverse: { name: 'plus', payload: { value: 1 } } as PlusValueCommand
+        }
+      ] as ChangeBlock[],
+      versionId: 3
+    });
+  });
+
+  it('disable keyboard events', async () => {
+    const wrapper = mount(VEditor, { props: { keyboardEnabled: false } });
+
+    await wrapper.find('.v-editor').trigger('keydown.up');
+    expect(wrapper.find({ ref: 'output' }).text()).toBe('0');
+
+    const changeValueEvent = wrapper.emitted('change-value');
+    expect(changeValueEvent).toBeUndefined();
+  });
+
+  it('update inspector first event', async () => {
+    const value = JSON.stringify({ counter: 20 } as DocumentObject);
+    const wrapper = mount(VEditor, {
+      props: { value, inspectorEnabled: true }
+    });
+
+    const updateInspectorEvent = wrapper.emitted(
+      'update-inspector'
+    ) as unknown[][];
+
+    expect(updateInspectorEvent).toHaveLength(1);
+    expect(updateInspectorEvent[0][0]).toEqual({
+      counterValue: 20,
+      buttons: [
+        { id: 1, value: -10 },
+        { id: 2, value: -5 },
+        { id: 3, value: -1 },
+        { id: 4, value: 1 },
+        { id: 5, value: 5 },
+        { id: 6, value: 10 }
+      ]
+    } as InspectorDataModel);
+  });
+
+  it('update inspector event', async () => {
+    const value = JSON.stringify({ counter: 20 } as DocumentObject);
+    const wrapper = mount(VEditor, {
+      props: { value, inspectorEnabled: true }
+    });
+
+    await wrapper
+      .find('.v-editor__controls')
+      .find('.v-button')
+      .trigger('click');
+
+    expect(wrapper.find({ ref: 'output' }).text()).toBe('10');
+
+    const updateInspectorEvent = wrapper.emitted(
+      'update-inspector'
+    ) as unknown[][];
+
+    expect(updateInspectorEvent).toHaveLength(2);
+    expect(updateInspectorEvent[0][0]).toEqual({
+      counterValue: 20,
+      buttons: [
+        { id: 1, value: -10 },
+        { id: 2, value: -5 },
+        { id: 3, value: -1 },
+        { id: 4, value: 1 },
+        { id: 5, value: 5 },
+        { id: 6, value: 10 }
+      ]
+    } as InspectorDataModel);
+    expect(updateInspectorEvent[1][0]).toEqual({
+      counterValue: 10,
+      buttons: [
+        { id: 1, value: -10 },
+        { id: 2, value: -5 },
+        { id: 3, value: -1 },
+        { id: 4, value: 1 },
+        { id: 5, value: 5 },
+        { id: 6, value: 10 }
+      ]
+    } as InspectorDataModel);
+  });
+
+  it('disable inspector event', async () => {
+    const value = JSON.stringify({ counter: 20 } as DocumentObject);
+    const wrapper = mount(VEditor, {
+      props: { value, inspectorEnabled: false }
+    });
+
+    await wrapper
+      .find('.v-editor__controls')
+      .find('.v-button')
+      .trigger('click');
+
+    expect(wrapper.find({ ref: 'output' }).text()).toBe('10');
+
+    const updateInspectorEvent = wrapper.emitted(
+      'update-inspector'
+    ) as unknown[][];
+
+    expect(updateInspectorEvent).toBeUndefined();
   });
 });
