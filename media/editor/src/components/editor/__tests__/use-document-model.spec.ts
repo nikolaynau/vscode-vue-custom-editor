@@ -57,6 +57,12 @@ describe('useDocumentModel', () => {
     expect(toString()).toBe(JSON.stringify({ counter: 10 }));
   });
 
+  it('formatted toString', () => {
+    const rawData = ref<DocumentObject>({ counter: 10 });
+    const { toString } = useDocumentModel(rawData);
+    expect(toString(true)).toBe(JSON.stringify({ counter: 10 }, null, 2));
+  });
+
   it('increase version', async () => {
     const rawData = ref<DocumentObject>({ counter: 10 });
     const { documentData, versionId } = useDocumentModel(rawData);

@@ -51,8 +51,8 @@ export function useDocumentModel(
     };
   }
 
-  function toString(): string {
-    return JSON.stringify(toJSON());
+  function toString(formatted = false): string {
+    return JSON.stringify(toJSON(), undefined, formatted ? 2 : undefined);
   }
 
   function applyEdits(operations: EditCommandArray, triggerChangeEvent = true) {
