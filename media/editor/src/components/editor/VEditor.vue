@@ -9,7 +9,11 @@ import {
   onMounted
 } from 'vue';
 import shortcutDefinitions from './utils/shortcuts';
-import type { PlusValueCommand, ReplaceValueCommand } from './utils/types';
+import type {
+  PlusValueCommand,
+  RawDocument,
+  ReplaceValueCommand
+} from './utils/types';
 import type { ButtonDefinition } from './utils/buttons';
 import { nextFocusElement, prevFocusElement } from './utils/focus';
 import {
@@ -22,7 +26,7 @@ import VAction from '../action/VAction.vue';
 import type { InspectorDataModel } from '../inspector/composables/use-inspector';
 
 export interface Props {
-  value?: string;
+  value?: RawDocument;
   focusOnStart?: boolean;
   keyboardEnabled?: boolean;
   inspectorEnabled?: boolean;

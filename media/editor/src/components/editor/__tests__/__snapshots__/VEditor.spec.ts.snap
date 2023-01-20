@@ -48,7 +48,55 @@ exports[`VEditor > render default props 1`] = `
 </div>"
 `;
 
-exports[`VEditor > value prop 1`] = `
+exports[`VEditor > value prop as object 1`] = `
+"<div class=\\"v-editor\\">
+  <div class=\\"v-editor__content\\">
+    <div class=\\"v-editor__controls\\"><a class=\\"v-button\\" tabindex=\\"0\\">-10</a><a class=\\"v-button\\" tabindex=\\"0\\">-5</a><a class=\\"v-button\\" tabindex=\\"0\\">-1</a></div>
+    <div class=\\"v-editor__input\\" tabindex=\\"0\\">10</div>
+    <div class=\\"v-editor__controls\\">
+      <div class=\\"v-action\\" title=\\"Clear Counter (Delete)\\" tabindex=\\"0\\"><span class=\\"codicon codicon-clear-all\\"></span></div><a class=\\"v-button\\" tabindex=\\"0\\">+1</a><a class=\\"v-button\\" tabindex=\\"0\\">+5</a><a class=\\"v-button\\" tabindex=\\"0\\">+10</a>
+    </div>
+  </div>
+  <div class=\\"v-editor__shortcuts\\">
+    <div class=\\"v-keyboard-shortcuts v-keyboard-shortcuts--label-right\\">
+      <dl>
+        <dt>Increase Сounter</dt>
+        <dd>
+          <div class=\\"v-keybinding-label\\" title=\\"UpArrow\\">
+            <!--v-if--><span class=\\"v-keybinding-label__key\\">UpArrow</span>
+          </div>
+        </dd>
+      </dl>
+      <dl>
+        <dt>Decrease Сounter</dt>
+        <dd>
+          <div class=\\"v-keybinding-label\\" title=\\"DownArrow\\">
+            <!--v-if--><span class=\\"v-keybinding-label__key\\">DownArrow</span>
+          </div>
+        </dd>
+      </dl>
+      <dl>
+        <dt>Clear Сounter</dt>
+        <dd>
+          <div class=\\"v-keybinding-label\\" title=\\"Delete\\">
+            <!--v-if--><span class=\\"v-keybinding-label__key\\">Delete</span>
+          </div>
+        </dd>
+      </dl>
+      <dl>
+        <dt>Clear Сounter</dt>
+        <dd>
+          <div class=\\"v-keybinding-label\\" title=\\"Backspace\\">
+            <!--v-if--><span class=\\"v-keybinding-label__key\\">Backspace</span>
+          </div>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</div>"
+`;
+
+exports[`VEditor > value prop as string 1`] = `
 "<div class=\\"v-editor\\">
   <div class=\\"v-editor__content\\">
     <div class=\\"v-editor__controls\\"><a class=\\"v-button\\" tabindex=\\"0\\">-10</a><a class=\\"v-button\\" tabindex=\\"0\\">-5</a><a class=\\"v-button\\" tabindex=\\"0\\">-1</a></div>

@@ -1,6 +1,7 @@
 export interface DocumentObject {
   counter: number;
 }
+
 export type RawJsonDocument = string;
 export type RawDocument = RawJsonDocument | DocumentObject;
 

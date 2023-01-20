@@ -9,8 +9,14 @@ describe('VEditor', () => {
     expect(wrapper.html()).toMatchSnapshot();
   });
 
-  it('value prop', () => {
+  it('value prop as string', () => {
     const value = JSON.stringify({ counter: 10 } as DocumentObject);
+    const wrapper = mount(VEditor, { props: { value } });
+    expect(wrapper.html()).toMatchSnapshot();
+  });
+
+  it('value prop as object', () => {
+    const value = { counter: 10 } as DocumentObject;
     const wrapper = mount(VEditor, { props: { value } });
     expect(wrapper.html()).toMatchSnapshot();
   });
