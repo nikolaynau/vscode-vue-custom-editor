@@ -1,0 +1,55 @@
+// Vitest Snapshot v1
+
+exports[`InspectorView > send ready signal 1`] = `
+"<div class=\\"inspector-container\\">
+  <div class=\\"v-inspector\\">
+    <div class=\\"v-fieldset v-fieldset--b-border v-fieldset--padding\\">
+      <div class=\\"v-fieldset__label\\">General</div>
+      <div class=\\"v-field-layout v-field-layout--vertical\\">
+        <div class=\\"v-field-layout__label\\"><label class=\\"v-label v-label--truncate\\">Counter</label></div>
+        <div class=\\"v-field-layout__value\\">
+          <div class=\\"v-input-layout\\"><input class=\\"v-input v-input--icon\\" placeholder=\\"Enter number\\" type=\\"text\\" tabindex=\\"0\\"><span class=\\"v-input__icon\\"><span class=\\"codicon codicon-info\\"></span></span></div>
+        </div>
+      </div>
+    </div>
+    <div class=\\"v-fieldset v-fieldset--padding\\">
+      <div class=\\"v-fieldset__label\\">Controls</div>
+    </div>
+  </div>
+</div>"
+`;
+
+exports[`InspectorView > setData rpc 1`] = `
+"<div class=\\"inspector-container\\">
+  <div class=\\"v-inspector\\">
+    <div class=\\"v-fieldset v-fieldset--b-border v-fieldset--padding\\">
+      <div class=\\"v-fieldset__label\\">General</div>
+      <div class=\\"v-field-layout v-field-layout--vertical\\">
+        <div class=\\"v-field-layout__label\\"><label class=\\"v-label v-label--truncate\\">Counter</label></div>
+        <div class=\\"v-field-layout__value\\">
+          <div class=\\"v-input-layout\\"><input class=\\"v-input v-input--icon\\" placeholder=\\"Enter number\\" type=\\"text\\" tabindex=\\"0\\"><span class=\\"v-input__icon\\"><span class=\\"codicon codicon-info\\"></span></span></div>
+        </div>
+      </div>
+    </div>
+    <div class=\\"v-fieldset v-fieldset--padding\\">
+      <div class=\\"v-fieldset__label\\">Controls</div>
+      <div class=\\"v-field-layout v-field-layout--vertical\\">
+        <div class=\\"v-field-layout__label\\"><label class=\\"v-label v-label--truncate\\">Button #1</label></div>
+        <div class=\\"v-field-layout__value\\">
+          <div class=\\"v-input-layout\\"><input class=\\"v-input\\" placeholder=\\"Enter number\\" type=\\"text\\" tabindex=\\"0\\">
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div class=\\"v-field-layout v-field-layout--vertical\\">
+        <div class=\\"v-field-layout__label\\"><label class=\\"v-label v-label--truncate\\">Button #2</label></div>
+        <div class=\\"v-field-layout__value\\">
+          <div class=\\"v-input-layout\\"><input class=\\"v-input\\" placeholder=\\"Enter number\\" type=\\"text\\" tabindex=\\"0\\">
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>"
+`;
