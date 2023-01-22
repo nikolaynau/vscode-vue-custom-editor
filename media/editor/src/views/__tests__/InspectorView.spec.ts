@@ -17,6 +17,7 @@ import type {
   EditCommandArray,
   ReplaceValueCommand
 } from '@/components/editor/utils/types';
+import vscode from '@/plugins/vscode';
 
 vi.mock('../../utils/vscode-rpc.ts', () => {
   const VsCodeRpc = vi.fn();
@@ -38,7 +39,7 @@ describe('InspectorView', () => {
   });
 
   it('send ready signal', () => {
-    const wrapper = mount(InspectorView);
+    const wrapper = mount(InspectorView, { global: { plugins: [vscode] } });
     expect(wrapper.html()).toMatchSnapshot();
 
     expect((VsCodeRpc as any).mock.instances).toHaveLength(1);
@@ -66,7 +67,7 @@ describe('InspectorView', () => {
       rpcHandlers[id] = handler;
     });
 
-    const wrapper = mount(InspectorView);
+    const wrapper = mount(InspectorView, { global: { plugins: [vscode] } });
     expect(typeof rpcHandlers['setData']).toBe('function');
 
     rpcHandlers['setData'](inspectorDataModel);
@@ -97,7 +98,7 @@ describe('InspectorView', () => {
       rpcHandlers[id] = handler;
     });
 
-    const wrapper = mount(InspectorView);
+    const wrapper = mount(InspectorView, { global: { plugins: [vscode] } });
     expect(typeof rpcHandlers['setData']).toBe('function');
 
     rpcHandlers['setData'](inspectorDataModel);
@@ -143,7 +144,7 @@ describe('InspectorView', () => {
   });
 
   it('call destroy rpc on unmount component', async () => {
-    const wrapper = mount(InspectorView);
+    const wrapper = mount(InspectorView, { global: { plugins: [vscode] } });
     expect((VsCodeRpc as any).mock.instances).toHaveLength(1);
     expect((VsCodeRpc as any).mock.instances[0].destroy).toBeCalledTimes(0);
 
