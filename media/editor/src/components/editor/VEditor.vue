@@ -48,9 +48,10 @@ const { value, focusOnStart, inspectorEnabled } = toRefs(props);
 const shortcuts = reactive(shortcutDefinitions);
 const output = ref<HTMLElement | null>(null);
 
-const { documentData, buttons, error, applyEdits } = useDocumentModel(value, {
-  onChange
-});
+const { documentData, buttons, error, applyEdits, toString, setData } =
+  useDocumentModel(value, {
+    onChange
+  });
 
 const leftButtons = computed(() => buttons.filter(b => b.side === 'left'));
 const rightButtons = computed(() => buttons.filter(b => b.side === 'right'));
@@ -134,7 +135,9 @@ if (inspectorEnabled.value) {
 
 defineExpose({
   sendInspectorModel,
-  applyEdits
+  applyEdits,
+  toString,
+  setData
 });
 </script>
 

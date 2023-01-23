@@ -51,7 +51,7 @@ describe('InspectorView', () => {
     );
   });
 
-  it('setData rpc', async () => {
+  it('call setData rpc', async () => {
     const inspectorDataModel = {
       counterValue: 10,
       buttons: [
@@ -82,7 +82,7 @@ describe('InspectorView', () => {
     expect(+inputs[2].element.value).toBe(inspectorDataModel.buttons[1].value);
   });
 
-  it('edit signal', async () => {
+  it('send edit signal', async () => {
     const inspectorDataModel = {
       counterValue: 10,
       buttons: [

@@ -1,0 +1,7 @@
+.editor-container {
+  /* display styles */
+  @apply overflow-auto;
+
+  /* sizes */
+  @apply w-full h-full;
+}
