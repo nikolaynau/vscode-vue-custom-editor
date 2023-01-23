@@ -118,7 +118,7 @@ export function useDocumentModel(
     operationHandlers[name] = handler;
   }
 
-  function plusValueHandler(
+  function handlePlusValue(
     name: string,
     payload: Record<string, unknown>
   ): ChangeBlock | null {
@@ -143,7 +143,7 @@ export function useDocumentModel(
     };
   }
 
-  function replaceValueHandler(
+  function handleReplaceValue(
     name: string,
     payload: Record<string, unknown>
   ): ChangeBlock | null {
@@ -170,7 +170,7 @@ export function useDocumentModel(
     };
   }
 
-  function changeButtonValueHandler(
+  function handleChangeButtonValue(
     name: string,
     payload: Record<string, unknown>
   ): ChangeBlock | null {
@@ -213,9 +213,9 @@ export function useDocumentModel(
 
   setData(unref(rawData));
 
-  registerOperationHandler('plus', plusValueHandler);
-  registerOperationHandler('replace', replaceValueHandler);
-  registerOperationHandler('change-button', changeButtonValueHandler);
+  registerOperationHandler('plus', handlePlusValue);
+  registerOperationHandler('replace', handleReplaceValue);
+  registerOperationHandler('change-button', handleChangeButtonValue);
 
   return {
     documentData,
