@@ -17,7 +17,7 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   dataModel: undefined,
-  editDelay: 500
+  editDelay: 300
 });
 
 const emit = defineEmits<{
