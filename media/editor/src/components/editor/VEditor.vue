@@ -157,25 +157,27 @@ defineExpose({
       <br />
       Details: {{ error.message }}
     </div>
-    <div v-else class="v-editor__content">
-      <div class="v-editor__controls">
-        <VEditorButtons :items="leftButtons" @click="onBtnPlus" />
+    <template v-else>
+      <div class="v-editor__content">
+        <div class="v-editor__controls">
+          <VEditorButtons :items="leftButtons" @click="onBtnPlus" />
+        </div>
+        <div ref="output" class="v-editor__input" tabindex="0">
+          {{ documentData.counter }}
+        </div>
+        <div class="v-editor__controls">
+          <VAction
+            @click="onClear"
+            title="Clear Counter (Delete)"
+            icon="clear-all"
+          />
+          <VEditorButtons :items="rightButtons" @click="onBtnPlus" />
+        </div>
       </div>
-      <div ref="output" class="v-editor__input" tabindex="0">
-        {{ documentData.counter }}
+      <div class="v-editor__shortcuts">
+        <VKeyboardShortcuts :items="shortcuts" label-align="right" />
       </div>
-      <div class="v-editor__controls">
-        <VAction
-          @click="onClear"
-          title="Clear Counter (Delete)"
-          icon="clear-all"
-        />
-        <VEditorButtons :items="rightButtons" @click="onBtnPlus" />
-      </div>
-    </div>
-    <div class="v-editor__shortcuts">
-      <VKeyboardShortcuts :items="shortcuts" label-align="right" />
-    </div>
+    </template>
   </div>
 </template>
 

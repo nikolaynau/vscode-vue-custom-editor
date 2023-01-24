@@ -1,4 +1,4 @@
-import { isDefined } from '@/utils/types';
+import { isDefined, isTextEmpty } from '@/utils/types';
 import { isPlainObject } from 'is-plain-object';
 import type { DocumentObject, RawDocument } from './types';
 
@@ -9,7 +9,7 @@ export function parseDocument(data: RawDocument | null | undefined): {
   let doc: DocumentObject | null = null;
   let err: Error | null = null;
 
-  if (!isDefined(data)) {
+  if (!isDefined(data) || isTextEmpty(data)) {
     return { doc, err };
   }
 

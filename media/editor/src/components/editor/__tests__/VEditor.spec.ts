@@ -84,11 +84,22 @@ describe('VEditor', () => {
     expect(wrapper.find({ ref: 'output' }).text()).toBe('0');
   });
 
-  it('error editor value', async () => {
+  it('error editor state when json value is not valid', async () => {
     const value = JSON.stringify({ badCounter: 20 });
     const wrapper = mount(VEditor, { props: { value } });
 
     expect(wrapper.find('.v-editor__error').text()).toContain('invalid format');
+    expect(wrapper.find('.v-editor__content').exists()).toBeFalsy();
+    expect(wrapper.find('.v-editor__shortcuts').exists()).toBeFalsy();
+  });
+
+  it('no error state when json value is empty', async () => {
+    const value = '';
+    const wrapper = mount(VEditor, { props: { value } });
+
+    expect(wrapper.find('.v-editor__error').exists()).toBeFalsy();
+    expect(wrapper.find('.v-editor__content').exists()).toBeTruthy();
+    expect(wrapper.find('.v-editor__shortcuts').exists()).toBeTruthy();
   });
 
   it('change value event', async () => {
@@ -105,7 +116,6 @@ describe('VEditor', () => {
     expect(wrapper.find({ ref: 'output' }).text()).toBe('4');
 
     const changeValueEvent = wrapper.emitted('change-value') as unknown[][];
-
     expect(changeValueEvent).toHaveLength(3);
 
     expect(changeValueEvent[0][0]).toEqual({

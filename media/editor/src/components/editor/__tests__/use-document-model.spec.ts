@@ -29,7 +29,7 @@ describe('useDocumentModel', () => {
     expect(versionId.value).toBe(0);
   });
 
-  it('not valid rawData as object', () => {
+  it('error when not valid rawData as object', () => {
     const rawData = ref<any>({ badCounter: 10 });
     const { documentData, error, versionId } = useDocumentModel(rawData);
     expect(documentData).toEqual({ counter: 0 });
@@ -37,11 +37,43 @@ describe('useDocumentModel', () => {
     expect(versionId.value).toBe(0);
   });
 
-  it('not valid rawData as string', () => {
+  it('error when not valid rawData as string', () => {
     const rawData = ref<any>(JSON.stringify({ badCounter: 10 }));
     const { documentData, error, versionId } = useDocumentModel(rawData);
     expect(documentData).toEqual({ counter: 0 });
     expect(error.value).not.toBeNull();
+    expect(versionId.value).toBe(0);
+  });
+
+  it('error when empty rawData as object', () => {
+    const rawData = ref<any>({});
+    const { documentData, error, versionId } = useDocumentModel(rawData);
+    expect(documentData).toEqual({ counter: 0 });
+    expect(error.value).not.toBeNull();
+    expect(versionId.value).toBe(0);
+  });
+
+  it('no error when empty rawData as string', () => {
+    const rawData = ref<any>('');
+    const { documentData, error, versionId } = useDocumentModel(rawData);
+    expect(documentData).toEqual({ counter: 0 });
+    expect(error.value).toBeNull();
+    expect(versionId.value).toBe(0);
+  });
+
+  it('no error when rawData is null', () => {
+    const rawData = ref<any>(null);
+    const { documentData, error, versionId } = useDocumentModel(rawData);
+    expect(documentData).toEqual({ counter: 0 });
+    expect(error.value).toBeNull();
+    expect(versionId.value).toBe(0);
+  });
+
+  it('no error when rawData is undefined', () => {
+    const rawData = ref<any>(null);
+    const { documentData, error, versionId } = useDocumentModel(rawData);
+    expect(documentData).toEqual({ counter: 0 });
+    expect(error.value).toBeNull();
     expect(versionId.value).toBe(0);
   });
 
