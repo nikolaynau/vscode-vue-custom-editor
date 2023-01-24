@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toRefs, ref, onBeforeMount, watch } from 'vue';
+import { toRefs, ref, onBeforeUnmount, watch } from 'vue';
 import VEditor from '@/components/editor/VEditor.vue';
 import type { ChangeEvent } from '@/components/editor/composables/use-document-model';
 import type { InspectorDataModel } from '@/components/inspector/composables/use-inspector';
@@ -51,7 +51,9 @@ function handleSetInitialData({
     const { setData, applyEdits, sendInspectorModel } = editor.value;
     setData(data);
     applyEdits(editOperations, false);
-    sendInspectorModel();
+    if (inspectorEnabled.value) {
+      sendInspectorModel();
+    }
   } else {
     pendingInitialData = { data, editOperations };
   }
@@ -74,7 +76,7 @@ function handleApplyEdits({
 }) {
   editor.value?.applyEdits(editOperations, notify);
 
-  if (!notify) {
+  if (!notify && inspectorEnabled.value) {
     editor.value?.sendInspectorModel();
   }
 }
@@ -87,12 +89,15 @@ rpc.provider.registerRpcHandler('getFileData', handleGetFileData);
 rpc.provider.registerRpcHandler('setFileData', handleSetFileData);
 rpc.provider.registerRpcHandler('applyEdits', handleApplyEdits);
 rpc.provider.registerRpcHandler('setInitialData', handleSetInitialData);
-rpc.provider.registerSignalHandler(
-  'needUpdateInspector',
-  handleNeedUpdateInspector
-);
 
-onBeforeMount(() => {
+if (inspectorEnabled.value) {
+  rpc.provider.registerSignalHandler(
+    'needUpdateInspector',
+    handleNeedUpdateInspector
+  );
+}
+
+onBeforeUnmount(() => {
   rpc.destroy();
 });
 

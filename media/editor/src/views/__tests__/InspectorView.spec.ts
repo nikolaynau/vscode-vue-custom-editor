@@ -42,13 +42,13 @@ describe('InspectorView', () => {
     const wrapper = mount(InspectorView, { global: { plugins: [vscode] } });
     expect(wrapper.html()).toMatchSnapshot();
 
-    expect((VsCodeRpc as any).mock.instances).toHaveLength(1);
+    expect((VsCodeRpc as Mock).mock.instances).toHaveLength(1);
     expect(
-      (VsCodeRpc as any).mock.instances[0].provider.signal
+      (VsCodeRpc as Mock).mock.instances[0].provider.signal
     ).toBeCalledTimes(1);
-    expect((VsCodeRpc as any).mock.instances[0].provider.signal).toBeCalledWith(
-      'ready'
-    );
+    expect(
+      (VsCodeRpc as Mock).mock.instances[0].provider.signal
+    ).toBeCalledWith('ready');
   });
 
   it('call setData rpc', async () => {
@@ -115,8 +115,8 @@ describe('InspectorView', () => {
 
     await nextTick();
 
-    expect((VsCodeRpc as any).mock.instances).toHaveLength(1);
-    const signalSpy = (VsCodeRpc as any).mock.instances[0].provider
+    expect((VsCodeRpc as Mock).mock.instances).toHaveLength(1);
+    const signalSpy = (VsCodeRpc as Mock).mock.instances[0].provider
       .signal as Mock;
     expect(signalSpy).toBeCalledTimes(4);
     expect(signalSpy.mock.calls[0][0]).toBe('ready');
@@ -145,11 +145,11 @@ describe('InspectorView', () => {
 
   it('call destroy rpc on unmount component', async () => {
     const wrapper = mount(InspectorView, { global: { plugins: [vscode] } });
-    expect((VsCodeRpc as any).mock.instances).toHaveLength(1);
-    expect((VsCodeRpc as any).mock.instances[0].destroy).toBeCalledTimes(0);
+    expect((VsCodeRpc as Mock).mock.instances).toHaveLength(1);
+    expect((VsCodeRpc as Mock).mock.instances[0].destroy).toBeCalledTimes(0);
 
     wrapper.unmount();
 
-    expect((VsCodeRpc as any).mock.instances[0].destroy).toBeCalledTimes(1);
+    expect((VsCodeRpc as Mock).mock.instances[0].destroy).toBeCalledTimes(1);
   });
 });
