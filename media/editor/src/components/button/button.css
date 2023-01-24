@@ -12,7 +12,7 @@
   @apply cursor-pointer;
 
   /* focus */
-  @apply focus:outline-button;
+  @apply focus:outline focus:outline-1 focus:outline-focus-border focus:outline-offset-2;
 
   /* active */
   @apply active:outline-none;

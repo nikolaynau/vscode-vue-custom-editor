@@ -14,7 +14,7 @@
   @apply w-full h-6 p-1;
 
   /* focus */
-  @apply focus:outline-blue;
+  @apply focus:outline focus:outline-1 focus:outline-focus-border focus:-outline-offset-1;
 
   /* disabled */
   @apply disabled:opacity-38;

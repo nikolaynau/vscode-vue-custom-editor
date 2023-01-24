@@ -46,10 +46,6 @@ module.exports = {
         '3sp': '0.1875rem',
         '5sp': '0.3125rem'
       },
-      outline: {
-        blue: ['1px solid var(--vscode-focusBorder)', '-1px'],
-        button: ['1px solid var(--vscode-focusBorder)', '2px']
-      },
       boxShadow: {
         'keybinding-label': 'inset 0 -1px 0 var(--keybinding-label-shadow)'
       },

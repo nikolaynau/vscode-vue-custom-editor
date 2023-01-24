@@ -19,7 +19,7 @@
   @apply mx-1 py-0.5 px-3.5;
 
   /* focus */
-  @apply focus:outline-blue;
+  @apply focus:outline focus:outline-1 focus:outline-focus-border focus:-outline-offset-1;
 
   /* active */
   @apply active:outline-none;
