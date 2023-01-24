@@ -16,3 +16,4 @@ images/**/*.gif
 webpack.config.js
 node_modules
 .github
+.husky
