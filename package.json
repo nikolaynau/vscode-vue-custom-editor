@@ -182,6 +182,16 @@
           "command": "vscodeVueCustomEditor.counterEditor.subtract",
           "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor",
           "group": "navigation@2"
+        },
+        {
+          "command": "vscodeVueCustomEditor.counterEditor.add",
+          "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor",
+          "group": "6_close@1"
+        },
+        {
+          "command": "vscodeVueCustomEditor.counterEditor.subtract",
+          "when": "activeCustomEditorId == vscodeVueCustomEditor.counterEditor",
+          "group": "6_close@2"
         }
       ]
     },
