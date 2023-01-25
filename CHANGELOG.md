@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.3.0] - 2023-01-25
+### Changed
+- Rewritten vue editor on typescript.
+
 ## [0.2.3] - 2022-09-01
 ### Changed
 - Up dependency versions.
