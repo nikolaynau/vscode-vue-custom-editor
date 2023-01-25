@@ -6,16 +6,16 @@ on:
 name: Release
 
 jobs:
-  test:
+  test_extension:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Install Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: 16.x
     - name: Install latest npm
@@ -30,14 +30,34 @@ jobs:
     - name: Run tests
       run: npm test
       if: runner.os != 'Linux'
-  publish:
+  test_editor:
     runs-on: ubuntu-latest
-    needs: test
+    defaults:
+      run:
+        working-directory: ./media/editor
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Install Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+    - name: Install latest npm
+      run: npm install -g npm@latest
+    - name: Check npm version
+      run: npm -v
+    - name: Install project dependencies
+      run: npm ci
+    - name: Run tests
+      run: npm test run
+  publish:
+    runs-on: ubuntu-latest
+    needs: [test_extension, test_editor]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Install Node.js
+      uses: actions/setup-node@v3
       with:
         node-version: 16.x
     - name: Install latest npm
@@ -47,7 +67,8 @@ jobs:
     - name: Install project dependencies
       run: npm ci
     - name: Install media dependencies
-      run: cd media/editor && npm ci && cd ../..
+      working-directory: ./media/editor
+      run: npm ci
     - name: Build vsix package
       run: npx vsce package -o vscode-vue-custom-editor.vsix
     - name: Get latest release version number
