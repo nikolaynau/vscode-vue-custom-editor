@@ -210,7 +210,7 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run build",
-    "build": "npm run editor:build && npm run package",
+    "build": "npm run build-editor && npm run package",
     "compile": "webpack",
     "watch": "webpack --watch",
     "package": "webpack --mode production --devtool hidden-source-map",
@@ -220,7 +220,7 @@
     "lint": "eslint src --ext ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "test": "node ./out/test/runTest.js",
-    "editor:build": "cd media/editor && npm run build && cd ../..",
+    "build-editor": "cd media/editor && npm run build && cd ../..",
     "deploy": "vsce publish --no-yarn",
     "postversion": "npm run push",
     "push": "git push origin master && git push origin master --tags",
